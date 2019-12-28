@@ -1,0 +1,1825 @@
+<lxs>
+    <scene root="rootComp" axis_length="5" />
+
+    <views default="sceneOverview">
+        <perspective id="sceneOverview" near="0.1" far="90" angle="60">
+            <from x="10" y="10" z="20" />
+            <to x="0" y="1" z="0" />
+        </perspective>
+        <perspective id="mushroomCloseup" near="0.1" far="90" angle="30">
+            <from x="6.5" y="6" z="12" />
+            <to x="6.5" y="4" z="8" />
+        </perspective>
+        <perspective id="sceneCloser" near="0.1" far="90" angle="60">
+            <from x="-1" y="5" z="10" />
+            <to x="10" y="0" z="0" />
+        </perspective>
+        <perspective id="coinsCloseup" near="0.1" far="90" angle="30">
+            <from x="6.5" y="3" z="30" />
+            <to x="6.5" y="1.5" z="8" />
+        </perspective>
+        <ortho id="sceneFrontOrtho" near="0.1" far="90" left="-13" right="13" top="13" bottom="-13">
+            <from x="5" y="5" z="20" />
+            <to x="5" y="5" z="0" />
+            <up x="0" y="1" z="0" />
+        </ortho>
+        <ortho id="sceneSideOrtho" near="0.1" far="90" left="-13" right="13" top="13" bottom="-13">
+            <from x="20" y="5" z="5" />
+            <to x="0" y="5" z="5" />
+            <up x="0" y="1" z="0" />
+        </ortho>
+        <ortho id="sceneBackOrtho" near="0.1" far="90" left="-13" right="13" top="13" bottom="-13">
+            <from x="5" y="5" z="-20" />
+            <to x="5" y="5" z="0" />
+            <up x="0" y="1" z="0" />
+        </ortho>
+        <ortho id="sceneOverviewOrtho" near="0.1" far="90" left="-10" right="10" top="10" bottom="-10">
+            <from x="10" y="10" z="10" />
+            <to x="0" y="0" z="0" />
+            <up x="0" y="1" z="0" />
+        </ortho>
+    </views>
+
+    <globals>
+        <ambient r="0.6" g="0.6" b="0.6" a="1" />
+        <background r="0.14" g="0.6" b="1" a="1" />
+    </globals>
+
+    <lights>
+        <omni id="sceneTop1" enabled="1">
+            <location x="2" y="15" z="5" w="1" />
+            <ambient r="0" g="0" b="0" a="1" />
+            <diffuse r="1" g="1" b="1" a="1" />
+            <specular r="1" g="1" b="1" a="1" />
+            <attenuation constant="1" linear="0" quadratic="0" />
+        </omni>
+        <omni id="sceneTop2" enabled="1">
+            <location x="5" y="15" z="5" w="1" />
+            <ambient r="0" g="0" b="0" a="1" />
+            <diffuse r="1" g="1" b="1" a="1" />
+            <specular r="1" g="1" b="1" a="1" />
+            <attenuation constant="1" linear="0" quadratic="0" />
+        </omni>
+        <omni id="sceneTop3" enabled="1">
+            <location x="8" y="15" z="5" w="1" />
+            <ambient r="0" g="0" b="0" a="1" />
+            <diffuse r="1" g="1" b="1" a="1" />
+            <specular r="1" g="1" b="1" a="1" />
+            <attenuation constant="0" linear="1" quadratic="0" />
+        </omni>
+        <omni id="mysteryLight" enabled="0">
+            <location x="6.5" y="3.5" z="8" w="1" />
+            <ambient r="0.3" g="0.3" b="0" a="1" />
+            <diffuse r="1" g="1" b="0" a="1" />
+            <specular r="1" g="1" b="0" a="1" />
+            <attenuation constant="0" linear="0" quadratic="1" />
+        </omni>
+        <spot id="goalPoleLight" enabled="0" angle="1" exponent="1">
+            <location x="1.5" y="5" z="8" w="1" />
+            <target x="1.5" y="0" z="7" />
+            <ambient r="0" g="0.15" b="0" a="1" />
+            <diffuse r="0.1" g="0.6" b="0.1" a="1" />
+            <specular r="0.1" g="0.6" b="0.1" a="1" />
+            <attenuation constant="0" linear="1" quadratic="0" />
+        </spot>
+        <spot id="bulletLight" enabled="0" angle="1" exponent="1">
+            <location x="6" y="8" z="9.5" w="1" />
+            <target x="8.5" y="7" z="8" />
+            <ambient r="0" g="0" b="0" a="1" />
+            <diffuse r="0.2" g="0.2" b="0.2" a="1" />
+            <specular r="1" g="1" b="1" a="1" />
+            <attenuation constant="0" linear="1" quadratic="0" />
+        </spot>
+        <spot id="coinsLight" enabled="0" angle="10" exponent="4">
+            <location x="8.5" y="3" z="8" w="1" />
+            <target x="8.5" y="1.5" z="9" />
+            <ambient r="0.1" g="0.1" b="0" a="1" />
+            <diffuse r="0.4" g="0.4" b="0.1" a="1" />
+            <specular r="0.8" g="0.8" b="0.1" a="1" />
+            <attenuation constant="0" linear="0" quadratic="1" />
+        </spot>
+    </lights>
+
+    <textures>
+        <texture id="tijolo" file="scenes/images/tijolo.jpg" />
+        <texture id="surprise" file="scenes/images/surprise.jpg" />
+        <texture id="bellTop" file="scenes/images/top.jpg" />
+        <texture id="flag" file="scenes/images/flag.png" />
+        <texture id="background1" file="scenes/images/background1.jpg" />
+        <texture id="background2" file="scenes/images/background2.jpg" />
+        <texture id="mushroomBottom" file="scenes/images/mushroombottom.png" />
+        <texture id="kartflag" file="scenes/images/kartflag.png" />
+    </textures>
+
+    <materials>
+        <material id="matRegular" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.3" g="0.3" b="0.3" a="1" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+        </material>
+        <material id="brown" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.44" g="0.26" b="0.04" a="1" />
+            <diffuse r="0.2" g="0.15" b="0.05" a="1" />
+            <specular r="0.1" g="0.05" b="0" a="1" />
+        </material>
+        <material id="white" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.8" g="0.8" b="0.8" a="1" />
+        </material>
+        <material id="gold" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.5" g="0.4" b="0" a="1" />
+            <diffuse r="0.6" g="0.6" b="0.2" a="1" />
+            <specular r="1" g="1" b="0.3" a="1" />
+        </material>
+        <material id="green" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0" g="0.5" b="0" a="1" />
+            <diffuse r="0.1" g="0.7" b="0.1" a="1" />
+            <specular r="0.2" g="1" b="0.4" a="1" />
+        </material>
+        <material id="black" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1" />
+            <diffuse r="0.2" g="0.2" b="0.2" a="1" />
+            <specular r="0.6" g="0.6" b="0.6" a="1" />
+        </material>
+        <material id="red" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.6" g="0" b="0" a="1" />
+            <diffuse r="0.8" g="0" b="0" a="1" />
+            <specular r="0.8" g="0" b="0" a="1" />
+        </material>
+        <material id="yellow" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.5" g="0.5" b="0.1" a="1" />
+            <diffuse r="0.6" g="0.6" b="0.2" a="1" />
+            <specular r="0.6" g="0.6" b="0.2" a="1" />
+        </material>
+        <material id="skin" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.5" g="0.4" b="0.3" a="1" />
+            <diffuse r="0.7" g="0.6" b="0.5" a="1" />
+            <specular r="0.7" g="0.6" b="0.5" a="1" />
+        </material>
+        <material id="grey" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1" />
+            <diffuse r="0.15" g="0.15" b="0.15" a="1" />
+            <specular r="0.15" g="0.15" b="0.15" a="1" />
+        </material>
+        <material id="orange" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.5" g="0.1" b="0" a="1" />
+            <diffuse r="0.8" g="0.2" b="0.1" a="1" />
+            <specular r="1" g="0.3" b="0.1" a="1" />
+        </material>
+        <material id="blue" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.1" g="0.1" b="0.5" a="1" />
+            <diffuse r="0.1" g="0.1" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="1" a="1" />
+        </material>
+    </materials>
+
+    <transformations>
+        <transformation id="frontPathTransf">
+            <translate x="6.5" y="0" z="8" />
+        </transformation>
+        <transformation id="blocksScale">
+            <scale x="0.75" y="0.75" z="0.75" />
+        </transformation>
+        <transformation id="middleBlock">
+            <translate x="0" y="3.5" z="0" />
+        </transformation>
+        <transformation id="leftBlock">
+            <translate x="-1" y="3.5" z="0" />
+        </transformation>
+        <transformation id="rightBlock">
+            <translate x="1" y="3.5" z="0" />
+        </transformation>
+        <transformation id="backPathTransf">
+            <translate x="2" y="0" z="4" />
+        </transformation>
+        <transformation id="standupY">
+            <rotate axis="x" angle="-90" />
+        </transformation>
+        <transformation id="verticalPathTransf">
+            <translate x="4.75" y="0" z="4.75" />
+            <rotate axis="y" angle="90" />
+        </transformation>
+        <transformation id="bulletBillTransf">
+            <translate x="9" y="7" z="9" />
+        </transformation>
+        <transformation id="bellTreeTransf">
+            <translate x="8" y="0" z="3" />
+        </transformation>
+        <transformation id="goalPoleTransf">
+            <translate x="1.5" y="0" z="7" />
+        </transformation>
+    </transformations>
+    
+    <animations>
+        <animation id="coins">
+            <keyframe instant="30">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="1800" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+        </animation>
+        <animation id="marioKart">
+            <keyframe instant="7">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="10.3">
+                <translate x="4" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="11.4">
+                <translate x="5" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="12.6">
+                <translate x="6" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="14">
+                <translate x="7.7" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="15">
+                <translate x="7.7" y="3" z="0" />
+                <rotate angle_x="0" angle_y="90" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="16">
+                <translate x="7.7" y="0" z="0" />
+                <rotate angle_x="0" angle_y="180" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="20">
+                <translate x="1.5" y="0" z="0" />
+                <rotate angle_x="0" angle_y="180" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="21">
+                <translate x="0.35" y="0" z="0" />
+                <rotate angle_x="0" angle_y="90" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="23.5">
+                <translate x="0.35" y="0" z="-4.5" />
+                <rotate angle_x="0" angle_y="90" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="24">
+                <translate x="0.35" y="0.1" z="-4.5" />
+                <rotate angle_x="0" angle_y="90" angle_z="0" />
+                <scale x="1.2" y="1.2" z="1.2" />
+            </keyframe>
+        </animation>
+        <animation id= "get_coin1">
+            <keyframe instant="10">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="720" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="10.5">
+                <translate x="0" y="0.5" z="0" />
+                <rotate angle_x="0" angle_y="720" angle_z="0" />
+                <scale x="0" y="0" z="0" />
+            </keyframe>
+        </animation>
+        <animation id= "get_coin2">
+            <keyframe instant="11">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="720" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="11.5">
+                <translate x="0" y="0.5" z="0" />
+                <rotate angle_x="0" angle_y="720" angle_z="0" />
+                <scale x="0" y="0" z="0" />
+            </keyframe>
+        </animation>
+        <animation id= "get_coin3">
+            <keyframe instant="12">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="720" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="12.5">
+                <translate x="0" y="0.5" z="0" />
+                <rotate angle_x="0" angle_y="720" angle_z="0" />
+                <scale x="0" y="0" z="0" />
+            </keyframe>
+        </animation>
+        <animation id= "get_coin4">
+            <keyframe instant="13">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="720" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="13.5">
+                <translate x="0" y="0.5" z="0" />
+                <rotate angle_x="0" angle_y="720" angle_z="0" />
+                <scale x="0" y="0" z="0" />
+            </keyframe>
+        </animation>
+
+        <animation id="mushroom_animation">
+            <keyframe instant="3">
+                <translate x="0" y="1.4" z="0"/>
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1.7" y="1.7" z="1.7" />
+            </keyframe>
+            <keyframe instant="4">
+                <translate x="0" y="1.4" z="0"/>
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1.7" y="1.7" z="1.7" />
+            </keyframe>
+            <keyframe instant="6">
+                <translate x="0" y="1.4" z="0"/>
+                <rotate angle_x="0" angle_y="-45" angle_z="0" />
+                <scale x="1.7" y="1.7" z="1.7" />
+            </keyframe>
+            <keyframe instant="8">
+                <translate x="0" y="1.4" z="0"/>
+                <rotate angle_x="0" angle_y="45" angle_z="0" />
+                <scale x="1.7" y="1.7" z="1.7" />
+            </keyframe>
+            <keyframe instant="10">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="11">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="12">
+                <translate x="0" y="1.5" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="2" y="2" z="2" />
+            </keyframe>
+            <keyframe instant="13">
+                <translate x="-1.7" y="1.5" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="2" y="2" z="2" />
+            </keyframe>
+            <keyframe instant="15">
+                <translate x="-1.7" y="-3.2" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="2" y="2" z="2" />
+            </keyframe>
+            <keyframe instant="16">
+                <translate x="-3" y="-3.2" z="-1" />
+                <rotate angle_x="0" angle_y="-180" angle_z="0" />
+                <scale x="2" y="2" z="2" />
+            </keyframe>
+            <keyframe instant="20">
+                <translate x="-3" y="-3.2" z="-6" />
+                <rotate angle_x="0" angle_y="-180" angle_z="0" />
+                <scale x="2" y="2" z="2" />
+            </keyframe>
+            <keyframe instant="23">
+                <translate x="-4" y="-3.2" z="-7" />
+                <rotate angle_x="0" angle_y="-90" angle_z="0" />
+                <scale x="2" y="2" z="2" />
+            </keyframe>             
+            <keyframe instant="24">
+                <translate x="-4" y="-3.2" z="-7" />
+                <rotate angle_x="0" angle_y="-90" angle_z="0" />
+                <scale x="0" y="0" z="0" />
+            </keyframe>
+        </animation>
+        <animation id="flag_move">
+            <keyframe instant="24">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="30">
+                <translate x="0" y="3" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+        </animation>
+        <animation id="bullet_loop">
+            <keyframe instant="3">
+                <translate x="-7.5" y="0" z="0" />
+                <rotate angle_x="0" angle_y="-90" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="6">
+                <translate x="-7.5" y="0" z="-7" />
+                <rotate angle_x="0" angle_y="-180" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="9">
+                <translate x="0" y="0" z="-7" />
+                <rotate angle_x="0" angle_y="-180" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+
+            <keyframe instant="10">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="-180" angle_z="180" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+   
+        </animation>
+    </animations>
+
+
+    <primitives>
+        <primitive id="wall">
+            <rectangle x1="0" y1="0" x2="10" y2="10" />
+        </primitive>
+        <primitive id="cubeFace">
+            <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+        </primitive>
+        <primitive id="coin">
+            <cylinder base="0.25" top="0.25" height="0.1" slices="20" stacks="6" />
+        </primitive>
+        <primitive id="mushroomHeadTopPrim">
+            <sphere radius="0.2" slices="20" stacks="20" />
+        </primitive>
+        <primitive id="mushroomHeadBottomPrim">
+            <torus inner="0.2" outer="0.2" slices="20" loops="20" />
+        </primitive>
+        <primitive id="mushroomBodyPrim">
+            <cylinder base="0.25" top="0.25" height="0.3" slices="50" stacks="6" />
+        </primitive>
+        <primitive id="bellTreeHeadTopPrim">
+            <sphere radius="0.75" slices="20" stacks="20" />
+        </primitive>
+        <primitive id="bellTreeHeadMiddlePrim">
+            <cylinder base="1.5" top="1.5" height="2" slices="20" stacks="6" />
+        </primitive>
+        <primitive id="bellTreeHeadBottomPrim">
+            <torus inner="0.3" outer="1.5" slices="20" loops="20" />
+        </primitive>
+        <primitive id="bellTreeBodyPrim">
+            <cylinder base="0.35" top="0.35" height="3" slices="20" stacks="6" />
+        </primitive>
+        <primitive id="warpPipeBodyPrim">
+            <cylinder base="0.5" top="0.5" height="2" slices="20" stacks="6" />
+        </primitive>
+        <primitive id="bulletBillBodyPrim">
+            <cylinder base="1" top="1" height="2" slices="50" stacks="10" />
+        </primitive>
+        <primitive id="bulletBillHeadPrim">
+            <sphere radius="0.5" slices="50" stacks="20" />
+        </primitive>
+        <primitive id="goalPoleTopPrim">
+            <sphere radius="0.1" slices="10" stacks="10" />
+        </primitive>
+        <primitive id="goalPoleBodyPrim">
+            <cylinder base="0.05" top="0.05" height="4.5" slices="20" stacks="6" />
+        </primitive>
+        <primitive id="goalPoleFlagPrim">
+            <triangle x1="-1" y1="0" z1="0" x2="0" y2="-0.75" z2="0" x3="0" y3="0" z3="0" />
+        </primitive>
+        <primitive id="wheelsCylinder">
+            <cylinder base="0.05" top="0.05" height="1.5" slices="20" stacks="20" />
+        </primitive>
+        <primitive id="tire">
+            <torus inner="0.2" outer="0.2" slices="50" loops="50" />
+        </primitive>
+        <primitive id="tire-rim">
+            <sphere radius="0.25" slices="50" stacks="20" />
+        </primitive>
+        <primitive id="marioFlag">
+            <patch npointsU="5" npointsV="2" npartsU="30" npartsV="1">
+                <controlpoint xx="-3" yy="-2" zz="0"/>
+                <controlpoint xx="-3" yy="2" zz="0"/>
+                <controlpoint xx="-1.5" yy="-2" zz="1.5"/>
+                <controlpoint xx="-1.5" yy="2" zz="1.5"/>
+                <controlpoint xx="0" yy="-2" zz="0"/>
+                <controlpoint xx="0" yy="2" zz="0"/>
+                <controlpoint xx="1.5" yy="-2" zz="-1.5"/>
+                <controlpoint xx="1.5" yy="2" zz="-1.5"/>
+                <controlpoint xx="3" yy="-2" zz="0"/>
+                <controlpoint xx="3" yy="2" zz="0"/>
+            </patch>
+        </primitive>
+        <primitive id="marioFlagReverse">
+            <patch npointsU="5" npointsV="2" npartsU="30" npartsV="1">
+                <controlpoint xx="-3" yy="2" zz="0"/>
+                <controlpoint xx="-3" yy="-2" zz="0"/>
+                <controlpoint xx="-1.5" yy="2" zz="1.5"/>
+                <controlpoint xx="-1.5" yy="-2" zz="1.5"/>
+                <controlpoint xx="0" yy="2" zz="0"/>
+                <controlpoint xx="0" yy="-2" zz="0"/>
+                <controlpoint xx="1.5" yy="2" zz="-1.5"/>
+                <controlpoint xx="1.5" yy="-2" zz="-1.5"/>
+                <controlpoint xx="3" yy="2" zz="0"/>
+                <controlpoint xx="3" yy="-2" zz="0"/>
+            </patch>
+        </primitive>
+        <primitive id="wheelCylinder">
+            <cylinder base="0.05" top="0.05" height="0.3" slices="20" stacks="20" />
+        </primitive>
+        <primitive id="turbo">
+            <cylinder base="0.2" top="0.1" height="0.6" slices="20" stacks="20" />
+        </primitive>
+        <primitive id="marioKartBodyBack">
+            <cylinder base="0.6" top="0.5" height="0.5" slices="20" stacks="20" />
+        </primitive>
+        <primitive id="wheelTorus">
+            <torus inner="0.03" outer="0.2" slices="20" loops="20" />
+        </primitive>
+        <primitive id="wheelSphere">
+            <sphere radius="0.05" slices="50" stacks="20" />
+        </primitive>
+        <primitive id="seat">
+            <patch npointsU="3" npointsV="2" npartsU="30" npartsV="1">
+                <controlpoint xx="-0.4" yy="0" zz="0.4"/>
+                <controlpoint xx="0.4" yy="0" zz="0.4"/>
+                <controlpoint xx="-0.4" yy="-0.1" zz="-0.1"/>
+                <controlpoint xx="0.4" yy="-0.1" zz="-0.1"/>
+                <controlpoint xx="-0.4" yy="0.6" zz="-0.1"/>
+                <controlpoint xx="0.4" yy="0.6" zz="-0.1"/>
+            </patch>
+        </primitive>
+        <primitive id="seatReverse">
+            <patch npointsU="3" npointsV="2" npartsU="30" npartsV="1">
+                <controlpoint xx="-0.4" yy="0.6" zz="-0.1"/>
+                <controlpoint xx="0.4" yy="0.6" zz="-0.1"/>
+                <controlpoint xx="-0.4" yy="-0.1" zz="-0.1"/>
+                <controlpoint xx="0.4" yy="-0.1" zz="-0.1"/>
+                <controlpoint xx="-0.4" yy="0" zz="0.4"/>
+                <controlpoint xx="0.4" yy="0" zz="0.4"/>
+            </patch>
+        </primitive>
+        <primitive id="marioKartBodyMidle">
+            <patch npointsU="5" npointsV="2" npartsU="30" npartsV="1">
+                <controlpoint xx="-0.49" yy="0" zz="-0.5"/>
+                <controlpoint xx="-0.49" yy="0" zz="0.5"/>
+                <controlpoint xx="-0.49" yy="-0.45" zz="-0.5"/>
+                <controlpoint xx="-0.49" yy="-0.45" zz="0.5"/>
+                <controlpoint xx="0" yy="-0.5" zz="-0.5"/>
+                <controlpoint xx="0" yy="-0.5" zz="0.5"/>
+                <controlpoint xx="0.49" yy="-0.45" zz="-0.5"/>
+                <controlpoint xx="0.49" yy="-0.45" zz="0.5"/>
+                <controlpoint xx="0.49" yy="0" zz="-0.5"/>
+                <controlpoint xx="0.49" yy="0" zz="0.5"/>
+            </patch>
+        </primitive>
+        <primitive id="marioKartBody">
+            <cylinder base="0.5" top="0.4" height="1.1" slices="20" stacks="20" />
+        </primitive>
+        <primitive id="circle">
+            <cylinder base="0.5" top="0.5" height="0.01" slices="20" stacks="20" />
+        </primitive>
+        <primitive id="marioKartBodyTapTorus">
+            <torus inner="0.05" outer="0.4" slices="20" loops="20" />
+        </primitive>
+        <primitive id="marioKartBodyTapSphere">
+            <sphere radius="0.1" slices="50" stacks="20" />
+        </primitive>
+    </primitives>
+
+    <components>
+        <component id="rootComp">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="leftWall" />
+                <componentref id="backWall" />
+                <componentref id="frontPath" />
+                <componentref id="backPath" />
+                <componentref id="verticalPath" />
+                <componentref id="warpPipe1" />
+                <componentref id="warpPipe2" />
+                <componentref id="bulletBill" />
+                <componentref id="bellTree" />
+                <componentref id="goalPole" />
+                <componentref id="floor" />
+            </children>
+        </component>
+        <component id="floor">
+            <transformation>
+                <translate x="0" y="0" z="10" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="brown" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="wall" />
+            </children>
+        </component>
+        <component id="leftWall">
+            <transformation>
+                <translate x="0" y="0" z="10" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="background1" length_s="10" length_t="10" />
+            <children>
+                <primitiveref id="wall" />
+            </children>
+        </component>
+        <component id="backWall">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="background2" length_s="10" length_t="10" />
+            <children>
+                <primitiveref id="wall" />
+            </children>
+        </component>
+        <component id="frontPath">
+            <transformation>
+                <transformationref id="frontPathTransf" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="frontGround" />
+                <componentref id="frontCoin1" />
+                <componentref id="frontCoin2" />
+                <componentref id="frontCoin3" />
+                <componentref id="frontCoin4" />
+                <componentref id="mysteryMushroom" />
+                <componentref id="marioKart" />
+            </children>
+        </component>
+        <component id="frontGround">
+            <transformation>
+                <translate x="0" y="0.75" z="0" />
+                <scale x="7" y="1.5" z="1.5" />
+            </transformation>
+            <materials>
+                <material id="white" />
+                <material id="grey" />
+                <material id="orange" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="cube" />
+            </children>
+        </component>
+        <component id="marioKart">
+            <transformation>
+                <translate x="-2" y="1.95" z="0" />
+                <scale x="0.6" y="0.6" z="0.6" />
+            </transformation>
+            <animationref id="marioKart" />
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="marioKartBody" />
+                <componentref id="frontWheels" />
+                <componentref id="backWheels" />
+                <componentref id="tire1" />
+                <componentref id="tire2" />
+                <componentref id="tire3" />
+                <componentref id="tire4" />
+            </children>
+        </component>
+        <component id="frontWheels">
+            <transformation>
+                <translate x="1" y="-0.3" z="-0.6" />
+                <scale x="1" y="1" z="0.8" />
+            </transformation>
+            <materials>
+                <material id="grey" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="wheelsCylinder" />
+            </children>
+        </component>
+        <component id="backWheels">
+            <transformation>
+                <translate x="-0.5" y="-0.3" z="-0.75" />
+            </transformation>
+            <materials>
+                <material id="grey" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="wheelsCylinder" />
+            </children>
+        </component>
+        <component id="tire1">
+            <transformation>
+                <translate x="-0.5" y="-0.3" z="-0.7" />
+            </transformation>
+            <materials>
+                <material id="black" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="tire-rim" />                
+                <primitiveref id="tire" />
+            </children>
+        </component>
+        <component id="tire2">
+            <transformation>
+                <translate x="-0.5" y="-0.3" z="0.7" />
+            </transformation>
+            <materials>
+                <material id="black" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="tire-rim" />                
+                <primitiveref id="tire" />
+            </children>
+        </component>
+        <component id="tire3">
+            <transformation>
+                <translate x="1" y="-0.3" z="-0.55" />
+            </transformation>
+            <materials>
+                <material id="black" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="tire-rim" />                
+                <primitiveref id="tire" />
+            </children>
+        </component>
+        <component id="tire4">
+            <transformation>
+                <translate x="1" y="-0.3" z="0.55" />
+            </transformation>
+            <materials>
+                <material id="black" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="tire-rim" />                
+                <primitiveref id="tire" />
+            </children>
+        </component>
+        <component id="tire-rim">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="yellow" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="tire-rim" />                
+            </children>
+        </component>
+        <component id="marioKartBody">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="marioKartBodyFront" />
+                <componentref id="marioKartBodyMidle" />
+                <componentref id="marioKartBodyBack" />
+            </children>
+        </component>
+        <component id="marioKartBodyBack" >
+            <transformation> 
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="marioKartBodyBackPrinc" />
+                <componentref id="marioKartBodyBackTurbo1" />
+                <componentref id="marioKartBodyBackTurbo2" />
+                <componentref id="marioFlag" />
+            </children>
+        </component>
+        <component id="marioFlag" >
+            <transformation> 
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="marioFlagCylinder" />
+                <componentref id="marioFlagF" />
+            </children>
+        </component>
+        <component id="marioFlagF" >
+            <transformation> 
+                <translate x="-0.8" y="1" z="-0.3" />
+                <rotate axis="y" angle="90" />
+                <scale x="0.1" y="0.1" z="0.1" />
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="kartflag" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="marioFlag" />
+                <primitiveref id="marioFlagReverse" />
+            </children>
+        </component>
+        <component id="marioFlagCylinder" >
+            <transformation> 
+                <translate x="-0.8" y="0.4" z="0" />
+                <scale x="0.5" y="3" z="0.5" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="blue" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="wheelCylinder" />
+            </children>
+        </component>
+        <component id="marioKartBodyBackTurbo1" >
+            <transformation> 
+                <translate x="-0.9" y="0" z="0.2" />
+                <rotate axis="z" angle="-20" />
+                <rotate axis="y" angle="110" />
+                <translate x="0" y="0" z="-0.6" />
+            </transformation>
+            <materials>
+                <material id="grey" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="turbo" />
+            </children>
+        </component>
+        <component id="marioKartBodyBackTurbo2" >
+            <transformation> 
+                <translate x="-0.9" y="0" z="-0.2" />
+                <rotate axis="z" angle="-20" />
+                <rotate axis="y" angle="70" />
+                <translate x="0" y="0" z="-0.6" />
+            </transformation>
+            <materials>
+                <material id="grey" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="turbo" />
+            </children>
+        </component>
+        <component id="marioKartBodyBackPrinc" >
+            <transformation> 
+                <translate x="-0.48" y="0" z="0" /> 
+                <scale x="1" y="0.7" z="1" />
+                <rotate axis="y" angle="90" />
+                <translate x="0" y="0" z="-0.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="marioKartBodyBack" />
+            </children>
+        </component>
+        <component id="marioKartBodyMidle" >
+            <transformation> 
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="marioKartBodyMidleBase" />
+                <componentref id="seatSection" />
+                <componentref id="steeringWheel" />
+            </children>
+        </component>
+        <component id="steeringWheel" >
+            <transformation> 
+                <translate x="0.1" y="0.4" z="0" /> 
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="wheel" />
+                <componentref id="wheelCylinder" />
+            </children>
+        </component>
+        <component id="wheelCylinder" >
+            <transformation> 
+                <rotate axis="x" angle="25" />
+            </transformation>
+            <materials>
+                <material id="grey" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="wheelCylinder" />
+            </children>
+        </component>
+        <component id="wheel" >
+            <transformation> 
+                <rotate axis="x" angle="10" />
+            </transformation>
+            <materials>
+                <material id="black" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="wheelPrinc" />
+                <componentref id="wheelSec1" />
+                <componentref id="wheelSec2" />
+            </children>
+        </component>
+        <component id="wheelPrinc" >
+            <transformation> 
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="wheelTorus" />
+                <primitiveref id="wheelSphere" />
+            </children>
+        </component>
+        <component id="wheelSec1" >
+            <transformation> 
+                <rotate axis="z" angle="-80" />
+                <rotate axis="x" angle="-90" />
+                <scale x="0.3" y="0.3" z="0.7" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="wheelCylinder" />
+            </children>
+        </component>
+        <component id="wheelSec2" >
+            <transformation> 
+                <rotate axis="z" angle="80" />
+                <rotate axis="x" angle="-90" />
+                <scale x="0.3" y="0.3" z="0.7" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="wheelCylinder" />
+            </children>
+        </component>
+        <component id="seatSection" >
+            <transformation> 
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="seatBase" />
+                <componentref id="seat" />
+            </children>
+        </component>
+        <component id="seatBase" >
+            <transformation> 
+                <scale x="0.97" y="1" z="1" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="cubeFace" />
+            </children>
+        </component>
+        <component id="seat" >
+            <transformation> 
+                <translate x="-0.35" y="0.02" z="0" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="blue" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="seat" />
+                <primitiveref id="seatReverse" />
+            </children>
+        </component>
+        <component id="marioKartBodyMidleBase" >
+            <transformation> 
+                <translate x="-0.14" y="0" z="0" />
+                <scale x="1" y="0.815" z="1" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="marioKartBodyMidle" />
+            </children>
+        </component>
+        <component id="marioKartBodyFront">
+            <transformation>
+                <translate x="0.95" y="0" z="0" /> 
+                <scale x="1" y="0.7" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="marioKartBodyFrontPrinc" />
+                <componentref id="marioKartBodyFrontTap" />
+            </children>
+        </component>
+        <component id="marioKartBodyFrontPrinc" >
+            <transformation>
+                <translate x="-0.6" y="0" z="0" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="controlPanel" />
+                <primitiveref id="marioKartBody" />
+            </children>
+        </component>
+        <component id="controlPanel" >
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="circle" />
+            </children>
+        </component>
+        <component id="marioKartBodyFrontTap" >
+            <transformation>
+                <translate x="0.55" y="0" z="0" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="blue" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="marioKartBodyTapTorus" />
+                <componentref id="marioKartBodyTapSphere" />
+            </children>
+        </component>
+        <component id="marioKartBodyTapSphere" >
+            <transformation>
+                <scale x="4.4" y="4.4" z="1" />
+            </transformation>
+            <materials>
+                <material id="grey" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="marioKartBodyTapSphere" />
+            </children>
+        </component>
+        <component id="frontCoin1">
+            <transformation>
+                <translate x="3" y="1.8" z="0" />
+                <rotate axis="y" angle="30" />
+            </transformation>
+        <animationref id= "get_coin4"/>
+            <materials>
+                <material id="gold" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="coin" />
+            </children>
+        </component>
+        <component id="frontCoin2">
+            <transformation>
+                <translate x="2.4" y="1.8" z="0" />
+                <rotate axis="y" angle="-40" />
+            </transformation>
+        <animationref id= "get_coin3"/>
+            <materials>
+                <material id="gold" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="coin" />
+            </children>
+        </component>
+        <component id="frontCoin3">
+            <transformation>
+                <translate x="1.8" y="1.8" z="0" />
+                <rotate axis="y" angle="10" />
+            </transformation>
+            <animationref id= "get_coin2"/>
+            <materials>
+                <material id="gold" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="coin" />
+            </children>
+        </component>
+        <component id="frontCoin4">
+            <transformation>
+                <translate x="1.2" y="1.8" z="0" />
+                <rotate axis="y" angle="-20" />
+            </transformation>
+            <animationref id= "get_coin1"/>
+            <materials>
+                <material id="gold" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="coin" />
+            </children>
+        </component>
+        <component id="mysteryMushroom">
+            <transformation>
+                <transformationref id="middleBlock" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="mysteryBlock" />
+                <componentref id="mushroom" />
+            </children>
+        </component>
+        <component id="mysteryBlock">
+            <transformation>
+                <transformationref id="blocksScale" />
+            </transformation>
+            <materials>
+                <material id="white" />
+                <material id="orange" />
+                <material id="white" />
+            </materials>
+            <texture id="surprise" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube" />
+            </children>
+        </component>
+        <component id="mushroom">
+            <transformation>
+                <translate x="0" y="-0.4" z="0" />
+                <scale x="0.5" y="0.5" z="0.5" />
+            </transformation>
+        <animationref id="mushroom_animation"/>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="mushroomHead" />
+                <componentref id="mushroomBody" />
+            </children>
+        </component>
+        <component id="mushroomHead">
+            <transformation>
+                <translate x="0" y="0.4" z="-0.05" />
+                <rotate axis="x" angle="-20" />
+                <scale x="1" y="1.2" z="1" />
+            </transformation>
+            <materials>
+                <material id="red" />
+                <material id="green" />
+                <material id="yellow" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="mushroomHeadBottom" />
+                <componentref id="mushroomHeadTop" />
+            </children>
+        </component>
+        <component id="mushroomBody">
+            <transformation>
+                <transformationref id="standupY" />
+            </transformation>
+            <materials>
+                <material id="skin" />
+            </materials>
+            <texture id="mushroomBottom" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="mushroomBodyPrim" />
+            </children>
+        </component>
+        <component id="mushroomHeadBottom">
+            <transformation>
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="mushroomHeadBottomPrim" />
+            </children>
+        </component>
+        <component id="mushroomHeadTop">
+            <transformation>
+                <translate x="0" y="0.075" z="0" />
+                <scale x="1.8" y="1" z="1.8" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="mushroomHeadTopPrim" />
+            </children>
+        </component>
+        <component id="backPath">
+            <transformation>
+                <transformationref id="backPathTransf" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="backGround" />
+                <componentref id="brickCoin1" />
+                <componentref id="brickCoin2" />
+                <componentref id="brickCoin3" />
+            </children>
+        </component>
+        <component id="backGround">
+            <transformation>
+                <translate x="0" y="0.75" z="0" />
+                <scale x="4" y="1.5" z="1.5" />
+            </transformation>
+            <materials>
+                <material id="white" />
+                <material id="grey" />
+                <material id="orange" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="cube" />
+            </children>
+        </component>
+        <component id="brickCoin1">
+            <transformation>
+                <transformationref id="leftBlock" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="backCoin1" />
+                <componentref id="brickBlock" />
+            </children>
+        </component>
+        <component id="brickCoin2">
+            <transformation>
+                <transformationref id="middleBlock" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="backCoin2" />
+                <componentref id="brickBlock" />
+            </children>
+        </component>
+        <component id="brickCoin3">
+            <transformation>
+                <transformationref id="rightBlock" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="backCoin3" />
+                <componentref id="brickBlock" />
+            </children>
+        </component>
+        <component id="backCoin1">
+            <transformation>
+                <translate x="0" y="0.75" z="0" />
+                <rotate axis="y" angle="30" />
+            </transformation>
+            <animationref id="coins" />
+            <materials>
+                <material id="gold" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="coin" />
+            </children>
+        </component>
+        <component id="backCoin2">
+            <transformation>
+                <translate x="0" y="0.75" z="0" />
+                <rotate axis="y" angle="-40" />
+            </transformation>
+            <animationref id="coins" />
+            <materials>
+                <material id="gold" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="coin" />
+            </children>
+        </component>
+        <component id="backCoin3">
+            <transformation>
+                <translate x="0" y="0.75" z="0" />
+                <rotate axis="y" angle="10" />
+            </transformation>
+            <animationref id="coins" />
+            <materials>
+                <material id="gold" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="coin" />
+            </children>
+        </component>
+        <component id="brickBlock">
+            <transformation>
+                <transformationref id="blocksScale" />
+            </transformation>
+            <materials>
+                <material id="brown" />
+                <material id="white" />
+                <material id="yellow" />
+            </materials>
+            <texture id="tijolo" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube" />
+            </children>
+        </component>
+        <component id="verticalPath">
+            <transformation>
+                <transformationref id="verticalPathTransf" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="verticalGround" />
+                <componentref id="brickBlock1" />
+                <componentref id="briclBlock2" />
+                <componentref id="mysteryBlock1" />
+            </children>
+        </component>
+        <component id="verticalGround">
+            <transformation>
+                <translate x="0" y="0.75" z="0" />
+                <scale x="5" y="1.5" z="1.5" />
+            </transformation>
+            <materials>
+                <material id="white" />
+                <material id="grey" />
+                <material id="orange" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="cube" />
+            </children>
+        </component>
+        <component id="brickBlock1">
+            <transformation>
+                <transformationref id="leftBlock" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="brickBlock" />
+            </children>
+        </component>
+        <component id="briclBlock2">
+            <transformation>
+                <transformationref id="rightBlock" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="brickBlock" />
+            </children>
+        </component>
+        <component id="mysteryBlock1">
+            <transformation>
+                <transformationref id="middleBlock" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="mysteryBlock" />
+            </children>
+        </component>
+        <component id="warpPipe1">
+            <transformation>
+                <translate x="7" y="0" z="6" />
+                <scale x="1" y="1.5" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="warpPipe" />
+            </children>
+        </component>
+        <component id="warpPipe2">
+            <transformation>
+                <translate x="2" y="0" z="1.5" />
+                <scale x="1.2" y="0.9" z="1.2" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="warpPipe" />
+            </children>
+        </component>
+        <component id="warpPipe">
+            <transformation>
+                <transformationref id="standupY" />
+            </transformation>
+            <materials>
+                <material id="green" />
+                <material id="yellow" />
+                <material id="red" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="warpPipeBody" />
+                <componentref id="warpPipeTop" />
+            </children>
+        </component>
+        <component id="warpPipeBody">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="warpPipeBodyPrim" />
+            </children>
+        </component>
+        <component id="warpPipeTop">
+            <transformation>
+                <translate x="0" y="0" z="2" />
+                <scale x="1.2" y="1.2" z="0.2" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="warpPipeBodyPrim" />
+            </children>
+        </component>
+        <component id="bulletBill">
+            <transformation>
+                <transformationref id="bulletBillTransf" />
+            </transformation>
+            <animationref id="bullet_loop" />
+            <materials>
+                <material id="black" />
+                <material id="red" />
+                <material id="grey" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="bulletBillHead" />
+                <componentref id="bulletBillBody" />
+                <componentref id="bulletBillBack" />
+            </children>
+        </component>
+        <component id="bulletBillHead">
+            <transformation>
+                <translate x="-2" y="0" z="0" />
+                <rotate axis="x" angle="180" />
+                <scale x="3" y="2" z="2" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="bulletBillHeadPrim" />
+            </children>
+        </component>
+        <component id="bulletBillBody">
+            <transformation>
+                <rotate axis="y" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="bulletBillBodyPrim" />
+            </children>
+        </component>
+        <component id="bulletBillBack">
+            <transformation>
+                <rotate axis="y" angle="-90" />
+                <scale x="1.1" y="1.1" z="0.2" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="bulletBillBodyPrim" />
+            </children>
+        </component>
+        <component id="bellTree">
+            <transformation>
+                <transformationref id="bellTreeTransf" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="bellTreeHead" />
+                <componentref id="bellTreeBody" />
+            </children>
+        </component>
+        <component id="bellTreeHead">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="yellow" />
+                <material id="green" />
+                <material id="gold" />
+            </materials>
+            <texture id="bellTop" length_s="1" length_t="1" />
+            <children>
+                <componentref id="bellTreeHeadBottom" />
+                <componentref id="bellTreeHeadMiddle" />
+                <componentref id="bellTreeHeadTop" />
+            </children>
+        </component>
+        <component id="bellTreeBody">
+            <transformation>
+                <transformationref id="standupY" />
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="bellTreeBodyPrim" />
+            </children>
+        </component>
+        <component id="bellTreeHeadBottom">
+            <transformation>
+                <translate x="0" y="3" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="bellTreeHeadBottomPrim" />
+            </children>
+        </component>
+        <component id="bellTreeHeadMiddle">
+            <transformation>
+                <translate x="0" y="3" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="bellTreeHeadMiddlePrim" />
+            </children>
+        </component>
+        <component id="bellTreeHeadTop">
+            <transformation>
+                <translate x="0" y="5" z="0" />
+                <scale x="2" y="1" z="2" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="bellTreeHeadTopPrim" />
+            </children>
+        </component>
+        <component id="goalPole">
+            <transformation>
+                <transformationref id="goalPoleTransf" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="goalPoleBody" />
+                <componentref id="goalPoleFlag" />
+                <componentref id="goalPoleTop" />
+                <componentref id="goalPoleBottom" />
+            </children>
+        </component>
+        <component id="goalPoleBody">
+            <transformation>
+                <transformationref id="standupY" />
+            </transformation>
+            <materials>
+                <material id="white" />
+                <material id="black" />
+                <material id="green" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="goalPoleBodyPrim" />
+            </children>
+        </component>
+        <component id="goalPoleFlag">
+            <transformation>
+                <translate x="0" y="1.3" z="0" />
+            </transformation>
+            <animationref id="flag_move" />
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="flag" length_s="1.25" length_t="0.6" />
+            <children>
+                <primitiveref id="goalPoleFlagPrim" />
+            </children>
+        </component>
+        <component id="goalPoleTop">
+            <transformation>
+                <translate x="0" y="4.5" z="0" />
+            </transformation>
+            <materials>
+                <material id="gold" />
+                <material id="white" />
+                <material id="yellow" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="goalPoleTopPrim" />
+            </children>
+        </component>
+        <component id="goalPoleBottom">
+            <transformation>
+                <translate x="0" y="0.28125" z="0" />
+                <scale x="0.75" y="0.75" z="0.75" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="brickBlock" />
+            </children>
+        </component>
+        <component id="cube">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="cubeTop" />
+                <componentref id="cubeBottom" />
+                <componentref id="cubeLeft" />
+                <componentref id="cubeRight" />
+                <componentref id="cubeBack" />
+                <componentref id="cubeFront" />
+            </children>
+        </component>
+        <component id="cubeFront">
+            <transformation>
+                <translate x="0" y="0" z="0.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="cubeFace" />
+            </children>
+        </component>
+        <component id="cubeBack">
+            <transformation>
+                <translate x="0" y="0" z="-0.5" />
+                <rotate axis="y" angle="180" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="cubeFace" />
+            </children>
+        </component>
+        <component id="cubeRight">
+            <transformation>
+                <translate x="0.5" y="0" z="0" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="cubeFace" />
+            </children>
+        </component>
+        <component id="cubeLeft">
+            <transformation>
+                <translate x="-0.5" y="0" z="0" />
+                <rotate axis="y" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="cubeFace" />
+            </children>
+        </component>
+        <component id="cubeTop">
+            <transformation>
+                <translate x="0" y="0.5" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="cubeFace" />
+            </children>
+        </component>
+        <component id="cubeBottom">
+            <transformation>
+                <translate x="0" y="-0.5" z="0" />
+                <rotate axis="x" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="cubeFace" />
+            </children>
+        </component>
+    </components>
+</lxs>
