@@ -17,6 +17,7 @@ serialInclude([
     'MySceneGraph.js', 
     'MyInterface.js', 
     'MyGraphNode.js',
+    'PieceNode.js',
     'primitives/MyRectangle.js',
     'primitives/MySphere.js',
     'primitives/MyTorus.js',

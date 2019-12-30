@@ -448,6 +448,9 @@
 
 
     <primitives>
+        <primitive id="wall">
+            <rectangle x1="0" y1="0" x2="10" y2="10" />
+        </primitive>
         <primitive id="board">
             <gameboard x1="0" y1="0" x2="10" y2="10" texture="board_texture"/>
         </primitive>
@@ -504,6 +507,25 @@
         </component>
     </components>
 
- 
+    <pieces>
+        <piece_green>
+            <transformation>
+                <translate x="0" y="0" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <material id="grey" />
+            <texture id="tijolo" length_s="1" length_t="1" />
+            <primitive id="wall" />
+        </piece_green>
+        <piece_yellow>
+            <transformation>
+                <translate x="0" y="0" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <material id="grey" />
+            <texture id="tijolo" length_s="1" length_t="1" />
+            <primitive id="wall" />
+        </piece_yellow>
+    </pieces>
         
 </lxs>

@@ -40,19 +40,15 @@ class XMLscene extends CGFscene {
         this.setPickEnabled(true);
 
         this.axis = new CGFaxis(this);
-        this.showAxis = true;
+        this.showAxis = false;
 
         this.createDefaultMaterial();
         this.setUpdatePeriod(10);
-        this.initSecurity();
 
         // Static objects scene setting
         ClickHandler.setScene(this);
         CameraHandler.setScene(this);
         MenuHandler.init(this);
-
-
-
     }
 
     /*
@@ -72,8 +68,6 @@ class XMLscene extends CGFscene {
         this.selectedView = "default"
         this.securityCamera = "default";
         this.views["default"] = this.camera;
-
-
     }
 
     /**
@@ -437,8 +431,9 @@ class XMLscene extends CGFscene {
 
         //construct the graph before start displaying
         this.graph.constructGraph();
+        this.graph.createCustomPieces();
 
-            if (!this.menuMode) {
+        if (!this.menuMode) {
             CameraHandler.swapToCurrentCamera();
             CameraHandler.moveToCurrentPosition();
         }
@@ -457,7 +452,6 @@ class XMLscene extends CGFscene {
         this.interface.setActiveCamera(camara);
 
         // ---- BEGIN Background, camera and axis setup
-
         ClickHandler.verifyClicks();
         
         // Clear image and depth buffer everytime we update the scene
@@ -481,14 +475,11 @@ class XMLscene extends CGFscene {
             this.axis.display();
 
         if (this.sceneInited) {
-
             if (this.menuMode) {
                 MenuHandler.displayCurrentMenu();
             } else {
-                this.graph.displayScene();            }   
-            //Displays the scene (MySceneGraph function).
-       
-            
+                this.graph.displayScene();  
+            }   
         }
 
         this.popMatrix();
@@ -498,17 +489,7 @@ class XMLscene extends CGFscene {
     renders security and scene camaras
     */
     display() {
-      //  this.security.attachToFrameBuffer(); //rtt
-       // this.camera = this.views[this.securityCamera];
-       // this.render(this.camera);
-        //this.security.detachFromFrameBuffer();
-
         this.camera = this.views[this.selectedView];
         this.render(this.camera);
-
-        //this.gl.disable(this.gl.DEPTH_TEST);
-        //this.camera_security.display();
-        //this.gl.enable(this.gl.DEPTH_TEST);
-
     }
 }

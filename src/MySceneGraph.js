@@ -177,6 +177,12 @@ class MySceneGraph {
                 this.onXMLMinorError("tag <components> out of order");
             this.parseComponents(nodes[index]);
         }
+
+        const piecesNode = rootElement.querySelector("pieces");
+
+        if (piecesNode) {
+            this.parsePieces(piecesNode);
+        }
         
         this.log("All parsed");
     }
@@ -1702,6 +1708,161 @@ class MySceneGraph {
         }
     }
 
+    parsePieces(piecesNode) {
+        const piece_green = piecesNode.querySelector("piece_green");
+        if (piece_green) {
+            this.piece_green = this.parsePiece(piece_green, "green");
+        } else {
+            this.onXMLMinorError("Custom green piece was not defined in pieces node, using default piece");
+        }
+        const piece_yellow = piecesNode.querySelector("piece_yellow");
+        if (piece_yellow) {
+            this.piece_yellow = this.parsePiece(piece_yellow, "yellow");
+        } else {
+            this.onXMLMinorError("Custom yellow piece was not defined in pieces node, using default piece");
+        }
+
+        this.log("Parsed Pieces");
+    }
+
+    /**
+     * Parses the a component
+     * @param {component element} componentNode
+     */
+    parsePiece(pieceNode, color) {
+        let messageError = "Piece " + color + ": ";
+        let pieceNodes = pieceNode.children;
+
+        if (pieceNodes.length > 4)
+            throw messageError + "invalid number of piece nodes";
+
+        let nodeNames = [];
+        for (var j = 0; j < pieceNodes.length; j++) {
+            nodeNames.push(pieceNodes[j].nodeName);
+        }
+
+        let transformationIndex, materialIndex, textureIndex, primitiveIndex;
+        // check if the tags transformation, materuals, texture and children are not missing
+        if ((transformationIndex = nodeNames.indexOf("transformation")) === -1)
+            throw messageError + "transformation tag is missing";
+        else if ((materialIndex = nodeNames.indexOf("material")) === -1)
+            throw messageError + "materials tag is missing";
+        else if ((textureIndex = nodeNames.indexOf("texture")) === -1)
+            throw messageError + "texture tag is missing";
+        else if ((primitiveIndex = nodeNames.indexOf("primitive")) === -1)
+            throw messageError + "primitive tag is missing";
+
+        // parse the transformation, materials and texture
+        let transformation = this.parsePieceTransformation(pieceNodes[transformationIndex], messageError);
+        let material = this.parsePieceMaterial(pieceNodes[materialIndex], messageError);
+        let texture = this.parsePieceTexture(pieceNodes[textureIndex], messageError);
+        let primitive = this.parsePiecePrimitive(pieceNodes[primitiveIndex], messageError);
+
+        const piece = {
+            transformation,
+            material,
+            texture,
+            primitive
+        };
+
+        return piece;
+    }
+
+    parsePieceTransformation(pieceTransformationNode, messageError) {
+        let foundTransformation = false;
+        let transformationref = null;
+        let transformations = [];
+
+        let transf = pieceTransformationNode.children;
+        for (let transformation of transf) {
+            if (transformation.nodeName === "transformationref") {
+                //check if an explicit transformation was already defined
+                if (foundTransformation) {
+                    this.onXMLMinorError(messageError + "transformation has already been found, ignoring transformation references");
+                    continue;
+                }
+
+                let transformationID = this.parseString(transformation, "id", messageError);
+                //verify the existence of the transformation
+                if ((this.transformations[transformationID] === undefined)) {
+                    throw messageError + "transformation with id " + transformationID + " is not defined";
+                } else if (transformations.length > 1) {
+                    this.onXMLMinorError(messageError + "only one transformationref is allowed. Further references will be ignored");
+                }
+                transformationref = transformationID;
+                //found transformationref, ignoring the the remaining nodes
+                break;
+            } else {
+                let aux;
+                if (transformation.nodeName === "translate") {
+                    aux = this.parseTranslate(transformation);
+                } else if (transformation.nodeName === "rotate") {
+                    aux = this.parseRotate(transformation);
+                } else if (transformation.nodeName === "scale") {
+                    aux = this.parseScale(transformation);
+                } else {
+                    this.onXMLMinorError(messageError + "unknown tag <" + transformation.nodeName + ">");
+                    continue;
+                }
+
+                foundTransformation = true;
+                transformations.push(aux);
+            }
+        }
+
+        return {
+            transformationref,
+            transformations
+        }
+    }
+
+    parsePieceMaterial(pieceMaterialsNode, messageError) {
+        let materialId = this.parseString(pieceMaterialsNode, "id", messageError);
+
+        if (this.materials[materialId] === undefined) {
+            throw messageError + "material with id " + materialId + " is not defined";
+        }
+
+        return materialId;
+    }
+
+    parsePieceTexture(pieceTextureNode, messageError) {
+        let textureId = this.parseString(pieceTextureNode, "id", messageError);
+
+        if ((this.textures[textureId] === undefined) && textureId !== "none") {
+            throw messageError + "texture with id " + textureId + " is not defined";
+        }
+
+        let length_s, length_t;
+        if (textureId !== "none") {
+            length_s = this.parseFloat(pieceTextureNode, "length_s", messageError);
+            length_t = this.parseFloat(pieceTextureNode, "length_t", messageError);
+        }
+
+        if (textureId === "none") {
+            if (this.reader.hasAttribute(pieceTextureNode, "length_s") || this.reader.hasAttribute(pieceTextureNode, "length_t")) {
+                throw messageError + "length_s and length_t should not be included in the statement if id = inherit or none";
+            }
+        }
+
+        // return its information
+        return {
+            textureId,
+            length_s,
+            length_t
+        }
+    }
+
+    parsePiecePrimitive(piecePrimitiveNode, messageError) {
+        let primitiveID = this.parseString(piecePrimitiveNode, "id", messageError);
+        
+        if ((this.primitives[primitiveID] === undefined)) {
+            throw messageError + "primitive child with id " + primitiveID + " is not defined";
+        }
+
+        return primitiveID;
+    }
+
     /**
      * Parse the coordinates from a node with ID = id
      * @param {block element} node
@@ -2009,6 +2170,82 @@ class MySceneGraph {
             }
         }
 
+    }
+
+    createCustomPieces() {
+        const green_piece_model = this.piece_green;
+        const yellow_piece_model = this.piece_yellow;
+
+        let green_piece, yellow_piece;
+
+        if (green_piece_model) {
+            let matrix = this.calculateMatrix(green_piece_model.transformation);
+            let material = this.scene.materials[green_piece_model.material];
+            let primitive = this.scenePrimitives[green_piece_model.primitive];
+            
+            let texture;
+            if (green_piece_model.texture.textureId === "none") {
+                texture = green_piece_model.texture.textureId;
+            } else {
+                texture = this.scene.textures[green_piece_model.texture.textureId];
+            }
+
+            green_piece = new PieceNode(this.scene, matrix, material, texture, green_piece_model.texture.length_s, green_piece_model.texture.length_t, primitive);
+        }
+
+        if (yellow_piece_model) {
+            let matrix = this.calculateMatrix(yellow_piece_model.transformation);
+            let material = this.scene.materials[yellow_piece_model.material];
+            let primitive = this.scenePrimitives[yellow_piece_model.primitive];
+
+            let texture;
+            if (yellow_piece_model.texture.textureId === "none") {
+                texture = yellow_piece_model.texture.textureId;
+            } else {
+                texture = this.scene.textures[yellow_piece_model.texture.textureId];
+            }
+
+            yellow_piece = new PieceNode(this.scene, matrix, material, texture, yellow_piece_model.texture.length_s, yellow_piece_model.texture.length_t, primitive);
+        }
+
+        // Passing the created pieces to the board
+        //this.board.setCustomPieces(green_piece, yellow_piece);
+    }
+
+    calculateMatrix(transformation) {
+        let matrix;
+        if (transformation.transformationref) {
+            matrix = this.scene.transformations[transformation.transformationref];
+        } else {
+            matrix = mat4.create();
+            for (let transf of transformation.transformations) {
+                switch (transf.type) {
+                    case "translate":
+                        mat4.translate(matrix, matrix, vec3.fromValues(transf.x, transf.y, transf.z));
+                        break;
+                    case "rotate":
+                        switch (transf.axis) {
+                            case "x":
+                                mat4.rotateX(matrix, matrix, DEGREE_TO_RAD * transf.angle);
+                                break;
+                            case "y":
+                                mat4.rotateY(matrix, matrix, DEGREE_TO_RAD * transf.angle);
+                                break;
+                            case "z":
+                                mat4.rotateZ(matrix, matrix, DEGREE_TO_RAD * transf.angle);
+                                break;
+                        }
+                        break;
+                    case "scale":
+                        mat4.scale(matrix, matrix, vec3.fromValues(transf.x, transf.y, transf.z));
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        return matrix;
     }
 
     /**

@@ -1822,4 +1822,21 @@
             </children>
         </component>
     </components>
+
+    <pieces>
+        <piece_green>
+            <transformation>
+            </transformation>
+            <material id="grey" />
+            <texture id="tijolo" length_s="1" length_t="1" />
+            <primitive id="wall" />
+        </piece_green>
+        <piece_yellow>
+            <transformation>
+            </transformation>
+            <material id="grey" />
+            <texture id="tijolo" length_s="1" length_t="1" />
+            <primitive id="wall" />
+        </piece_yellow>
+    </pieces>
 </lxs>
