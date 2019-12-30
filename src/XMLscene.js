@@ -27,6 +27,8 @@ class XMLscene extends CGFscene {
         this.sceneInited = false;
 
         this.initCameras();
+        this.initMenuCamera();
+
         this.enableTextures(true);
 
         this.gl.clearDepth(100.0);
@@ -35,12 +37,21 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
         this.gl.depthMask(true);
 
+        this.setPickEnabled(true);
+
         this.axis = new CGFaxis(this);
         this.showAxis = true;
 
         this.createDefaultMaterial();
         this.setUpdatePeriod(10);
         this.initSecurity();
+
+        // Static objects scene setting
+        ClickHandler.setScene(this);
+        CameraHandler.setScene(this);
+        MenuHandler.init(this);
+
+
 
     }
 
@@ -61,6 +72,8 @@ class XMLscene extends CGFscene {
         this.selectedView = "default"
         this.securityCamera = "default";
         this.views["default"] = this.camera;
+
+
     }
 
     /**
@@ -72,6 +85,11 @@ class XMLscene extends CGFscene {
         this.defaultMaterial.setDiffuse(0.2, 0.4, 0.8, 1.0);
         this.defaultMaterial.setAmbient(0.2, 0.4, 0.8, 1.0);
         this.defaultMaterial.setShininess(10.0);
+    }
+
+    initMenuCamera() {
+        this.menu_camera = new CGFcamera(1, 0.1, 20, vec3.fromValues(0, 0, 2.5), vec3.fromValues(0, 0, 0));
+        this.camera = this.menu_camera;
     }
 
     /**
@@ -122,6 +140,20 @@ class XMLscene extends CGFscene {
         //add the views dropdown to the interface
         this.interface.viewsDropDown(viewsId);
         this.interface.secutyCameraDropDown(viewsId);
+
+        if (!this.menuMode) {
+            // Already playing (not in menu mode), change player camera to the defined default
+            this.setCurrentCamera(this.graph.defaultViewId);
+        }
+
+        this.game_camera = this.camera;
+        this.interface.setActiveCamera(null);
+    }
+
+    initGame() {
+        CameraHandler.resetZoom();
+        this.camera = this.game_camera;
+        this.menuMode = false;
     }
 
     /**
@@ -353,6 +385,8 @@ class XMLscene extends CGFscene {
         // update das keyframes since it can not depende on the rate the function display is called
 
         if (this.sceneInited) {
+            CameraHandler.update(delta_time);
+
             for (var key in this.animations) {
                 if (this.animations.hasOwnProperty(key)) {
                     if (!this.animations[key].isFinished())
@@ -364,10 +398,27 @@ class XMLscene extends CGFscene {
         this.camera_security.time = t;
     }
 
+    setCurrentCamera(camera_id) {
+        const selected_camera = this.cameras.get(camera_id);
+
+        if(!selected_camera) {
+            console.warn(`Camera with id '${camera_id}' was not found, falling back to default camera`);
+        }
+
+        this.camera = selected_camera || this.default_camera;
+        // this.interface.setActiveCamera(this.camera);
+        this.interface.setActiveCamera(null);
+    }
+
     /** Handler called when the graph is finally loaded. 
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
+
+        // If another scene was loaded before, "pause" the scene rendering to ensure there are no unnecessary errors
+        this.sceneInited = false;
+
+
         this.axis = new CGFaxis(this, this.graph.referenceLength);
 
         this.gl.clearColor(this.graph.background.r, this.graph.background.g, this.graph.background.b, this.graph.background.a);
@@ -387,6 +438,13 @@ class XMLscene extends CGFscene {
         //construct the graph before start displaying
         this.graph.constructGraph();
 
+            if (!this.menuMode) {
+            CameraHandler.swapToCurrentCamera();
+            CameraHandler.moveToCurrentPosition();
+        }
+
+        // Start or "resume" scene displaying
+
         this.sceneInited = true;
     }
 
@@ -399,6 +457,8 @@ class XMLscene extends CGFscene {
         this.interface.setActiveCamera(camara);
 
         // ---- BEGIN Background, camera and axis setup
+
+        ClickHandler.verifyClicks();
         
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
@@ -421,8 +481,14 @@ class XMLscene extends CGFscene {
             this.axis.display();
 
         if (this.sceneInited) {
+
+            if (this.menuMode) {
+                MenuHandler.displayCurrentMenu();
+            } else {
+                this.graph.displayScene();            }   
             //Displays the scene (MySceneGraph function).
-            this.graph.displayScene();
+       
+            
         }
 
         this.popMatrix();
@@ -432,17 +498,17 @@ class XMLscene extends CGFscene {
     renders security and scene camaras
     */
     display() {
-        this.security.attachToFrameBuffer(); //rtt
-        this.camera = this.views[this.securityCamera];
-        this.render(this.camera);
-        this.security.detachFromFrameBuffer();
+      //  this.security.attachToFrameBuffer(); //rtt
+       // this.camera = this.views[this.securityCamera];
+       // this.render(this.camera);
+        //this.security.detachFromFrameBuffer();
 
         this.camera = this.views[this.selectedView];
         this.render(this.camera);
 
-        this.gl.disable(this.gl.DEPTH_TEST);
-        this.camera_security.display();
-        this.gl.enable(this.gl.DEPTH_TEST);
+        //this.gl.disable(this.gl.DEPTH_TEST);
+        //this.camera_security.display();
+        //this.gl.enable(this.gl.DEPTH_TEST);
 
     }
 }

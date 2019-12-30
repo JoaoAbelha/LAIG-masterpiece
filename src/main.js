@@ -40,6 +40,11 @@ serialInclude([
     'primitives/Cube.js',
     'primitives/Scoreboard/scoreBoard.js',
     'primitives/Scoreboard/scoreBoardState.js',
+    'game/clickHandler.js',
+    'game/camaraHandler.js',
+    'game/menuHandler.js',
+    'menu/menu.js',
+    'primitives/button.js',
 
 main=function()
 {
