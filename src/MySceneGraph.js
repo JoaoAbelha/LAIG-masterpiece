@@ -1080,6 +1080,7 @@ class MySceneGraph {
     parsePrimitives(primitivesNode) {
         this.primitives = []; // to save primitives
         let primitives = primitivesNode.children;
+        this.hasBoardPrimitive = false;
 
         let primitive_nr = 0;
 
@@ -1089,6 +1090,11 @@ class MySceneGraph {
                 this.onXMLMinorError("Primitives: unknown tag <" + primitives[primitive_nr].nodeName + ">");
                 continue;
             } else this.parsePrimitive(primitives[primitive_nr]);
+        }
+
+        //there should be a board in the game
+        if (this.hasBoardPrimitive === false) {
+            throw "There should be a board primitive defined";
         }
 
         //check if there is at least one primitive
@@ -1143,6 +1149,7 @@ class MySceneGraph {
             primitive.type = "cylinder2";
         } else if(node.nodeName === "gameboard") {
             primitive = this.parseBoard(node, messageError);
+            this.hasBoardPrimitive = true;
         }
         else if (node.nodeName === "timer") {
             primitive = this.parseTimer(node, messageError);

@@ -42,7 +42,7 @@ class gameboard  extends CGFobject {
      * 
      */
     _createPiece() {
-        this.play_piece = new piece(this.scene,this.piece_size, 5, 5);
+        this.play_piece = new Mushroom(this.scene,this.piece_size, 5, 5);
     }
 
        /**
