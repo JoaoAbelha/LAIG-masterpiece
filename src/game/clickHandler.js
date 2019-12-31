@@ -42,8 +42,8 @@ class ClickHandler {
         if (!square_piece && this.origin === null) {
             BoardState.setHighlightedSquare(null);
         } else {
-            if (square_piece && square_piece.color === "white" && current_player === 1 ||
-                square_piece && square_piece.color === "black" && current_player === 2) {
+            if (square_piece && square_piece.color === "green" && current_player === 1 ||
+                square_piece && square_piece.color === "yellow" && current_player === 2) {
                 
                 this.origin = {row, column};
                 BoardState.setHighlightedSquare(this.origin);

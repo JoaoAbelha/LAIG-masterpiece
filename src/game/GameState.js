@@ -31,7 +31,7 @@ class GameState {
             //CameraHandler.setPlayerCamera();
 
             // Initializing board state pieces
-            BoardState.initPieces(res.board);
+            BoardState.initPieces();
 
             // Initialize score board (Score starts at 0)
             //ScoreboardState.setScore(0);

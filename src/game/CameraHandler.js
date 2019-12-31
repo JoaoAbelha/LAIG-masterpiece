@@ -91,6 +91,5 @@ class CameraHandler {
 CameraHandler.current_camera = "spectator_camera";
 CameraHandler.rotationAmount = 0;
 CameraHandler.speed = Math.PI/2e3;
-// The camera starts in the white player
 CameraHandler.curr_player = 1;
 CameraHandler.last_zoom = 0;

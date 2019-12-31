@@ -1,27 +1,24 @@
 const BOARD_SIZE = 4;
 const BOARD_MARGIN = BOARD_SIZE / 32;
-const SQUARE_SIZE = (BOARD_SIZE - 2*BOARD_MARGIN)/10;
+const SQUARE_SIZE = (BOARD_SIZE - 2 * BOARD_MARGIN) / 10;
 
 class BoardState {
     static updatePieceAnimations(delta_time) {
         for (const piece of this.pieces) {
-            piece.update(delta_time/1e3);
+            piece.update(delta_time / 1e3);
         }
     }
 
-    static initPieces(board_pieces = []) {
+    static initPieces() {
         // In order to handle inits after the first one
         this.pieces = [];
 
-        for (let i = 0; i < board_pieces.length; ++i) {
-            for (let j = 0; j < board_pieces[i].length; ++j) {
-                // Blank space
-                if (board_pieces[i][j] === 0) {
-                    continue;
-                }
-                
-                this.pieces.push(new Piece(j, i, board_pieces[i][j]));
-            }
+        for (let i = 0; i < 4; ++i) {
+            this.pieces.push(new Piece(0, i, "green"));
+        }
+
+        for (let i = 0; i < 4; ++i) {
+            this.pieces.push(new Piece(1, i, "yellow"));
         }
     }
 
@@ -31,33 +28,34 @@ class BoardState {
 
     static removePiece(piece) {
         if (piece.color === "yellow") {
-            const row = Math.floor(num_yellow_removed_pieces/13);
+            const row = Math.floor(num_yellow_removed_pieces / 13);
             piece.setTarget(
-                -(row + 1.5), 
-                -(BOARD_MARGIN + SQUARE_SIZE + 1) + num_yellow_removed_pieces%13 + (row ? 0.5 : 0)
+                -(row + 1.5),
+                -(BOARD_MARGIN + SQUARE_SIZE + 1) + num_yellow_removed_pieces % 13 + (row ? 0.5 : 0)
             );
         } else if (piece.color === "green") {
-            const row = Math.floor(num_green_removed_pieces/13);
+            const row = Math.floor(num_green_removed_pieces / 13);
             piece.setTarget(
-                row + 10.5, 
-                -(BOARD_MARGIN + SQUARE_SIZE + 1) + num_green_removed_pieces%13 + (row ? 0.5 : 0)
+                row + 10.5,
+                -(BOARD_MARGIN + SQUARE_SIZE + 1) + num_green_removed_pieces % 13 + (row ? 0.5 : 0)
             );
         }
     }
 
-    static performInsert(piece, row, column) {
+    static performMove(row, column) {
+        const color = GameState.getCurrentPlayerColor();
         if (!piece) {
             return;
         }
         piece.setTarget(row, column);
     }
 
-    static undoInsert(row, column) {
+    static undoMove(row, column) {
         const piece = this.getPieceAt(row, column);
         this.removePiece(piece);
     }
 
-    static performMove(origin_row, origin_column, target_row, target_column) {
+    static performMove(origin_row, origin_column, target_row = null, target_column = null) {
         const piece = this.getPieceAt(origin_row, origin_column);
         if (!piece) {
             return;
