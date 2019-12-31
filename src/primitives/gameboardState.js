@@ -1,8 +1,8 @@
-const BOARD_SIZE = 8;
-const BOARD_MARGIN = BOARD_SIZE / 32;
-const SQUARE_SIZE = (BOARD_SIZE - 2*BOARD_MARGIN) / 5;
+//const BOARD_SIZE = 8;
+//const BOARD_MARGIN = BOARD_SIZE / 32;
+//const SQUARE_SIZE = (BOARD_SIZE - 2*BOARD_MARGIN) / 5;
 
-class BoardState {
+class BoardState1 {
     static updatePieceAnimations(delta_time) {
         for (const piece of this.pieces) {
             piece.update(delta_time/1e3);

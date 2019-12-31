@@ -3,7 +3,7 @@
  * @constructor
  */
 
-class scoreBoard extends  CGFobject {
+class ScoreBoard extends  CGFobject {
 	constructor(scene) {
         super(scene);
 

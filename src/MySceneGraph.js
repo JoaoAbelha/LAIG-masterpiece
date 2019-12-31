@@ -1212,22 +1212,10 @@ class MySceneGraph {
      * @param {message to send if there is an error} messageError
      */
     parseBoard(boardNode, messageError) {
-        let x1 = this.parseFloat(boardNode, "x1", messageError);
-        let y1 = this.parseFloat(boardNode, "y1", messageError);
-        let x2 = this.parseFloat(boardNode, "x2", messageError);
-        let y2 = this.parseFloat(boardNode, "y2", messageError);
         let texture = this.parseString(boardNode, "texture", messageError);
-
-        if (Math.abs(x1 - x2) !== Math.abs(y1 - y2)) {
-            throw "The board should be a square";
-        }
 
         return {
             type: "gameboard",
-            x1,
-            y1,
-            x2,
-            y2,
             texture
         };
     }
@@ -2097,14 +2085,14 @@ class MySceneGraph {
                     case "cylinder2":
                         prim = new MyCylinder2(this.scene, primitive.base, primitive.top, primitive.height, primitive.slices, primitive.stacks);
                     case "gameboard":
-                        prim = new gameboard(this.scene, primitive.x1, primitive.x2, primitive.y1, primitive.y2, primitive.texture);
+                        prim = new Board(this.scene, primitive.texture);
                         break;
                     case "timer":
                         prim = new timer(this.scene);   
                     break;   
                     
                     case "scoreboard":
-                        prim = new scoreBoard(this.scene);
+                        prim = new ScoreBoard(this.scene);
                     default:
                         break;
                 }

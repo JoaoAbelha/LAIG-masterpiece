@@ -2,7 +2,7 @@
  * Board
  * @constructor
  */
-class Board extends PrimitiveObject {
+class Board extends CGFobject {
     constructor(scene, tex) {
         super(scene);
 
@@ -11,7 +11,7 @@ class Board extends PrimitiveObject {
         this.board_margin = BOARD_MARGIN;
         this.square_size = SQUARE_SIZE;
         this.piece_offset = this.board_margin + this.square_size / 2;
-        this.piece_size = this.board_size / 20;
+        this.piece_size = this.board_size / 10;
 
         this.createHighlight();
         this.createTouchSquare();
@@ -98,7 +98,7 @@ class Board extends PrimitiveObject {
 
         this.board_edge_texture = new CGFtexture(this.scene, "primitives/resources/board_edge.jpg");
         this.board_bottom_texture = new CGFtexture(this.scene, "primitives/resources/board_bottom.jpg");
-        this.yellow_piece_texture = new CGFtexture(this.scene, "primitives/resources/black_piece.jpg");
+        this.yellow_piece_texture = new CGFtexture(this.scene, "primitives/resources/white_piece.jpg");
         this.green_piece_texture = new CGFtexture(this.scene, "primitives/resources/white_piece.jpg");
         this.piece_material = {};
 
@@ -134,17 +134,17 @@ class Board extends PrimitiveObject {
         this.highlighted_material.setShininess(25);
 
         this.piece_material["yellow"] = new CGFappearance(this.scene);
-        this.piece_material["yellow"].setAmbient(0.15, 0.15, 0.15, 1);
-        this.piece_material["yellow"].setDiffuse(0.5, 0.5, 0.5, 1);
-        this.piece_material["yellow"].setSpecular(0.3, 0.3, 0.3, 1);
+        this.piece_material["yellow"].setAmbient(0.15, 0.15, 0.0, 1);
+        this.piece_material["yellow"].setDiffuse(0.5, 0.5, 0.0, 1);
+        this.piece_material["yellow"].setSpecular(0.3, 0.3, 0.0, 1);
         this.piece_material["yellow"].setEmission(0, 0, 0, 1);
         this.piece_material["yellow"].setShininess(25);
         this.piece_material["yellow"].setTexture(this.yellow_piece_texture);
 
         this.piece_material["green"] = new CGFappearance(this.scene);
-        this.piece_material["green"].setAmbient(0.15, 0.15, 0.15, 1);
-        this.piece_material["green"].setDiffuse(0.5, 0.5, 0.5, 1);
-        this.piece_material["green"].setSpecular(0.3, 0.3, 0.3, 1);
+        this.piece_material["green"].setAmbient(0.0, 0.15, 0.0, 1);
+        this.piece_material["green"].setDiffuse(0.0, 0.5, 0.0, 1);
+        this.piece_material["green"].setSpecular(0.0, 0.3, 0.0, 1);
         this.piece_material["green"].setEmission(0, 0, 0, 1);
         this.piece_material["green"].setShininess(25);
         this.piece_material["green"].setTexture(this.green_piece_texture);
@@ -160,7 +160,7 @@ class Board extends PrimitiveObject {
 
     drawPiece(piece) {
         this.scene.pushMatrix();
-        const piece_to_display = this.getCustomOrFallbackPiece(piece);
+        const piece_to_display = this.getCustomPiece(piece);
 
         this.scene.translate(this.piece_offset + this.square_size * piece.column, this.board_height + piece.height, this.piece_offset + this.square_size * piece.row);
         this.scene.scale(this.piece_size, this.piece_size, this.piece_size);
@@ -169,7 +169,7 @@ class Board extends PrimitiveObject {
         this.scene.popMatrix();
     }
 
-    getCustomOrFallbackPiece(piece) {
+    getCustomPiece(piece) {
         switch (piece.color) {
             case "green":
                 if (this.green_piece) {

@@ -3,8 +3,8 @@
 
     <views default="player_camera" >
         <perspective id="player_camera" near="0.1" far="90" angle="60">
-            <from x="-2.45" y="9.25" z="2.45" />
-            <to x="0" y="4.8" z="0" />
+            <from x="5" y="5" z="5" />
+            <to x="0" y="0" z="0" />
         </perspective>
         <perspective id="spectator_camera" near="0.1" far="90" angle="60">
             <from x="4" y="10" z="0.4" />
@@ -220,7 +220,7 @@
             <rectangle x1="0" y1="0" x2="10" y2="10" />
         </primitive>
         <primitive id="board">
-            <gameboard x1="0" y1="0" x2="10" y2="10" texture="board_texture"/>
+            <gameboard texture="board_texture"/>
         </primitive>
 
         <primitive id="timer">

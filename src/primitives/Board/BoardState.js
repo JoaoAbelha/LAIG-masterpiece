@@ -1,6 +1,6 @@
 const BOARD_SIZE = 4;
 const BOARD_MARGIN = BOARD_SIZE / 32;
-const SQUARE_SIZE = (BOARD_SIZE - 2 * BOARD_MARGIN) / 10;
+const SQUARE_SIZE = (BOARD_SIZE - 2 * BOARD_MARGIN) / 5;
 
 class BoardState {
     static updatePieceAnimations(delta_time) {
