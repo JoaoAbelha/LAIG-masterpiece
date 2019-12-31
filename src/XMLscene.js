@@ -51,13 +51,7 @@ class XMLscene extends CGFscene {
         MenuHandler.init(this);
     }
 
-    /*
-    * Intialize the security camara
-    */
-    initSecurity() {
-        this.security = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
-        this.camera_security = new MySecurityCamera(this, 0.25, 1.0, -1.0, -0.25);
-    }
+ 
 
     /**
      * Initialize the scene camera.
@@ -128,8 +122,8 @@ class XMLscene extends CGFscene {
         //change to the default view defined
         this.selectedView = this.graph.defaultViewId;
         this.securityCamera = this.graph.defaultViewId;
-        this.camera = this.views[this.selectedView];
-        this.interface.setActiveCamera(this.camera);
+        //this.camera = this.views[this.selectedView];
+       // this.interface.setActiveCamera(this.camera);
 
         //add the views dropdown to the interface
         this.interface.viewsDropDown(viewsId);
@@ -389,7 +383,7 @@ class XMLscene extends CGFscene {
             }
         }
 
-        this.camera_security.time = t;
+        //this.camera_security.time = t;
     }
 
     setCurrentCamera(camera_id) {
@@ -447,9 +441,9 @@ class XMLscene extends CGFscene {
      * Displays the scene.
      * @param camara - the active camara to render the scene
      */
-    render(camara) {
+   display() {
         // set camara active
-        this.interface.setActiveCamera(camara);
+       // this.interface.setActiveCamera(camara);
 
         // ---- BEGIN Background, camera and axis setup
         ClickHandler.verifyClicks();
@@ -485,11 +479,4 @@ class XMLscene extends CGFscene {
         this.popMatrix();
     }
 
-    /*
-    renders security and scene camaras
-    */
-    display() {
-        this.camera = this.views[this.selectedView];
-        this.render(this.camera);
-    }
 }
