@@ -21,7 +21,7 @@ class ClickHandler {
     }
 
     static verifyClick(clickId) {
-        if (clickId >= 0 && clickId < 100) {
+        if (clickId >= 0 && clickId < 25) {
             this.boardClickHandler(clickId);
         } else if (clickId > 500) {
             this.buttonClickHandler(clickId);
@@ -33,11 +33,19 @@ class ClickHandler {
             return;
         }
 
-        const column = clickId % 10;
-        const row = Math.floor(clickId / 10);
+        const column = clickId % 5;
+        const row = Math.floor(clickId / 5);
+
+
 
         const current_player = GameState.getCurrentPlayerColor();
         const square_piece = BoardState.getPieceAt(row, column);
+        console.log(clickId);
+        console.log(square_piece);
+
+        // SE O CLICK FOR IDENTIFICADO MAS O SQUARE ID FOR NULL => ESTADO INTERMEDIO 1 => COLOCAR PEÇAS NO BOARD
+        // SE O CLICK FOR IDDENTIFICADO E O SQUARE ID TB => ESTADO INTERMEDIO 2 => MOVER PECAS NO BOARD
+        // NO ESTADO INTERMEDIO 2 => O CLICKID DA PECA E DO SITIO ONDE ESTA (SQUARE) E O MESMO
 
         if (!square_piece && this.origin === null) {
             BoardState.setHighlightedSquare(null);

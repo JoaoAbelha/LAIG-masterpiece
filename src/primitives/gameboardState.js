@@ -101,5 +101,5 @@ class BoardState1 {
     }
 };
 
-BoardState.highlighted_square = null;
-BoardState.pieces = [];
+BoardState1.highlighted_square = null;
+BoardState1.pieces = [];

@@ -21,9 +21,9 @@ class Board extends CGFobject {
     };
 
     display() {
-        if (this.scene.pickMode) {
+        if (this.scene.pickMode) 
             this.drawTouchSquares();
-        }
+        
 
         this.drawPieces();
         this.drawHighlightedSquare();
@@ -164,7 +164,7 @@ class Board extends CGFobject {
 
         this.scene.translate(this.piece_offset + this.square_size * piece.column, this.board_height + piece.height, this.piece_offset + this.square_size * piece.row);
         this.scene.scale(this.piece_size, this.piece_size, this.piece_size);
-        this.scene.registerForPick(piece.row * 10 + piece.column, this.piece);
+        this.scene.registerForPick(piece.row * 5 + piece.column, this.piece);
         piece_to_display.display();
         this.scene.popMatrix();
     }
@@ -200,19 +200,19 @@ class Board extends CGFobject {
     }
 
     drawTouchSquares() {
-        for (let i = 0; i < 10; ++i) {
-            for (let j = 0; j < 10; ++j) {
+        for (let i = 0; i < 5; ++i) {
+            for (let j = 0; j < 5; ++j) {
                 this.drawTouchSquare(i, j);
             }
         }
-        this.scene.registerForPick(100, null);
+        this.scene.registerForPick(25, null);
     }
 
     drawTouchSquare(row, column) {
         this.scene.pushMatrix();
         this.scene.translate(this.piece_offset + this.square_size * column, this.board_height + 0.001, this.piece_offset + this.square_size * row);
         this.scene.scale(this.square_size, 1, this.square_size);
-        this.scene.registerForPick(row * 10 + column, this.touch_square);
+        this.scene.registerForPick(row * 5 + column, this.touch_square);
         this.touch_square.display();
         this.scene.popMatrix();
     }

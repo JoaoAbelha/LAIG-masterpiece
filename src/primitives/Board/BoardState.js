@@ -2,6 +2,8 @@ const BOARD_SIZE = 4;
 const BOARD_MARGIN = BOARD_SIZE / 32;
 const SQUARE_SIZE = (BOARD_SIZE - 2 * BOARD_MARGIN) / 5;
 
+const PIECE_OFFSET = 1.5;
+
 class BoardState {
     static updatePieceAnimations(delta_time) {
         for (const piece of this.pieces) {
@@ -14,11 +16,11 @@ class BoardState {
         this.pieces = [];
 
         for (let i = 0; i < 4; ++i) {
-            this.pieces.push(new Piece(0, i, "green"));
+            this.pieces.push(new Piece(-PIECE_OFFSET, i, "green"));
         }
 
         for (let i = 0; i < 4; ++i) {
-            this.pieces.push(new Piece(1, i, "yellow"));
+            this.pieces.push(new Piece(BOARD_SIZE + PIECE_OFFSET, i, "yellow"));
         }
     }
 
