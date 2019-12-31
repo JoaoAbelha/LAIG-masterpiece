@@ -12,7 +12,6 @@ class CameraHandler {
     }
 
     static rotate(angle) {
-        console.log("oioi");
         this.scene.camera.orbit(CGFcameraAxis.y, angle);
     }
 

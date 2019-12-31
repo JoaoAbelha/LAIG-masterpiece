@@ -11,16 +11,16 @@
 initial_game_state(game_state(Board,Cels,NFirst,NSecond)) :-
 	emptyBoard(Board),
 	cels(Cels),
-	getNrPieces(Board, green, NFirst),
-	getNrPieces(Board, yellow, NSecond).
+	getNrPieces(Board, 1, NFirst),
+	getNrPieces(Board, 2, NSecond).
 
 /*
    nextTurn(+GameState,-GameStateOut,-BoardOut)
    Called to change turn by updating the game state: the board, the player turn 
 */
 nextTurn(game_state(_, Cels, _, _), game_state(BoardOut, Cels, NFirst2, NSecond2), BoardOut) :-
-	getNrPieces(BoardOut, green, NFirst2),
-	getNrPieces(BoardOut, yellow, NSecond2).
+	getNrPieces(BoardOut, 1, NFirst2),
+	getNrPieces(BoardOut, 2, NSecond2).
 
 %%%%%%%%%%%%%%%%%%%%%% * Print menus * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

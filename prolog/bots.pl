@@ -3,9 +3,9 @@
 
 get_list_value(List,Piece,Value) :-
 	(
-		append(_,[empty/N,Piece/M | _], List);
-		append(_,[Piece/M,empty/N | _], List);
-		append(_,[empty/N, Piece/M, empty/X | _], List)
+		append(_,[0/N,Piece/M | _], List);
+		append(_,[Piece/M,0/N | _], List);
+		append(_,[0/N, Piece/M, 0/X | _], List)
 	),
 	(
 	    3 < N + M,

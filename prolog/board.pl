@@ -10,60 +10,60 @@
  getPos(?Type,?Interface)
  get the corresponding state and interface of a position
 */
-getPos(empty,' ').
-getPos(green,'G').
-getPos(yellow,'Y').
+getPos(0,' ').
+getPos(1,'G').
+getPos(2,'Y').
 
 
 /*
  getCel(?Cel, ?Interface)
  get the corresponding cel and its interface
 */
-getCel(empty,' ').
-getCel(up,'/').
-getCel(down,'\\').
+getCel(0,' ').
+getCel(1,'/').
+getCel(2,'\\').
 
 
 /*just some board states:*/
 
-emptyBoard([[empty,empty, empty, empty, empty],
-        [empty,empty, empty, empty, empty],
-        [empty,empty, empty, empty, empty],
-        [empty,empty, empty, empty, empty],
-        [empty,empty, empty, empty, empty]
+emptyBoard([[0,0, 0, 0, 0],
+        [0,0, 0, 0, 0],
+        [0,0, 0, 0, 0],
+        [0,0, 0, 0, 0],
+        [0,0, 0, 0, 0]
 ]). %% empty board that corresponds to the inital state of the board
 
 
-e1stateBoard([[empty,empty, empty, empty, empty],
-              [green,empty, empty, yellow, empty],
-              [empty,empty, empty, empty, empty],
-              [empty,empty, empty, empty, empty],
-              [empty,empty, empty, empty, empty]
+e1stateBoard([[0,0, 0, 0, 0],
+              [1,0, 0, 2, 0],
+              [0,0, 0, 0, 0],
+              [0,0, 0, 0, 0],
+              [0,0, 0, 0, 0]
 ]).
 
 
-e2stateBoard([[empty,empty, empty, empty, empty],
-              [green,green, green, empty, green],
-              [empty,yellow, empty, empty, yellow],
-              [yellow,empty, empty, yellow, empty],
-              [empty,empty, empty, empty, empty]
+e2stateBoard([[0,0, 0, 0, 0],
+              [1,1, 1, 0, 1],
+              [0,2, 0, 0, 2],
+              [2,0, 0, 2, 0],
+              [0,0, 0, 0, 0]
 ]).
 
-finalStateBoard([[empty,empty, empty, empty, empty],
-            [green,green, green, yellow, empty],
-            [green,empty, empty, yellow, empty],
-            [empty,empty, empty, yellow, empty],
-            [empty,empty, empty, yellow, empty]
+finalStateBoard([[0,0, 0, 0, 0],
+            [1,1, 1, 2, 0],
+            [1,0, 0, 2, 0],
+            [0,0, 0, 2, 0],
+            [0,0, 0, 2, 0]
 ]).
 
 /*
   cels(-Cels)
   get the cels of the board
 */
-cels([[empty,up, down, empty],
-      [up, up, down, down],
-      [down, down, up, up],
-      [empty, down, up, empty]
+cels([[0,1, 2, 0],
+      [1, 1, 2, 2],
+      [2, 2, 1, 1],
+      [0, 2, 1, 0]
 ]).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -182,9 +182,10 @@ getNrPieces(Board,TypePieces, NumberPieces):-
   displays the player status by outputing the number of pieces it has in the board
 */
 currentPlayerStatus(Piece, Board):-
+  write(piece),nl,
 	getNrPieces(Board, Piece, NumberPieces),
     nl,
-    format("Player ~s: ~d/4 pieces in the board",[Piece,NumberPieces]), !.
+    format("Player: ~d/4 pieces in the board",[NumberPieces]), !.
 
 
 /*

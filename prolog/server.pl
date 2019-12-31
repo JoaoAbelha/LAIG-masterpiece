@@ -148,8 +148,8 @@ parse_input(init/P1Dif/P2Dif, Res) :-
 
 	Res = {
 		'"success"': true,
-		'"currp"': [green, P1Dif],
-		'"nextp"': [yellow, P2Dif],
+		'"currp"': ['"green"', P1Dif],
+		'"nextp"': ['"yellow"', P2Dif],
 		'"board"': Board,
         '"cels"' : Cels,
 		'"nGreen"': NGreen,

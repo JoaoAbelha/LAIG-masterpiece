@@ -6,13 +6,13 @@
 /* initial_player(-Player)
    chooses the first type of player
 */
-initial_player(player(green, Type)) :-
+initial_player(player(1, Type)) :-
     choose_player(Type).
 
 /* initial_player(-Player)
    chooses the second type of player
 */
-second_player(player(yellow, Type)) :-
+second_player(player(2, Type)) :-
     choose_player(Type).
 
 /*possible players*/

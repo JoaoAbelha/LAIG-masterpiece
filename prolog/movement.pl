@@ -3,8 +3,8 @@
 /*
  get_cel_type(?Slope, ?Orientation).
 */
-get_cel_type(-1.0, up).
-get_cel_type(1.0, down).
+get_cel_type(-1.0, 1).
+get_cel_type(1.0, 2).
 
 /*
   valid_move(+Board,+Move)
@@ -12,7 +12,7 @@ get_cel_type(1.0, down).
 */
 valid_move(Board, move(Col, Row)) :-
 	insideBoard(Board, Col, Row),
-	get_element(Board, empty, Col, Row).
+	get_element(Board, 0, Col, Row).
 
 
 /*
@@ -22,7 +22,7 @@ valid_move(Board, move(Col, Row)) :-
 valid_move(Board, Cels, move(SrcCol, SrcRow, DestCol, DestRow), Piece) :-
 	insideBoard(Board, SrcCol, SrcRow),
 	insideBoard(Board, DestCol, DestRow),
-	get_element(Board, empty, DestCol, DestRow),
+	get_element(Board, 0, DestCol, DestRow),
 	get_element(Board, Piece, SrcCol, SrcRow),
 	is_adjacent(move(SrcCol, SrcRow, DestCol, DestRow), Cels).
 
@@ -79,7 +79,7 @@ check_cel(move(SrcCol, SrcRow, DestCol, DestRow), Cels, Piece) :-
   
 */
 move_piece(move(SrcCol, SrcRow, DestCol, DestRow), Piece, BoardIn, BoardOut) :- !,
-	set_matrix_element_pos(BoardIn, Bout, empty, SrcCol, SrcRow),
+	set_matrix_element_pos(BoardIn, Bout, 0, SrcCol, SrcRow),
 	set_matrix_element_pos(Bout, BoardOut, Piece, DestCol, DestRow).
 
 move_piece(move(Col, Row), Piece, BoardIn, BoardOut) :- !,

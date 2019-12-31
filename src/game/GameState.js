@@ -29,7 +29,7 @@ class GameState {
 
             // Set the camera to playing mode
             CameraHandler.setPlayerCamera();
-
+            
             // Initializing board state pieces
             BoardState.initPieces();
 
