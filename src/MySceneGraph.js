@@ -238,6 +238,14 @@ class MySceneGraph {
             throw "Default view id not specified";
         }
 
+        if (this.views["player_camera"] === undefined) {
+            throw "view with id 'player_camera' must be specified";
+        }
+
+        if (this.views["spectator_camera"] === undefined) {
+            throw "view with id 'spectator_camera' must be specified";
+        }
+
         this.log("Parsed Views");
     }
 

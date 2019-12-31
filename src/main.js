@@ -43,6 +43,8 @@ serialInclude([
     'primitives/Scoreboard/scoreBoard.js',
     'primitives/Scoreboard/scoreBoardState.js',
     'game/ClickHandler.js',
+    'game/GameState.js',
+    'game/CommunicationHandler.js',
     'game/CameraHandler.js',
     'game/menuHandler.js',
     'menu/menu.js',

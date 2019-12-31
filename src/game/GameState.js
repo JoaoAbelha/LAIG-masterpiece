@@ -28,7 +28,7 @@ class GameState {
             this.current_undo_index = 0;
 
             // Set the camera to playing mode
-            //CameraHandler.setPlayerCamera();
+            CameraHandler.setPlayerCamera();
 
             // Initializing board state pieces
             BoardState.initPieces();
@@ -36,7 +36,7 @@ class GameState {
             // Initialize score board (Score starts at 0)
             //ScoreboardState.setScore(0);
             
-            //ClickHandler.reset();
+            ClickHandler.reset();
 
             // Starting the player turn - if the player is human starts the clock countdown
             this.startPlayerTurn();

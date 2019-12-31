@@ -12,6 +12,7 @@ class CameraHandler {
     }
 
     static rotate(angle) {
+        console.log("oioi");
         this.scene.camera.orbit(CGFcameraAxis.y, angle);
     }
 
@@ -74,7 +75,7 @@ class CameraHandler {
     static swapToCurrentCamera() {
         // Resetting camera zoom to prevent erroneous camera states
         this.resetZoom();
-        this.scene.camera = this.scene.cameras.get(this.current_camera);
+        this.scene.camera = this.scene.views[this.current_camera];
     }
 
     static setPlayerCamera() {

@@ -374,13 +374,7 @@ class XMLscene extends CGFscene {
 
         if (this.sceneInited) {
             CameraHandler.update(delta_time);
-
-            for (var key in this.animations) {
-                if (this.animations.hasOwnProperty(key)) {
-                    if (!this.animations[key].isFinished())
-                        this.animations[key].update(delta_time * 1e-3);
-                }
-            }
+            
         }
 
         //this.camera_security.time = t;
