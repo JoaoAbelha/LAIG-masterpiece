@@ -44,7 +44,7 @@ class MenuHandler {
     }
     
     static swapMenu(new_menu) {
-        CameraHandler.menuRotation();
+        //CameraHandler.menuRotation();
         setTimeout(() => {
             this.menu = new_menu;
         }, 500);
