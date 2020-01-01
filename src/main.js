@@ -51,6 +51,7 @@ serialInclude([
     'game/menuHandler.js',
     'menu/menu.js',
     'primitives/button.js',
+    'animations/Arch.js',
 
 main=function()
 {

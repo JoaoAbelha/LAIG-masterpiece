@@ -12,7 +12,7 @@ class CameraHandler {
     }
 
     static rotate(angle) {
-        this.scene.camera.orbit(CGFcameraAxis.y, angle);
+        this.scene.camera.orbit(CGFcameraAxis.Y, angle);
     }
 
     static swapPlayer(player_type) {

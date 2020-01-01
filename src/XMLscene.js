@@ -466,6 +466,7 @@ class XMLscene extends CGFscene {
             if (this.menuMode) {
                 MenuHandler.displayCurrentMenu();
             } else {
+                console.log(this.camera);
                 this.graph.displayScene();  
             }   
         }
