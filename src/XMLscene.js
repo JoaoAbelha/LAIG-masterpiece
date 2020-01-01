@@ -128,8 +128,7 @@ class XMLscene extends CGFscene {
 
         if (!this.menuMode) {
             // Already playing (not in menu mode), change player camera to the defined default
-            this.setCurrentCamera(this.graph.defaultViewId);
-            
+            this.setCurrentCamera(this.graph.defaultViewId);  
         }
         else {
             this.interface.setActiveCamera(null);
@@ -437,7 +436,6 @@ class XMLscene extends CGFscene {
      */
    display() {
         // set camara active
-       // this.interface.setActiveCamera(camara);
 
         // ---- BEGIN Background, camera and axis setup
         ClickHandler.verifyClicks();
@@ -466,7 +464,7 @@ class XMLscene extends CGFscene {
             if (this.menuMode) {
                 MenuHandler.displayCurrentMenu();
             } else {
-                console.log(this.camera);
+                //  console.log(this.camera);
                 this.graph.displayScene();  
             }   
         }
