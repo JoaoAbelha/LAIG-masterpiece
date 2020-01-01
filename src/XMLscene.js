@@ -60,7 +60,6 @@ class XMLscene extends CGFscene {
         this.views = [];
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
         this.selectedView = "default"
-        this.securityCamera = "default";
         this.views["default"] = this.camera;
     }
 
@@ -76,7 +75,7 @@ class XMLscene extends CGFscene {
     }
 
     initMenuCamera() {
-        this.menu_camera = new CGFcamera(1, 0.1, 20, vec3.fromValues(0, 0, 2.5), vec3.fromValues(0, 0, 0));
+        this.menu_camera = new CGFcamera(1.3, 0.1, 20, vec3.fromValues(0, 0, 2.5), vec3.fromValues(0, 0, 0));
         this.camera = this.menu_camera;
     }
 
@@ -121,21 +120,22 @@ class XMLscene extends CGFscene {
 
         //change to the default view defined
         this.selectedView = this.graph.defaultViewId;
-        this.securityCamera = this.graph.defaultViewId;
         //this.camera = this.views[this.selectedView];
        // this.interface.setActiveCamera(this.camera);
 
         //add the views dropdown to the interface
         this.interface.viewsDropDown(viewsId);
-        this.interface.secutyCameraDropDown(viewsId);
 
         if (!this.menuMode) {
             // Already playing (not in menu mode), change player camera to the defined default
             this.setCurrentCamera(this.graph.defaultViewId);
+            
+        }
+        else {
+            this.interface.setActiveCamera(null);
         }
 
         this.game_camera = this.camera;
-        this.interface.setActiveCamera(null);
     }
 
     initGame() {

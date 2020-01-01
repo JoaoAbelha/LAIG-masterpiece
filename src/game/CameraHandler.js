@@ -9,10 +9,22 @@ class CameraHandler {
             this.rotate(amount);
             this.rotationAmount -= amount;
         }
+
+        if( this.translationAmount > 0) {
+            let amount = Math.min(this.speed * this.speed_multiplier * delta_time, this.translationAmount);
+            this.translate(this.translationAmount);
+            this.translationAmount-=amount;
+
+        }
     }
 
     static rotate(angle) {
         this.scene.camera.orbit(CGFcameraAxis.Y, angle);
+    }
+
+    static translate(amount) {
+        this.scene.camera.translate(vec3.fromValues(0,amount,0));
+        
     }
 
     static swapPlayer(player_type) {
@@ -30,9 +42,14 @@ class CameraHandler {
         }
     }
 
+    
     static menuRotation() {
+        console.log(this.scene.camera);
         this.speed_multiplier = 2.5;
         this.rotationAmount = Math.PI * 2;
+        this.translationAmount = 0.01;
+        
+
     }
 
     static isMoving() {
