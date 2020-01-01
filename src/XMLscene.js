@@ -469,6 +469,8 @@ class XMLscene extends CGFscene {
             }   
         }
 
+     
+
         this.popMatrix();
     }
 

@@ -77,6 +77,19 @@ class Board extends CGFobject {
         this.board_edge_material.apply();
         this.board_edge.display();
         this.scene.popMatrix();
+
+        // piece supporters
+    this.scene.pushMatrix();
+        this.scene.scale(1,1,BOARD_SIZE);
+        this.scene.translate(BOARD_SIZE/1.5 , -0.3 , 0);
+        this.piece_supporters.display();
+    this.scene.popMatrix();
+
+    this.scene.pushMatrix();
+    this.scene.scale(1,1,BOARD_SIZE);
+    this.scene.translate(-BOARD_SIZE/1.5 , -0.3 , 0);
+    this.piece_supporters.display();
+    this.scene.popMatrix();
     }
 
     createTouchSquare() {
@@ -87,6 +100,7 @@ class Board extends CGFobject {
     createBoard() {
         this.board_cover = new MyPlane(this.scene, 20, 20);
         this.board_edge = new MyPlane(this.scene, 20, 4);
+        this.piece_supporters = new Cube(this.scene);
     }
 
     createPiece() {
