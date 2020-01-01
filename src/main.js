@@ -65,16 +65,29 @@ main=function()
     app.setScene(myScene);
     app.setInterface(myInterface);
 
-    myInterface.setActiveCamera(myScene.camera);
+   // myInterface.setActiveCamera(myScene.camera);
+
+   let scene_names = [
+       "game.xml",
+       "island.xml"
+
+   ];
+
+
+   let scene_graphs = [];
+
+   for(let i = 0; i < scene_names.length; i++) {
+       scene_graphs.push(new MySceneGraph(scene_names[i], myScene));
+   }
 
 	// get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml 
 	// or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor) 
 	
-    var filename=getUrlVars()['file'] || "game.xml";
+   // var filename=getUrlVars()['file'] || "game.xml";
 
 	// create and load graph, and associate it to scene. 
 	// Check console for loading errors
-	var myGraph = new MySceneGraph(filename, myScene);
+	//var myGraph = new MySceneGraph(filename, myScene);
 	
 	// start
     app.run();

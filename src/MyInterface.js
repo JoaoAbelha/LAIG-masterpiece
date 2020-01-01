@@ -59,30 +59,38 @@ class MyInterface extends CGFinterface {
             .onChange(value => this.scene.selectedView = value);
     }
 
-    secutyCameraDropDown(views) {
-        this.model.securityCamera = this.scene.securityCamera;
+    addDifferentScenes(scene_graphs) {
+        let scene_name = [];
 
-        this.gui.add(this.model, 'securityCamera', views)
-            .name("Security Camera")
-            .onChange(value => this.scene.securityCamera = value);
+        for(let names in scene_graphs)
+            scene_name.push(names);
+
+        this.gui.add(this.scene, 'select_scene_graph', scene_name).onChange(function(sceneName) {
+            this.object.onGraphChange(sceneName);
+        }).name("Scene");
     }
+
+
 
     /**
      * Adds a folder containing the IDs of the lights
      * @param {Ligths parsed from the XML} lights 
      */
     lightsCheckBoxes(lights) {
-        var group = this.gui.addFolder("Lights");
+        this.group_light = this.gui.addFolder("Lights");
+        this.group_light.open();
+        this.lights = [];
 
         for (var key in lights) {
             if (lights.hasOwnProperty(key)) {
                 let light = lights[key];
                 this.model[key] = light.enableLight;
-                group.add(this.model, key)
+
+                this.lights.push(this.group_light.add(this.model, key)
                     .name("Light " + key)
                     .onChange(val => {
                         this.scene.setLightState(light.lightID, val);
-                    });
+                    }));
             }
         }
     }
@@ -95,6 +103,31 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.model, 'Show Lights').onChange(val => {
             this.scene.showLights();
         });
+    }
+
+
+    updateLightsGroup(lights) {
+
+        for (let i = 0; i < this.lights.length; ++i)
+            this.group_light.remove(this.lights[i]);
+
+        this.lights = [];
+        
+
+
+        for (var key in lights) {
+            if (lights.hasOwnProperty(key)) {
+                let light = lights[key];
+                this.model[key] = light.enableLight;
+
+                this.lights.push(this.group_light.add(this.model, key)
+                    .name("Light " + key)
+                    .onChange(val => {
+                        this.scene.setLightState(light.lightID, val);
+                    }));
+            }
+        }
+
     }
 
     /**
