@@ -67,5 +67,5 @@ choose_move(Type, game_state(Board, Cels, NFirst, NSecond), Move, CurrP, NextP, 
         findall(M, valid_move(Board, M), Moves),
         get_random_element(Moves, Move);
         NTurns > 2,
-        alpha_beta(game_state(Board, Cels, NFirst, NSecond), CurrP, NextP, 3, -1000, 1000, Move, _Value)
+        alpha_beta(game_state(Board, Cels, NFirst, NSecond), CurrP, NextP, 4, -1000, 1000, Move, _Value), !
     ).

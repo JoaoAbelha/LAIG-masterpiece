@@ -361,7 +361,6 @@ parse_input(move/[Board, Cels, NGreen, NYellow, NTurns]/[CurrColor, CurrDif]/[Ne
 
     GS = game_state(Board, Cels, NGreen, NYellow),
 	Mov = move(X1, Y1, X2, Y2),
-
 	move(GS, CurrColor, Mov, BoardOut),
     nextTurn(GS, game_state(NewBoard, NewCels, NewNGreen, NewNYellow), BoardOut), !,
 
@@ -402,8 +401,8 @@ parse_input(move/[Board, Cels, NGreen, NYellow, NTurns]/[CurrColor, CurrDif]/[Ne
 % Game already over
 parse_input(calcmove/[Board, Cels, NGreen, NYellow, NTurns]/[CurrColor, CurrDif]/[NextColor, NextDif], Res) :-
 	(
-        game_over(NewBoard, CurrColor), Winner = CurrColor, !;
-        game_over(NewBoard, NextColor), Winner = NextColor, !
+        game_over(Board, CurrColor), Winner = CurrColor, !;
+        game_over(Board, NextColor), Winner = NextColor, !
     ),
 
 
@@ -448,7 +447,8 @@ parse_input(calcmove/[Board, Cels, NGreen, NYellow, NTurns]/[CurrColor, CurrDif]
 
 	choose_move(CurrDif, GS, Mov, CurrColor, NextColor, NTurns),
 	move(GS, CurrColor, Mov, BoardOut),
-    nextTurn(GS, game_state(NewBoard, NewCels, NewNGreen, NewNYellow), BoardOut),
+	nextTurn(GS, game_state(NewBoard, NewCels, NewNGreen, NewNYellow), BoardOut),
+
 	(
         game_over(NewBoard, CurrColor), Winner = CurrColor, !;
         game_over(NewBoard, NextColor), Winner = NextColor, !
@@ -499,6 +499,7 @@ parse_input(calcmove/[Board, Cels, NGreen, NYellow, NTurns]/[CurrColor, CurrDif]
 	GS = game_state(Board, Cels, NGreen, NYellow),
 
 	choose_move(CurrDif, GS, Mov, CurrColor, NextColor, NTurns),
+	write(Mov), nl,nl,nl,
 	move(GS, CurrColor, Mov, BoardOut),
     nextTurn(GS, game_state(NewBoard, NewCels, NewNGreen, NewNYellow), BoardOut), !,
 
@@ -509,8 +510,7 @@ parse_input(calcmove/[Board, Cels, NGreen, NYellow, NTurns]/[CurrColor, CurrDif]
         Res = {
             '"success"': true,
 
-            '"game_over"': true,
-            '"winner"': Winner,
+            '"game_over"': false,
 
             '"currp"': [NextColor, NextDif],
             '"nextp"': [CurrColor, CurrDif],
@@ -525,8 +525,7 @@ parse_input(calcmove/[Board, Cels, NGreen, NYellow, NTurns]/[CurrColor, CurrDif]
         Res = {
             '"success"': true,
 
-            '"game_over"': true,
-            '"winner"': Winner,
+            '"game_over"': false,
 
             '"currp"': [NextColor, NextDif],
             '"nextp"': [CurrColor, CurrDif],

@@ -70,10 +70,10 @@ class GameState {
             this.curr_game_state = res;
             this.previous_states.push(this.curr_game_state);
             // Resetting countdown to prevent player loss
-            //ClockState.resetCountdown();
+            ClockState.resetCountdown();
 
             // Signaling that the move was valid
-            //ClockState.setColor(CLOCK_COLOR.green);
+            ClockState.setColor(CLOCK_COLOR.green);
 
             console.log("Performed move!", res.performed_move);
             res.performed_move.unshift(x1, y1);
@@ -88,7 +88,7 @@ class GameState {
         } catch(err) {
             // console.error("Move piece unsuccessful:", err);
             // Signaling that the move was invalid
-            //ClockState.setColor(CLOCK_COLOR.red);
+            ClockState.setColor(CLOCK_COLOR.red);
         }
     }
 
@@ -106,24 +106,24 @@ class GameState {
             this.curr_game_state = res;
             this.previous_states.push(this.curr_game_state);
             // Resetting countdown to prevent player loss
-            //ClockState.resetCountdown();
+            ClockState.resetCountdown();
 
             // Signaling that the move was valid
-            //ClockState.setColor(CLOCK_COLOR.green);
+            ClockState.setColor(CLOCK_COLOR.green);
 
-            // console.log("Performed move!", res.performed_move);
+            console.log("Performed move!", res.performed_move);
 
             // Updating the board
             BoardState.performMove(...res.performed_move);
             // Updating the scoreboard
-            //ScoreboardState.setScore(this.calcScore());
+            ScoreboardState.setScore(this.calcScore());
             
             // Testing if the game is over
             this.checkGameOver(res);
         } catch(err) {
-            // console.error("Move piece unsuccessful:", err);
+            console.error("Move piece unsuccessful:", err);
             // Signaling that the move was invalid
-            //ClockState.setColor(CLOCK_COLOR.red);
+            ClockState.setColor(CLOCK_COLOR.red);
         }
     }
 
@@ -134,10 +134,11 @@ class GameState {
             return;
         }
 
-        //ClockState.disable();
+        ClockState.disable();
 
         // If it is not, then request the AI move from the API and do the same as above
         try {
+            const color = this.getCurrentPlayerColor();
             const res = await CommunicationHandler.aiMovePiece(this.curr_game_state);
             // Success! Updating state!
             this.curr_game_state = res;
@@ -146,14 +147,14 @@ class GameState {
             // console.log("Ai performed move!", res.performed_move);
 
             if(res.performed_move.length === 2) {
-                let origin = BoardState.getPieceToInsert();
-                res.performed_move.unshift(origin.x, origin.y);
+                let origin = BoardState.getPieceToInsert(color);
+                res.performed_move.unshift(origin.column, origin.row);
             }
 
             // Updating the board
             BoardState.performMove(...res.performed_move);
             // Updating the scoreboard
-            //ScoreboardState.setScore(this.calcScore());
+            ScoreboardState.setScore(this.calcScore());
 
             // Testing if the game is over
             this.checkGameOver(res);
@@ -166,8 +167,8 @@ class GameState {
     static startPlayerTurn() {
         // If the current player is human and we are in the playing state (not undoing or replaying), then start the clock and change the camera
         if (this.isCurrentPlayerHuman() && this.isPlaying()) {
-            //CameraHandler.swapPlayer(this.getCurrentPlayerColor());
-            //ClockState.countdown(DIFFICULTY_TIME_ENUM[this.countdown_speed], () => {this.playerTimedOut()});
+            CameraHandler.swapPlayer(this.getCurrentPlayerColor());
+            ClockState.countdown(DIFFICULTY_TIME_ENUM[this.countdown_speed], () => {this.playerTimedOut()});
         }
     }
 
@@ -183,8 +184,8 @@ class GameState {
      * Central function that is always called when the game finishes
      */
     static triggerGameFinishedActions() {
-        //ClockState.gameFinished();
-        //ScoreboardState.gameFinished();
+        ClockState.gameFinished();
+        ScoreboardState.gameFinished();
     }
 
     static isAnimationRunning() {
@@ -226,14 +227,14 @@ class GameState {
         this.curr_game_state = this.previous_states[this.previous_states.length - 1 - this.current_undo_index];
 
         // Update the scoreboard
-        //ScoreboardState.setScore(this.calcScore());
+        ScoreboardState.setScore(this.calcScore());
 
         // Do animation by passing information to board
         BoardState.undoMove(...old_state.performed_move);
     }
 
     static calcScore() {
-        //return this.getNrGreen() - this.getNrYellow();
+        return this.getNrGreen() - this.getNrYellow();
     }
 
     static redoMove() {
@@ -257,7 +258,7 @@ class GameState {
         this.curr_game_state = this.previous_states[this.previous_states.length - 1 - this.current_undo_index];
 
         // Update the scoreboard
-        //ScoreboardState.setScore(this.calcScore());
+        ScoreboardState.setScore(this.calcScore());
  
         // Do animation by passing information to board
         BoardState.performMove(...this.curr_game_state.performed_move);
@@ -281,8 +282,8 @@ class GameState {
         this.state = STATE_ENUM.playing;
         // Rotate camera just in case the current player changed (only if the player is human!!) and resume clock countdown
         if (this.isCurrentPlayerHuman()) {
-            //CameraHandler.swapPlayer(this.getCurrentPlayerColor());
-            //ClockState.resumeCountdown();
+            CameraHandler.swapPlayer(this.getCurrentPlayerColor());
+            ClockState.resumeCountdown();
         } else {
             // If the player we ended up at is not human then trigger an ai move
             this.aiMovePiece();
@@ -296,9 +297,9 @@ class GameState {
         }
 
         // Set spectator camera to watch the replay
-        //CameraHandler.setSpectatorCamera();
+        CameraHandler.setSpectatorCamera();
 
-        //ClockState.disable();
+        ClockState.disable();
         this.state = STATE_ENUM.replaying;
         Piece.setPace(2.5);
         // Set initial board pieces positions
@@ -323,7 +324,7 @@ class GameState {
         // Perform the move of the current state
         BoardState.performMove(...this.curr_game_state.performed_move);
         // Update the scoreboard score as well
-        //ScoreboardState.setScore(this.calcScore());
+        ScoreboardState.setScore(this.calcScore());
 
         // Check for game finish
         if (this.replaying_turn < this.previous_states.length - 1) {

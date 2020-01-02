@@ -95,8 +95,8 @@ alpha_beta(Game, CurrP, NextP, D, Alpha, Beta, Move, Value) :-
     valid_moves(Game, CurrP, Moves),
     Alpha1 is -Beta, % max/min
     Beta1 is -Alpha,
-    D1 is D-1, 
-    evaluate_and_choose(Game, CurrP, NextP, Moves, D1, Alpha1, Beta1, nil, (Move,Value)).
+    D1 is D-1,
+    evaluate_and_choose(Game, CurrP, NextP, Moves, D1, Alpha1, Beta1, Move, (Move,Value)).
 
 evaluate_and_choose(game_state(Board, Cels, NFirst, NSecond), CurrP, NextP, [Move-BoardOut|Moves], D, Alpha, Beta, Record, BestMove) :-
     alpha_beta(game_state(BoardOut, Cels, NFirst, NSecond), NextP, CurrP, D, Alpha, Beta, _MoveX, Value),

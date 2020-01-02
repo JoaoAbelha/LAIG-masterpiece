@@ -50,8 +50,8 @@ class ClickHandler {
                 BoardState.setHighlightedSquare(this.origin);
             } else if (this.origin !== null) {
                 (this.origin.column < 0 || this.origin.column > 4) ? 
-                GameState.insertPiece(this.origin.row, this.origin.column, row, column) :
-                GameState.movePiece(this.origin.column, this.origin.row, row, column);
+                GameState.insertPiece(this.origin.column, this.origin.row, column, row) :
+                GameState.movePiece(this.origin.column, this.origin.row, column, row);
                 this.origin = null;
                 BoardState.setHighlightedSquare(null);
             }

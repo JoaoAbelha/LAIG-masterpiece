@@ -55,7 +55,7 @@ class BoardState {
         }
     }
 
-    static performMove(origin_row, origin_column, target_row, target_column) {
+    static performMove(origin_column, origin_row, target_column, target_row) {
         const piece = this.getPieceAt(origin_row, origin_column);
         if (!piece) {
             return;
@@ -79,20 +79,22 @@ class BoardState {
     static getFreeOrigins(origins) {
         let free_origins = [];
 
-        for (origin in origins) {
-            if (this.getPieceAt(origin.x, origin.y)) {
+        for(let i = 0; i < origins.length; ++i) {
+            let origin = origins[i];
+            if (!this.getPieceAt(origin.row, origin.column)) {
                 free_origins.push(origin);
             }
         }
-
+        console.log(pieces_origins);
         return free_origins;
     }
 
     static getPiecesOrigins(origins) {
         let pieces_origins = [];
 
-        for (origin in origins) {
-            if (this.getPieceAt(origin.x, origin.y)) {
+        for(let i = 0; i < origins.length; ++i) {
+            let origin = origins[i];
+            if (this.getPieceAt(origin.row, origin.column)) {
                 pieces_origins.push(origin);
             }
         }
@@ -100,9 +102,7 @@ class BoardState {
         return pieces_origins;
     }
 
-    static getPieceToInsert() {
-        const color = GameState.getCurrentPlayerColor();
-
+    static getPieceToInsert(color) {
         if (color === 1) {
             let origins = this.getPiecesOrigins(this.green_pieces_origins);
             return origins[Math.floor(Math.random() * origins.length)];

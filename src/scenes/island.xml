@@ -222,7 +222,6 @@
         <primitive id="board">
             <gameboard texture="board_texture"/>
         </primitive>
-
         <primitive id="timer">
             <timer />
         </primitive>

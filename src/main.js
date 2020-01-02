@@ -34,11 +34,9 @@ serialInclude([
     'animations/Interpolant.js',
     'animations/TransformationInterpolant.js',
     'MySecurityCamera.js',
-    'primitives/gameboard.js',
     'primitives/Mushroom.js',
-    'primitives/gameboardState.js',
-    'primitives/clock.js',
-    'primitives/clockState.js',
+    'primitives/Clock/Clock.js',
+    'primitives/Clock/ClockState.js',
     'primitives/Cube.js',
     'primitives/Scoreboard/ScoreBoard.js',
     'primitives/Scoreboard/ScoreboardState.js',
@@ -73,8 +71,8 @@ main=function()
    // myInterface.setActiveCamera(myScene.camera);
 
    let scene_names = [
+        "game.xml",
        "room.xml",
-       "game.xml",
        "island.xml"
 
    ];
