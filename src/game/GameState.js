@@ -34,7 +34,7 @@ class GameState {
             BoardState.initPieces();
 
             // Initialize score board (Score starts at 0)
-            //ScoreboardState.setScore(0);
+            ScoreboardState.setScore(0);
             
             ClickHandler.reset();
 
@@ -57,14 +57,14 @@ class GameState {
         }
     }
 
-    static async insertPiece(x1, y1) {
+    static async insertPiece(x1, y1, x2, y2) {
         // Safety check
         if (this.state !== STATE_ENUM.playing || this.isAnimationRunning()) {
             return;
         }
 
         try {
-            const desired_move = [x1, y1];
+            const desired_move = [x2, y2];
             const res = await CommunicationHandler.insertPiece(this.curr_game_state, desired_move);
             // Success! Updating state!
             this.curr_game_state = res;
@@ -75,12 +75,13 @@ class GameState {
             // Signaling that the move was valid
             //ClockState.setColor(CLOCK_COLOR.green);
 
-            // console.log("Performed move!", res.performed_move);
+            console.log("Performed move!", res.performed_move);
+            res.performed_move.unshift(x1, y1);
 
             // Updating the board
-            BoardState.performInsert(...res.performed_move);
+            BoardState.performMove(...res.performed_move);
             // Updating the scoreboard
-            //ScoreboardState.setScore(this.calcScore());
+            ScoreboardState.setScore(this.calcScore());
             
             // Testing if the game is over
             this.checkGameOver(res);
@@ -143,6 +144,11 @@ class GameState {
             this.previous_states.push(this.curr_game_state);
 
             // console.log("Ai performed move!", res.performed_move);
+
+            if(res.performed_move.length === 2) {
+                let origin = BoardState.getPieceToInsert();
+                res.performed_move.unshift(origin.x, origin.y);
+            }
 
             // Updating the board
             BoardState.performMove(...res.performed_move);
