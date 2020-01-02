@@ -380,7 +380,9 @@ class XMLscene extends CGFscene {
 
         if (this.sceneInited) {
             CameraHandler.update(delta_time);
+            BoardState.updatePieceAnimations(delta_time);
             this.scoreBoard && this.scoreBoard.updateTextures();
+            this.clock && this.clock.updateTextures();
         }
     }
 

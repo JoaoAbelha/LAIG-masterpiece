@@ -21,9 +21,9 @@ class Board extends CGFobject {
     };
 
     display() {
-        if (this.scene.pickMode) 
+        if (this.scene.pickMode)
             this.drawTouchSquares();
-        
+
 
         this.drawPieces();
         this.drawHighlightedSquare();
@@ -53,6 +53,7 @@ class Board extends CGFobject {
         this.board_edge_material.apply();
         this.board_edge.display();
         this.scene.popMatrix();
+
         this.scene.pushMatrix();
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
         this.scene.translate(0, this.board_height / 2, this.board_size / 2);
@@ -61,6 +62,7 @@ class Board extends CGFobject {
         this.board_edge_material.apply();
         this.board_edge.display();
         this.scene.popMatrix();
+
         this.scene.pushMatrix();
         this.scene.rotate(Math.PI, 0, 1, 0);
         this.scene.translate(0, this.board_height / 2, this.board_size / 2);
@@ -69,6 +71,7 @@ class Board extends CGFobject {
         this.board_edge_material.apply();
         this.board_edge.display();
         this.scene.popMatrix();
+
         this.scene.pushMatrix();
         this.scene.rotate(-Math.PI / 2, 0, 1, 0);
         this.scene.translate(0, this.board_height / 2, this.board_size / 2);
@@ -77,19 +80,6 @@ class Board extends CGFobject {
         this.board_edge_material.apply();
         this.board_edge.display();
         this.scene.popMatrix();
-
-        // piece supporters
-    this.scene.pushMatrix();
-        this.scene.scale(1,1,BOARD_SIZE);
-        this.scene.translate(BOARD_SIZE/1.5 , -0.3 , 0);
-        this.piece_supporters.display();
-    this.scene.popMatrix();
-
-    this.scene.pushMatrix();
-    this.scene.scale(1,1,BOARD_SIZE);
-    this.scene.translate(-BOARD_SIZE/1.5 , -0.3 , 0);
-    this.piece_supporters.display();
-    this.scene.popMatrix();
     }
 
     createTouchSquare() {
@@ -173,12 +163,13 @@ class Board extends CGFobject {
     }
 
     drawPiece(piece) {
-        this.scene.pushMatrix();
+        const clickid = (piece.column < 0 || piece.column > 4) ? piece.row * 7 + Math.abs(piece.column) + 30 : piece.row * 5 + piece.column;
         const piece_to_display = this.getCustomPiece(piece);
 
+        this.scene.pushMatrix();
         this.scene.translate(this.piece_offset + this.square_size * piece.column, this.board_height + piece.height, this.piece_offset + this.square_size * piece.row);
         this.scene.scale(this.piece_size, this.piece_size, this.piece_size);
-        this.scene.registerForPick(piece.row * 5 + piece.column, this.piece);
+        this.scene.registerForPick(clickid, this.piece);
         piece_to_display.display();
         this.scene.popMatrix();
     }
@@ -192,15 +183,15 @@ class Board extends CGFobject {
                     this.preparePiece(piece);
                     return this.piece;
                 }
-            case "yellow":
-                if (this.yellow_piece) {
-                    return this.yellow_piece;
-                } else {
-                    this.preparePiece(piece);
-                    return this.piece;
-                }
-            default:
-                break;
+                case "yellow":
+                    if (this.yellow_piece) {
+                        return this.yellow_piece;
+                    } else {
+                        this.preparePiece(piece);
+                        return this.piece;
+                    }
+                    default:
+                        break;
         }
     }
 
@@ -232,7 +223,7 @@ class Board extends CGFobject {
     }
 
     createHighlight() {
-        this.highlight = new MyPlane(this.scene, 1, 1);
+        this.highlight = new MyCylinder(this.scene, 10, 10, 0.1, 1, 1);
     }
 
     drawHighlightedSquare() {
@@ -241,7 +232,6 @@ class Board extends CGFobject {
         if (!current_highlighted_square) {
             return;
         }
-
         this.scene.pushMatrix();
         this.scene.translate(
             this.piece_offset + this.square_size * current_highlighted_square.column,

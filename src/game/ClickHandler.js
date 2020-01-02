@@ -23,6 +23,8 @@ class ClickHandler {
     static verifyClick(clickId) {
         if (clickId >= 0 && clickId < 25) {
             this.boardClickHandler(clickId);
+        } else if (clickId > 25 && clickId < 100) {
+            this.outPieceClickHandler(clickId);
         } else if (clickId > 500) {
             this.buttonClickHandler(clickId);
         }
@@ -35,17 +37,8 @@ class ClickHandler {
 
         const column = clickId % 5;
         const row = Math.floor(clickId / 5);
-
-
-
         const current_player = GameState.getCurrentPlayerColor();
         const square_piece = BoardState.getPieceAt(row, column);
-        console.log(clickId);
-        console.log(square_piece);
-
-        // SE O CLICK FOR IDENTIFICADO MAS O SQUARE ID FOR NULL => ESTADO INTERMEDIO 1 => COLOCAR PEÇAS NO BOARD
-        // SE O CLICK FOR IDDENTIFICADO E O SQUARE ID TB => ESTADO INTERMEDIO 2 => MOVER PECAS NO BOARD
-        // NO ESTADO INTERMEDIO 2 => O CLICKID DA PECA E DO SITIO ONDE ESTA (SQUARE) E O MESMO
 
         if (!square_piece && this.origin === null) {
             BoardState.setHighlightedSquare(null);
@@ -56,10 +49,32 @@ class ClickHandler {
                 this.origin = {row, column};
                 BoardState.setHighlightedSquare(this.origin);
             } else if (this.origin !== null) {
-                GameState.movePiece(this.origin.row, this.origin.column, row, column);
+                (this.origin.column < 0 || this.origin.column > 4) ? 
+                GameState.insertPiece(this.origin.row, this.origin.column, row, column) :
+                GameState.movePiece(this.origin.column, this.origin.row, row, column);
                 this.origin = null;
                 BoardState.setHighlightedSquare(null);
             }
+        }
+    }
+
+    static outPieceClickHandler(clickId) {
+        if(!GameState.isCurrentPlayerHuman() || !GameState.isPlaying()) {
+            return;
+        }
+
+        let actualId = clickId - 30;
+        const column = (actualId % 7 === 2) ? -2 : actualId % 7;
+        const row = Math.floor(actualId / 7);
+        const current_player = GameState.getCurrentPlayerColor();
+        const square_piece = BoardState.getPieceAt(row, column);
+        
+        if (!square_piece && this.origin === null) {
+            BoardState.setHighlightedSquare(null);
+        } else if (square_piece && square_piece.color === "green" && current_player === 1 ||
+                   square_piece && square_piece.color === "yellow" && current_player === 2) {
+            this.origin = {row, column};
+            BoardState.setHighlightedSquare(this.origin);
         }
     }
 

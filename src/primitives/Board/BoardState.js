@@ -1,8 +1,7 @@
 const BOARD_SIZE = 4;
-const BOARD_MARGIN = BOARD_SIZE / 10;
+const BOARD_MARGIN = BOARD_SIZE / 32;
 const SQUARE_SIZE = (BOARD_SIZE - 2 * BOARD_MARGIN) / 5;
-
-const PIECE_OFFSET = 1.5;
+const PIECE_OFFSET = 2;
 
 class BoardState {
     static updatePieceAnimations(delta_time) {
@@ -14,13 +13,25 @@ class BoardState {
     static initPieces() {
         // In order to handle inits after the first one
         this.pieces = [];
+        this.green_pieces_origins = [];
+        this.yellow_pieces_origins = [];
 
         for (let i = 0; i < 4; ++i) {
-            this.pieces.push(new Piece(-PIECE_OFFSET, i, "green"));
+            let origin = {
+                column: -PIECE_OFFSET,
+                row: i
+            };
+            this.green_pieces_origins.push(origin);
+            this.pieces.push(new Piece(origin.column, origin.row, "green"));
         }
 
         for (let i = 0; i < 4; ++i) {
-            this.pieces.push(new Piece(BOARD_SIZE + PIECE_OFFSET, i, "yellow"));
+            let origin = {
+                column: BOARD_SIZE + PIECE_OFFSET,
+                row: i
+            };
+            this.yellow_pieces_origins.push(origin);
+            this.pieces.push(new Piece(origin.column , origin.row, "yellow"));
         }
     }
 
@@ -68,8 +79,8 @@ class BoardState {
     static getFreeOrigins(origins) {
         let free_origins = [];
 
-        for(origin in origins) {
-            if(this.getPieceAt(origin.x, origin.y)) {
+        for (origin in origins) {
+            if (this.getPieceAt(origin.x, origin.y)) {
                 free_origins.push(origin);
             }
         }
@@ -80,8 +91,8 @@ class BoardState {
     static getPiecesOrigins(origins) {
         let pieces_origins = [];
 
-        for(origin in origins) {
-            if(this.getPieceAt(origin.x, origin.y)) {
+        for (origin in origins) {
+            if (this.getPieceAt(origin.x, origin.y)) {
                 pieces_origins.push(origin);
             }
         }
@@ -92,12 +103,12 @@ class BoardState {
     static getPieceToInsert() {
         const color = GameState.getCurrentPlayerColor();
 
-        if(color === 1) {
+        if (color === 1) {
             let origins = this.getPiecesOrigins(this.green_pieces_origins);
-            return origins[Math.floor(Math.random()*origins.length)];
+            return origins[Math.floor(Math.random() * origins.length)];
         } else {
             let origins = this.getPiecesOrigins(this.yellow_pieces_origins);
-            return origins[Math.floor(Math.random()*origins.length)];
+            return origins[Math.floor(Math.random() * origins.length)];
         }
     }
 
