@@ -1185,7 +1185,9 @@ class MySceneGraph {
         }
         else if(node.nodeName === "cubeMap") {
             primitive = this.parseCubeMap(node, messageError);
-
+        }
+        else if (node.nodeName === "sky") {
+            primitive = this.parsesky(node, messageError);
         }
         else {
             this.onXMLMinorError(messageError + "unknown tag <" + node.nodeName + ">");
@@ -1196,6 +1198,21 @@ class MySceneGraph {
         primitive.primitiveID = primitiveID;
         
         this.primitives[primitive.primitiveID] = primitive;
+    }
+
+
+    parsesky(node, messageError) {
+        let heightMap = this.parseString(node,"height", messageError);
+        let colorMap = this.parseString(node, "colorMap", messageError);
+        let size = this.parseFloat(node, "size", messageError);
+
+        return {
+            type:"sky",
+            heightMap:heightMap,
+            colorMap: colorMap,
+            size
+        };
+
     }
 
 
@@ -2052,7 +2069,6 @@ class MySceneGraph {
      * Constrcuts the graph based on the information that was parsed
      */
     constructGraph() {
-        console.log(this.scene_id);
         this.sceneComponents = [];
         this.scenePrimitives = [];
 
@@ -2123,6 +2139,10 @@ class MySceneGraph {
                     break;
                     case "cubeMap":
                         prim = new cubeMap(this.scene, primitive.size, primitive.folderPath);
+                    break;
+                    case "sky":
+                        prim = new sky(this.scene, primitive.heightMap, primitive.colorMap, primitive.size);
+                    break;
                     default:
                         break;
                 }
@@ -2279,7 +2299,7 @@ class MySceneGraph {
      */
     displayScene() {
         this.transversePreorder(this.idRoot, this.scene.defaultMaterial, null, 1, 1);
-        console.log(this.idRoot);
+        //console.log(this.idRoot);
     }
 
     /**
@@ -2291,7 +2311,7 @@ class MySceneGraph {
      * @param {parent length_t} length_t 
      */
     transversePreorder(id, material, texture, length_s, length_t) {
-        console.log(this.sceneComponents);
+        //console.log(this.sceneComponents);
         let node = this.sceneComponents[id];
         this.scene.pushMatrix();
         this.scene.multMatrix(node.tranfMatrix);

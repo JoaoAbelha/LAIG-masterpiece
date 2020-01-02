@@ -82,6 +82,8 @@
         <texture id="mushroomBottom" file="scenes/images/mushroombottom.png" />
         <texture id="kartflag" file="scenes/images/kartflag.png" />
         <texture id="board_texture" file="scenes/images/board.PNG"/>
+        <texture id="skyHeightMap" file="scenes/images/sky/height.png"/>
+        <texture id="skyColorMap" file="scenes/images/sky/colormap.png"/>
     </textures>
 
     <materials>
@@ -197,6 +199,9 @@
         <transformation id="goalPoleTransf">
             <translate x="1.5" y="0" z="7" />
         </transformation>
+        <transformation id = "translationSky">
+            <translate x="0" y="14" z="0"/>
+        </transformation>
     </transformations>
     
     <animations>
@@ -232,8 +237,9 @@
         <primitive id="cubeMap">
             <cubeMap folderPath = "scenes/images/island" size ="30" />
         </primitive>
-
-
+        <primitive id="sky">
+            <sky size ="30" height = "skyHeightMap" colorMap = "skyColorMap" />
+        </primitive>
 
     </primitives>
 
@@ -264,7 +270,20 @@
                 <primitiveref id="score" />
                 <componentref id = "timer"/>
                 <primitiveref id="cubeMap"/>
+                <componentref id="sky"/>
 
+            </children>
+        </component>
+        <component id="sky">
+            <transformation>
+            <transformationref id = "translationSky"/>
+            </transformation>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id = "sky"/>
             </children>
         </component>
         <component id="timer">

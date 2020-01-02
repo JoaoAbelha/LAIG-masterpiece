@@ -22,6 +22,7 @@ class cubeMap extends  CGFobject  {
 			material.setEmission(0, 0, 0, 1);
 			material.setShininess(10);
 			material.setTexture(new CGFtexture(this.scene, "scenes/images/background1.jpg"));
+			//material.setTexture(new CGFtexture(this.scene, filePath + "/" +  i.toString() + ".jpg"));
 			this.materials.push(material);
 		}
 
