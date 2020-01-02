@@ -3,7 +3,7 @@
 
     <views default="player_camera" >
         <perspective id="player_camera" near="0.1" far="90" angle="60">
-            <from x="5" y="5" z="5" />
+            <from x="10" y="10" z="10" />
             <to x="0" y="0" z="0" />
         </perspective>
         <perspective id="spectator_camera" near="0.1" far="90" angle="60">
