@@ -1,5 +1,5 @@
 const BOARD_SIZE = 4;
-const BOARD_MARGIN = BOARD_SIZE / 32;
+const BOARD_MARGIN = BOARD_SIZE / 10;
 const SQUARE_SIZE = (BOARD_SIZE - 2 * BOARD_MARGIN) / 5;
 
 const PIECE_OFFSET = 1.5;
@@ -44,20 +44,7 @@ class BoardState {
         }
     }
 
-    static performMove(row, column) {
-        const color = GameState.getCurrentPlayerColor();
-        if (!piece) {
-            return;
-        }
-        piece.setTarget(row, column);
-    }
-
-    static undoMove(row, column) {
-        const piece = this.getPieceAt(row, column);
-        this.removePiece(piece);
-    }
-
-    static performMove(origin_row, origin_column, target_row = null, target_column = null) {
+    static performMove(origin_row, origin_column, target_row, target_column) {
         const piece = this.getPieceAt(origin_row, origin_column);
         if (!piece) {
             return;
@@ -76,6 +63,42 @@ class BoardState {
             }
         }
         return null;
+    }
+
+    static getFreeOrigins(origins) {
+        let free_origins = [];
+
+        for(origin in origins) {
+            if(this.getPieceAt(origin.x, origin.y)) {
+                free_origins.push(origin);
+            }
+        }
+
+        return free_origins;
+    }
+
+    static getPiecesOrigins(origins) {
+        let pieces_origins = [];
+
+        for(origin in origins) {
+            if(this.getPieceAt(origin.x, origin.y)) {
+                pieces_origins.push(origin);
+            }
+        }
+
+        return pieces_origins;
+    }
+
+    static getPieceToInsert() {
+        const color = GameState.getCurrentPlayerColor();
+
+        if(color === 1) {
+            let origins = this.getPiecesOrigins(this.green_pieces_origins);
+            return origins[Math.floor(Math.random()*origins.length)];
+        } else {
+            let origins = this.getPiecesOrigins(this.yellow_pieces_origins);
+            return origins[Math.floor(Math.random()*origins.length)];
+        }
     }
 
     static setHighlightedSquare(square) {

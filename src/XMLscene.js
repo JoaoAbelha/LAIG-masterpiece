@@ -380,10 +380,8 @@ class XMLscene extends CGFscene {
 
         if (this.sceneInited) {
             CameraHandler.update(delta_time);
-            
+            this.scoreBoard && this.scoreBoard.updateTextures();
         }
-
-        //this.camera_security.time = t;
     }
 
     setCurrentCamera(camera_id) {

@@ -2169,6 +2169,14 @@ class MySceneGraph {
                 }
 
                 this.scenePrimitives[key] = prim;
+
+                if (primitive.type === "gameboard") {
+                    this.scene.board = prim;
+                } else if (primitive.type === "timer") {
+                    this.scene.clock = prim;
+                } else if (primitive.type === "scoreboard") {
+                    this.scene.scoreBoard = prim;
+                }
             }
         }
     }
