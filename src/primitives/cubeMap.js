@@ -26,7 +26,6 @@ class cubeMap extends  CGFobject  {
 			this.materials.push(material);
 		}
 
-		
 	};	
 
 	display() {

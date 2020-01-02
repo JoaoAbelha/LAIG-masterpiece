@@ -55,6 +55,7 @@ serialInclude([
     'primitives/cubeMap.js',
     'primitives/sky.js',
     'primitives/water.js',
+    'primitives/sand.js',
 
 main=function()
 {

@@ -86,6 +86,8 @@
         <texture id="skyColorMap" file="scenes/images/sky/colormap.png"/>
         <texture id="waterHeightMap" file="scenes/images/water/waterHeight.jpg"/>
         <texture id="water" file="scenes/images/water/sea.jpg"/>
+        <texture id="sand" file="scenes/images/islandTerrain/sand.jpg"/>
+        <texture id="islandHeightMap" file="scenes/images/islandTerrain/islandHeightMap.jpg"/>
     </textures>
 
     <materials>
@@ -207,6 +209,10 @@
         <transformation id = "translationSea">
             <translate x="0" y="-10" z="0"/>
         </transformation>
+        <transformation id = "translationIsland">
+            <translate x="0" y="-8" z="0"/>
+        </transformation>
+
     </transformations>
     
     <animations>
@@ -232,7 +238,6 @@
         <primitive id="board">
             <gameboard texture="board_texture"/>
         </primitive>
-
         <primitive id="timer">
             <timer />
         </primitive>
@@ -247,6 +252,9 @@
         </primitive>
         <primitive id="sea">
             <water size ="30" height = "waterHeightMap" color = "water"/>
+        </primitive>
+        <primitive id="islandTerrain">
+            <sand size ="25" height = "islandHeightMap" color = "sand"/>
         </primitive>
 
     </primitives>
@@ -280,6 +288,7 @@
                 <primitiveref id="cubeMap"/>
                 <componentref id="sky"/>
                 <componentref id="sea"/>
+                <componentref id="island"/>
             </children>
         </component>
         <component id="sky">
@@ -304,6 +313,18 @@
             <texture id="none" />
             <children>
                 <primitiveref id = "sea"/>
+            </children>
+        </component>
+        <component id="island">
+            <transformation>
+            <transformationref id = "translationIsland"/>
+            </transformation>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id = "islandTerrain"/>
             </children>
         </component>
         <component id="timer">

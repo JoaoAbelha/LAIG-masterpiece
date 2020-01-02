@@ -1192,6 +1192,9 @@ class MySceneGraph {
         else if (node.nodeName === "water") {
             primitive = this.parseWater(node, messageError);
         }
+        else if (node.nodeName === "sand") {
+            primitive = this.parseSand(node, messageError);
+        }
         else {
             this.onXMLMinorError(messageError + "unknown tag <" + node.nodeName + ">");
             return;
@@ -1201,6 +1204,21 @@ class MySceneGraph {
         primitive.primitiveID = primitiveID;
         
         this.primitives[primitive.primitiveID] = primitive;
+    }
+
+    parseSand(node, messageError) {
+        let size = this.parseFloat(node, "size", messageError);
+        let heightMap = this.parseString(node,"height", messageError);
+        let color = this.parseString(node, "color", messageError);
+
+        return {
+        
+            type:"sand",
+            heightMap:heightMap,
+            size,
+            color
+        }
+
     }
 
 
@@ -2162,7 +2180,10 @@ class MySceneGraph {
                         prim = new sky(this.scene, primitive.heightMap, primitive.colorMap, primitive.size);
                     break;
                     case "water":
-                        prim = new water(this.scene, primitive.heightMap, primitive.size, primitive.color)
+                        prim = new water(this.scene, primitive.heightMap, primitive.size, primitive.color);
+                    break;
+                    case "sand":
+                        prim = new sand(this.scene, primitive.heightMap, primitive.size, primitive.color);
                     break;
                     default:
                         break;
