@@ -56,6 +56,7 @@ serialInclude([
     'primitives/sky.js',
     'primitives/water.js',
     'primitives/sand.js',
+    'primitives/window.js',
 
 main=function()
 {
@@ -72,6 +73,7 @@ main=function()
    // myInterface.setActiveCamera(myScene.camera);
 
    let scene_names = [
+       "room.xml",
        "game.xml",
        "island.xml"
 

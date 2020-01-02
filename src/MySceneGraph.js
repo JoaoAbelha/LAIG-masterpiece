@@ -1195,6 +1195,9 @@ class MySceneGraph {
         else if (node.nodeName === "sand") {
             primitive = this.parseSand(node, messageError);
         }
+        else if (node.nodeName === "window") {
+            primitive = this.parseWindow(node, messageError);
+        }
         else {
             this.onXMLMinorError(messageError + "unknown tag <" + node.nodeName + ">");
             return;
@@ -1204,6 +1207,21 @@ class MySceneGraph {
         primitive.primitiveID = primitiveID;
         
         this.primitives[primitive.primitiveID] = primitive;
+    }
+
+
+    parseWindow(node, messageError) {
+        let size = this.parseFloat(node, "size", messageError);
+        let distortion = this.parseString(node,"distortion", messageError);
+        let background = this.parseString(node, "background", messageError);
+
+        return {
+            type:"window",
+            distortion,
+            size,
+            background
+        }
+        
     }
 
     parseSand(node, messageError) {
@@ -2184,6 +2202,9 @@ class MySceneGraph {
                     break;
                     case "sand":
                         prim = new sand(this.scene, primitive.heightMap, primitive.size, primitive.color);
+                    break;
+                    case "window":   
+                        prim = new windowObject(this.scene, primitive.distortion, primitive.size, primitive.background);
                     break;
                     default:
                         break;

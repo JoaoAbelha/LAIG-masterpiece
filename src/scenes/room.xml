@@ -1,0 +1,322 @@
+<lxs>
+    <scene root="rootComp" axis_length="5" />
+
+    <views default="player_camera" >
+        <perspective id="player_camera" near="0.1" far="90" angle="60">
+            <from x="10" y="10" z="10" />
+            <to x="0" y="0" z="0" />
+        </perspective>
+        <perspective id="spectator_camera" near="0.1" far="90" angle="60">
+            <from x="4" y="10" z="0.4" />
+            <to x="0" y="5.3" z="0" />
+        </perspective>
+    </views>
+
+    <globals>
+        <ambient r="0.6" g="0.6" b="0.6" a="1" />
+        <background r="0.8" g="0.1" b="1" a="1" />
+    </globals>
+
+    <lights>
+        <omni id="sceneTop1" enabled="1">
+            <location x="2" y="15" z="5" w="1" />
+            <ambient r="0" g="0" b="0" a="1" />
+            <diffuse r="1" g="1" b="1" a="1" />
+            <specular r="1" g="1" b="1" a="1" />
+            <attenuation constant="1" linear="0" quadratic="0" />
+        </omni>
+        <omni id="sceneTop2" enabled="1">
+            <location x="5" y="15" z="5" w="1" />
+            <ambient r="0" g="0" b="0" a="1" />
+            <diffuse r="1" g="1" b="1" a="1" />
+            <specular r="1" g="1" b="1" a="1" />
+            <attenuation constant="1" linear="0" quadratic="0" />
+        </omni>
+        <omni id="sceneTop3" enabled="1">
+            <location x="8" y="15" z="5" w="1" />
+            <ambient r="0" g="0" b="0" a="1" />
+            <diffuse r="1" g="1" b="1" a="1" />
+            <specular r="1" g="1" b="1" a="1" />
+            <attenuation constant="0" linear="1" quadratic="0" />
+        </omni>
+        <omni id="mysteryLight" enabled="0">
+            <location x="6.5" y="3.5" z="8" w="1" />
+            <ambient r="0.3" g="0.3" b="0" a="1" />
+            <diffuse r="1" g="1" b="0" a="1" />
+            <specular r="1" g="1" b="0" a="1" />
+            <attenuation constant="0" linear="0" quadratic="1" />
+        </omni>
+        <spot id="goalPoleLight" enabled="0" angle="1" exponent="1">
+            <location x="1.5" y="5" z="8" w="1" />
+            <target x="1.5" y="0" z="7" />
+            <ambient r="0" g="0.15" b="0" a="1" />
+            <diffuse r="0.1" g="0.6" b="0.1" a="1" />
+            <specular r="0.1" g="0.6" b="0.1" a="1" />
+            <attenuation constant="0" linear="1" quadratic="0" />
+        </spot>
+        <spot id="bulletLight" enabled="0" angle="1" exponent="1">
+            <location x="6" y="8" z="9.5" w="1" />
+            <target x="8.5" y="7" z="8" />
+            <ambient r="0" g="0" b="0" a="1" />
+            <diffuse r="0.2" g="0.2" b="0.2" a="1" />
+            <specular r="1" g="1" b="1" a="1" />
+            <attenuation constant="0" linear="1" quadratic="0" />
+        </spot>
+        <spot id="coinsLight" enabled="0" angle="10" exponent="4">
+            <location x="8.5" y="3" z="8" w="1" />
+            <target x="8.5" y="1.5" z="9" />
+            <ambient r="0.1" g="0.1" b="0" a="1" />
+            <diffuse r="0.4" g="0.4" b="0.1" a="1" />
+            <specular r="0.8" g="0.8" b="0.1" a="1" />
+            <attenuation constant="0" linear="0" quadratic="1" />
+        </spot>
+    </lights>
+
+    <textures>
+        <texture id="tijolo" file="scenes/images/tijolo.jpg" />
+        <texture id="surprise" file="scenes/images/surprise.jpg" />
+        <texture id="bellTop" file="scenes/images/top.jpg" />
+        <texture id="flag" file="scenes/images/flag.png" />
+        <texture id="background1" file="scenes/images/background1.jpg" />
+        <texture id="background2" file="scenes/images/background2.jpg" />
+        <texture id="mushroomBottom" file="scenes/images/mushroombottom.png" />
+        <texture id="kartflag" file="scenes/images/kartflag.png" />
+        <texture id="board_texture" file="scenes/images/board.PNG"/>
+        <texture id="skyHeightMap" file="scenes/images/sky/height.png"/>
+        <texture id="skyColorMap" file="scenes/images/sky/colormap.png"/>
+        <texture id="waterHeightMap" file="scenes/images/water/waterHeight.jpg"/>
+        <texture id="water" file="scenes/images/water/sea.jpg"/>
+        <texture id="sand" file="scenes/images/islandTerrain/sand.jpg"/>
+        <texture id="islandHeightMap" file="scenes/images/islandTerrain/islandHeightMap.jpg"/>
+        <texture id="windowDistortion" file="scenes/images/distortion.png"/>
+        <texture id="windowBg" file="scenes/images/forestbg.jpg"/>
+    </textures>
+
+    <materials>
+        <material id="matRegular" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.3" g="0.3" b="0.3" a="1" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+        </material>
+        <material id="brown" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.44" g="0.26" b="0.04" a="1" />
+            <diffuse r="0.2" g="0.15" b="0.05" a="1" />
+            <specular r="0.1" g="0.05" b="0" a="1" />
+        </material>
+        <material id="white" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.8" g="0.8" b="0.8" a="1" />
+        </material>
+        <material id="gold" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.5" g="0.4" b="0" a="1" />
+            <diffuse r="0.6" g="0.6" b="0.2" a="1" />
+            <specular r="1" g="1" b="0.3" a="1" />
+        </material>
+        <material id="green" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0" g="0.5" b="0" a="1" />
+            <diffuse r="0.1" g="0.7" b="0.1" a="1" />
+            <specular r="0.2" g="1" b="0.4" a="1" />
+        </material>
+        <material id="black" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1" />
+            <diffuse r="0.2" g="0.2" b="0.2" a="1" />
+            <specular r="0.6" g="0.6" b="0.6" a="1" />
+        </material>
+        <material id="red" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.6" g="0" b="0" a="1" />
+            <diffuse r="0.8" g="0" b="0" a="1" />
+            <specular r="0.8" g="0" b="0" a="1" />
+        </material>
+        <material id="yellow" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.5" g="0.5" b="0.1" a="1" />
+            <diffuse r="0.6" g="0.6" b="0.2" a="1" />
+            <specular r="0.6" g="0.6" b="0.2" a="1" />
+        </material>
+        <material id="skin" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.5" g="0.4" b="0.3" a="1" />
+            <diffuse r="0.7" g="0.6" b="0.5" a="1" />
+            <specular r="0.7" g="0.6" b="0.5" a="1" />
+        </material>
+        <material id="grey" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1" />
+            <diffuse r="0.15" g="0.15" b="0.15" a="1" />
+            <specular r="0.15" g="0.15" b="0.15" a="1" />
+        </material>
+        <material id="orange" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.5" g="0.1" b="0" a="1" />
+            <diffuse r="0.8" g="0.2" b="0.1" a="1" />
+            <specular r="1" g="0.3" b="0.1" a="1" />
+        </material>
+        <material id="blue" shininess="10">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.1" g="0.1" b="0.5" a="1" />
+            <diffuse r="0.1" g="0.1" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="1" a="1" />
+        </material>
+    </materials>
+
+    <transformations>
+        <transformation id="rotation">
+        <rotate axis="x" angle="90" />
+        </transformation>
+        <transformation id="translationTimer">
+            <translate x="4" y="0.3" z="0.2" />
+        </transformation>
+        <transformation id="blocksScale">
+            <scale x="0.75" y="0.75" z="0.75" />
+        </transformation>
+        <transformation id="middleBlock">
+            <translate x="0" y="3.5" z="0" />
+        </transformation>
+        <transformation id="leftBlock">
+            <translate x="-1" y="3.5" z="0" />
+        </transformation>
+        <transformation id="rightBlock">
+            <translate x="1" y="3.5" z="0" />
+        </transformation>
+        <transformation id="backPathTransf">
+            <translate x="2" y="0" z="4" />
+        </transformation>
+        <transformation id="standupY">
+            <rotate axis="x" angle="-90" />
+        </transformation>
+        <transformation id="verticalPathTransf">
+            <translate x="4.75" y="0" z="4.75" />
+            <rotate axis="y" angle="90" />
+        </transformation>
+        <transformation id="bulletBillTransf">
+            <translate x="9" y="7" z="9" />
+        </transformation>
+        <transformation id="bellTreeTransf">
+            <translate x="8" y="0" z="3" />
+        </transformation>
+        <transformation id="goalPoleTransf">
+            <translate x="1.5" y="0" z="7" />
+        </transformation>
+        <transformation id = "translationSky">
+            <translate x="0" y="14" z="0"/>
+        </transformation>
+        <transformation id = "translationSea">
+            <translate x="0" y="-10" z="0"/>
+        </transformation>
+        <transformation id = "translationIsland">
+            <translate x="0" y="-8" z="0"/>
+        </transformation>
+
+    </transformations>
+    
+    <animations>
+        <animation id="flag_move">
+            <keyframe instant="24">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="30">
+                <translate x="0" y="3" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+        </animation>
+    </animations>
+
+
+    <primitives>
+        <primitive id="wall">
+            <rectangle x1="0" y1="0" x2="10" y2="10" />
+        </primitive>
+        <primitive id="board">
+            <gameboard texture="board_texture"/>
+        </primitive>
+        <primitive id="timer">
+            <timer />
+        </primitive>
+        <primitive id="score">
+            <scoreboard />
+        </primitive>
+        <primitive id="cubeMap">
+            <cubeMap folderPath = "scenes/images/island" size ="30" />
+        </primitive>
+        <primitive id = "window">
+            <window distortion = "windowDistortion" background = "windowBg" size ="5" />
+        </primitive>
+
+    </primitives>
+
+    <components>
+        <component id="rootComp">
+            <transformation>
+            <transformationref id = "rotation"/>
+            </transformation>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="floor" />
+            </children>
+        </component>
+        <component id="floor">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="brown" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <!-- <primitiveref id="board" />
+                <primitiveref id="score" />
+                <componentref id = "timer"/>-->
+                <primitiveref id = "window"/>
+            </children>
+        </component>
+        <component id="timer">
+            <transformation>
+            <transformationref id = "translationTimer"/>
+            </transformation>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id = "timer"/>
+            </children>
+        </component>
+    </components>
+
+    <pieces>
+        <piece_green>
+            <transformation>
+                <translate x="0" y="0" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <material id="grey" />
+            <texture id="tijolo" length_s="1" length_t="1" />
+            <primitive id="wall" />
+        </piece_green>
+        <piece_yellow>
+            <transformation>
+                <translate x="0" y="0" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <material id="grey" />
+            <texture id="tijolo" length_s="1" length_t="1" />
+            <primitive id="wall" />
+        </piece_yellow>
+    </pieces>
+        
+</lxs>
