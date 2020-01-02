@@ -405,6 +405,8 @@ class XMLscene extends CGFscene {
 
 
         if (this.current_graph != graph) {
+            graph.constructGraph();
+            graph.createCustomPieces();
             return;
         }
 

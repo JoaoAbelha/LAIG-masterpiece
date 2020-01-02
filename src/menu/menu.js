@@ -20,7 +20,7 @@ class Menu extends CGFobject {
         }
 
         this.menuBody = new Cube(scene);
-        this.background = new MySecurityCamera(scene, -0.3, 0.5, -0.4, 0.4);
+        this.background = new MySecurityCamera(scene, -0.2, 0.35, -0.4 , 0.45);
 
         this.buttons = [];
         for (let button_action of button_actions) {

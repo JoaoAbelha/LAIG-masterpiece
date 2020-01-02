@@ -52,6 +52,7 @@ serialInclude([
     'menu/menu.js',
     'primitives/button.js',
     'animations/Arch.js',
+    'primitives/cubeMap.js',
 
 main=function()
 {
@@ -77,6 +78,7 @@ main=function()
    let scene_graphs = [];
 
    for(let i = 0; i < scene_names.length; i++) {
+       console.log(scene_names[i]);
        scene_graphs.push(new MySceneGraph(scene_names[i], myScene));
    }
 

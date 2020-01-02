@@ -1183,6 +1183,10 @@ class MySceneGraph {
         else if (node.nodeName === "scoreboard") {
             primitive = this.parseScoreBoard(node, messageError);
         }
+        else if(node.nodeName === "cubeMap") {
+            primitive = this.parseCubeMap(node, messageError);
+
+        }
         else {
             this.onXMLMinorError(messageError + "unknown tag <" + node.nodeName + ">");
             return;
@@ -1194,6 +1198,17 @@ class MySceneGraph {
         this.primitives[primitive.primitiveID] = primitive;
     }
 
+
+    parseCubeMap(node, messageError) {
+        let folderPath = this.parseString(node, "folderPath", messageError);
+        let size = this.parseFloat(node, "size", messageError);
+
+        return {
+            type:"cubeMap",
+            folderPath:folderPath,
+            size:size
+        }
+    }
   
     parseScoreBoard(node, messageError) {
 
@@ -2037,6 +2052,7 @@ class MySceneGraph {
      * Constrcuts the graph based on the information that was parsed
      */
     constructGraph() {
+        console.log(this.scene_id);
         this.sceneComponents = [];
         this.scenePrimitives = [];
 
@@ -2102,9 +2118,11 @@ class MySceneGraph {
                     case "timer":
                         prim = new timer(this.scene);   
                     break;   
-                    
                     case "scoreboard":
                         prim = new ScoreBoard(this.scene);
+                    break;
+                    case "cubeMap":
+                        prim = new cubeMap(this.scene, primitive.size, primitive.folderPath);
                     default:
                         break;
                 }
@@ -2261,6 +2279,7 @@ class MySceneGraph {
      */
     displayScene() {
         this.transversePreorder(this.idRoot, this.scene.defaultMaterial, null, 1, 1);
+        console.log(this.idRoot);
     }
 
     /**
@@ -2272,6 +2291,7 @@ class MySceneGraph {
      * @param {parent length_t} length_t 
      */
     transversePreorder(id, material, texture, length_s, length_t) {
+        console.log(this.sceneComponents);
         let node = this.sceneComponents[id];
         this.scene.pushMatrix();
         this.scene.multMatrix(node.tranfMatrix);

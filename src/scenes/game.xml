@@ -229,6 +229,10 @@
         <primitive id="score">
             <scoreboard />
         </primitive>
+        <primitive id="cubeMap">
+            <cubeMap folderPath = "scenes/images/island" size ="30" />
+        </primitive>
+
 
 
     </primitives>
@@ -259,6 +263,8 @@
                 <primitiveref id="board" />
                 <primitiveref id="score" />
                 <componentref id = "timer"/>
+                <primitiveref id="cubeMap"/>
+
             </children>
         </component>
         <component id="timer">
