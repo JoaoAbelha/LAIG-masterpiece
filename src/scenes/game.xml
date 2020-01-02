@@ -84,6 +84,8 @@
         <texture id="board_texture" file="scenes/images/board.PNG"/>
         <texture id="skyHeightMap" file="scenes/images/sky/height.png"/>
         <texture id="skyColorMap" file="scenes/images/sky/colormap.png"/>
+        <texture id="waterHeightMap" file="scenes/images/water/waterHeight.jpg"/>
+        <texture id="water" file="scenes/images/water/sea.jpg"/>
     </textures>
 
     <materials>
@@ -202,6 +204,9 @@
         <transformation id = "translationSky">
             <translate x="0" y="14" z="0"/>
         </transformation>
+        <transformation id = "translationSea">
+            <translate x="0" y="-10" z="0"/>
+        </transformation>
     </transformations>
     
     <animations>
@@ -240,6 +245,9 @@
         <primitive id="sky">
             <sky size ="30" height = "skyHeightMap" colorMap = "skyColorMap" />
         </primitive>
+        <primitive id="sea">
+            <water size ="30" height = "waterHeightMap" color = "water"/>
+        </primitive>
 
     </primitives>
 
@@ -271,7 +279,7 @@
                 <componentref id = "timer"/>
                 <primitiveref id="cubeMap"/>
                 <componentref id="sky"/>
-
+                <componentref id="sea"/>
             </children>
         </component>
         <component id="sky">
@@ -284,6 +292,18 @@
             <texture id="none" />
             <children>
                 <primitiveref id = "sky"/>
+            </children>
+        </component>
+        <component id="sea">
+            <transformation>
+            <transformationref id = "translationSea"/>
+            </transformation>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id = "sea"/>
             </children>
         </component>
         <component id="timer">
