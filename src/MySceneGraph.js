@@ -28,8 +28,6 @@ class MySceneGraph {
         this.scene_id = filename.split('.')[0];
 
         // Establish bidirectional references between scene and graph.
-        console.log(scene);
-
         this.scene = scene;
         scene.graphs[this.scene_id] = this;
 
@@ -2351,7 +2349,7 @@ class MySceneGraph {
         }
 
         // Passing the created pieces to the board
-        //this.board.setCustomPieces(green_piece, yellow_piece);
+        this.scene.board.setCustomPieces(green_piece, yellow_piece);
     }
 
     calculateMatrix(transformation) {

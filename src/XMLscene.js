@@ -261,23 +261,12 @@ class XMLscene extends CGFscene {
      * Initializes the scene textures with the values read from the XML file.
      */
     initTextures(graph) {
-        
-        
-
-        console.log(graph.textures);
-
         for (var key in graph.textures) {
             if (graph.textures.hasOwnProperty(key)) {
                 var texture = graph.textures[key];
                 this.textures[key] = new CGFtexture(this, texture.path);
             }
         }
-
-                //console.log(graph);
-                console.log(this);
-
-
-
     }
 
     /**
@@ -461,20 +450,11 @@ class XMLscene extends CGFscene {
     }
 
     onGraphChange(scene_name) {
-
         this.current_graph = this.graphs[scene_name];
-
         this.axis = new CGFaxis(this,this.current_graph.referenceLength);
-
         this.gl.clearColor(this.current_graph.background.r, this.current_graph.background.g, this.current_graph.background.b, this.current_graph.background.a);
-
         this.setGlobalAmbientLight(this.current_graph.ambient.r, this.current_graph.ambient.g, this.current_graph.ambient.b, this.current_graph.ambient.a);
-
         this.interface.updateLightsGroup(this.current_graph.lights);
-
-        console.log(scene_name);
-        console.log(this.textures);
-
     }
 
     
@@ -483,7 +463,7 @@ class XMLscene extends CGFscene {
      * Displays the scene.
      * @param camara - the active camara to render the scene
      */
-   display() {
+    display() {
         // set camara active
 
         // ---- BEGIN Background, camera and axis setup
@@ -517,9 +497,6 @@ class XMLscene extends CGFscene {
                 this.current_graph.displayScene();  
             }   
         }
-
-     
-
         this.popMatrix();
     }
 

@@ -238,13 +238,16 @@
             <rectangle x1="0" y1="0" x2="10" y2="10" />
         </primitive>
         <primitive id="board">
-            <gameboard texture="board_texture"/>
+            <gameboard texture="board_texture" />
         </primitive>
         <primitive id="timer">
             <timer />
         </primitive>
         <primitive id="score">
             <scoreboard />
+        </primitive>
+        <primitive id="gamecontrols">
+            <gamecontrols />
         </primitive>
         <primitive id="cubeMap">
             <cubeMap folderPath = "scenes/images/island" size ="30" />
@@ -276,12 +279,12 @@
             <materials>
                 <material id="brown" />
             </materials>
-            <texture id="none"/>
+            <texture id="none" />
             <children>
-                <!-- <primitiveref id="board" />
+                <primitiveref id="board" />
                 <primitiveref id="score" />
-                <componentref id = "timer"/>-->
-                <primitiveref id = "window"/>
+                <primitiveref id="gamecontrols" />
+                <componentref id="timer" />
             </children>
         </component>
         <component id="timer">

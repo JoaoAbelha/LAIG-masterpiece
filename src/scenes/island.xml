@@ -217,7 +217,7 @@
 
     <primitives>
         <primitive id="wall">
-            <rectangle x1="0" y1="0" x2="10" y2="10" />
+            <cylinder base="0.25" top="0.25" height="0.1" slices="20" stacks="6" />
         </primitive>
         <primitive id="board">
             <gameboard texture="board_texture" />
@@ -258,10 +258,25 @@
             <children>
                 <primitiveref id="board" />
                 <primitiveref id="score" />
-                <primitiveref id="gamecontrols" />
+                <componentref id="gamecontrols" />
                 <componentref id="timer" />
             </children>
         </component>
+
+        <component id="gamecontrols">
+            <transformation>
+                <translate x="2" y="2" z="0" />
+            </transformation>
+            <animations></animations>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="gamecontrols" />
+            </children>
+        </component>
+
         <component id="timer">
             <transformation>
                 <transformationref id="translationTimer" />

@@ -202,7 +202,7 @@ class GameState {
             return;
         }
 
-        if (this.curr_game_state.nTurns === 0) {
+        if (this.curr_game_state.nTurns === 1) {
             console.warn("No moves to undo yet!");
             return;
         }        
