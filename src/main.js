@@ -71,10 +71,7 @@ main=function()
    // myInterface.setActiveCamera(myScene.camera);
 
    let scene_names = [
-        "game.xml",
-       "room.xml",
-       "island.xml"
-
+    "island.xml"
    ];
 
 
