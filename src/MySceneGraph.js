@@ -20,41 +20,37 @@ class MySceneGraph {
     /**
      * @constructor
      */
-    constructor(filename, scene) {
+    constructor(scene) {
         this.loadedOk = null;
 
-        // remove the extension
-        // a scene_id is reprensented by the name of the file
-        this.scene_id = filename.split('.')[0];
-
         // Establish bidirectional references between scene and graph.
-        console.log(scene);
-
         this.scene = scene;
-        scene.graphs[this.scene_id] = this;
-
-        if (!scene.current_graph) { // if is not defined selects the scene
-            scene.select_scene_graph = this.scene_id;
-            scene.current_graph = this;
-        }
-
-
-        this.idRoot = null; // The id of the root element.
+        scene.graph = this;
 
         this.axisCoords = [];
         this.axisCoords['x'] = [1, 0, 0];
         this.axisCoords['y'] = [0, 1, 0];
         this.axisCoords['z'] = [0, 0, 1];
 
+    
+    }
+
+
+    processXml(filename) {
+        this.filename = filename;
+        this.idRoot = null; // The id of the root element.
+
         // File reading 
         this.reader = new CGFXMLreader();
 
         /*
-         * Read the contents of the xml file, and refer to this class for loading and error handlers.
-         * After the file is read, the reader calls onXMLReady on this object.
-         * If any error occurs, the reader calls onXMLError on this object, with an error message
-         */
+            * Read the contents of the xml file, and refer to this class for loading and error handlers.
+            * After the file is read, the reader calls onXMLReady on this object.
+            * If any error occurs, the reader calls onXMLError on this object, with an error message
+            */
         this.reader.open('scenes/' + filename, this);
+
+
     }
 
     /*
@@ -79,7 +75,7 @@ class MySceneGraph {
         //console.log(this.animations);
 
         // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
-        this.scene.onGraphLoaded(this);
+        this.scene.onGraphLoaded();
     }
 
     /**
