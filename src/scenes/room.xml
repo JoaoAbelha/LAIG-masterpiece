@@ -283,8 +283,21 @@
             <children>
                 <primitiveref id="board" />
                 <primitiveref id="score" />
-                <primitiveref id="gamecontrols" />
+                <componentref id="gamecontrols" />
                 <componentref id="timer" />
+            </children>
+        </component>
+        <component id="gamecontrols">
+            <transformation>
+                <translate x="2" y="2" z="0" />
+            </transformation>
+            <animations></animations>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="gamecontrols" />
             </children>
         </component>
         <component id="timer">

@@ -244,6 +244,9 @@
         <primitive id="score">
             <scoreboard />
         </primitive>
+        <primitive id="gamecontrols">
+            <gamecontrols />
+        </primitive>
         <primitive id="cubeMap">
             <cubeMap folderPath = "scenes/images/island" size ="30" />
         </primitive>
@@ -285,10 +288,24 @@
                 <primitiveref id="board" />
                 <primitiveref id="score" />
                 <componentref id = "timer"/>
+                <componentref id="gamecontrols" />
                 <primitiveref id="cubeMap"/>
                 <componentref id="sky"/>
                 <componentref id="sea"/>
                 <componentref id="island"/>
+            </children>
+        </component>
+        <component id="gamecontrols">
+            <transformation>
+                <translate x="2" y="2" z="0" />
+            </transformation>
+            <animations></animations>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="gamecontrols" />
             </children>
         </component>
         <component id="sky">

@@ -18,16 +18,24 @@ class MyInterface extends CGFinterface {
         // init GUI. For more information on the methods, check:
         //  http://workshop.chromeexperiments.com/examples/gui
 
+        return true;
+    }
+
+
+    loadInterface() {
+
+        this.gui && this.gui.destroy();
         this.gui = new dat.GUI();
 
         this.model = {}
         // add a group of controls (and open/expand by defult)
 
+        this.addDifferentScenes();
+
         this.initKeys();
 
-        // this.gui.add(this.scene,'selectedView', this.scene.camerasId).name('Cameras').onChange(this.scene.updateCamera());
-        return true;
     }
+
 
     /**
      * initKeys
@@ -59,15 +67,17 @@ class MyInterface extends CGFinterface {
             .onChange(value => this.scene.selectedView = value);
     }
 
-    addDifferentScenes(scene_graphs) {
-        let scene_name = [];
+    addDifferentScenes() {
+        const scene_name = [
+            "game.xml",
+            "island.xml"
+        ]
 
-        for(let names in scene_graphs)
-            scene_name.push(names);
+        this.model.scene = this.scene.graph.filename;
 
-        this.gui.add(this.scene, 'select_scene_graph', scene_name).onChange(function(sceneName) {
-            this.object.onGraphChange(sceneName);
-        }).name("Scene");
+        this.gui.add(this.model, 'scene_name', scene_name).onChange(
+            filename => this.scene.graph.parseXMLFile(filename)
+        ).name("Scene");
     }
 
 
