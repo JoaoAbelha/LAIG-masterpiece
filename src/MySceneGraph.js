@@ -1217,9 +1217,9 @@ class MySceneGraph {
 
         return {
             type:"window",
-            distortion,
-            size,
-            background
+            distortion:distortion,
+            size:size,
+            background:background
         }
         
     }

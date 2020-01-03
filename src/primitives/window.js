@@ -6,10 +6,16 @@ class windowObject extends CGFobject {
 	constructor(scene, distortion, size, background) {
         super(scene);
         this.scene = scene;
-		this.shader = new CGFshader(this.scene.gl, "shaders/window.vert", "shaders/window.frag");
+	this.shader = new CGFshader(this.scene.gl, "shaders/window.vert", "shaders/window.frag");
 		
         this.distortion = this.scene.textures[distortion];
         this.background = this.scene.textures[background];
+
+        
+
+        //console.log(distortion);
+        //console.log(this.scene.textures);  
+       // console.log(this.scene.textures['windowBg'])
 		
         this.shader.setUniformsValues({distortion: 0, background :1 , timefactor1: 0});
 
@@ -21,8 +27,9 @@ class windowObject extends CGFobject {
 	display() {
         this.scene.setActiveShader(this.shader);
         this.scene.activeShader.setUniformsValues({timefactor1: (this.scene.time / 30000 % 100) });
-        this.distortion.bind(0);
         this.background.bind(1);
+
+        this.distortion.bind(0);
         this.scene.pushMatrix();
         this.scene.scale(this.size ,1, this.size);
         this.plane.display();

@@ -48,6 +48,7 @@ class XMLscene extends CGFscene {
 
         this.axis = new CGFaxis(this);
         this.showAxis = false;
+        this.textures = [];
 
         this.createDefaultMaterial();
         this.setUpdatePeriod(10);
@@ -259,15 +260,24 @@ class XMLscene extends CGFscene {
     /**
      * Initializes the scene textures with the values read from the XML file.
      */
-    initTextures() {
-        this.textures = [];
+    initTextures(graph) {
+        
+        
 
-        for (var key in this.current_graph.textures) {
-            if (this.current_graph.textures.hasOwnProperty(key)) {
-                var texture = this.current_graph.textures[key];
+        console.log(graph.textures);
+
+        for (var key in graph.textures) {
+            if (graph.textures.hasOwnProperty(key)) {
+                var texture = graph.textures[key];
                 this.textures[key] = new CGFtexture(this, texture.path);
             }
         }
+
+                //console.log(graph);
+                console.log(this);
+
+
+
     }
 
     /**
@@ -408,13 +418,16 @@ class XMLscene extends CGFscene {
         if (this.current_graph != graph) {
             graph.constructGraph();
             graph.createCustomPieces();
+            this.initMaterials();
+            this.initTextures(graph);
+            this.initTransformations();
             return;
         }
 
         // If another scene was loaded before, "pause" the scene rendering to ensure there are no unnecessary errors
         //this.sceneInited = false;
 
-        console.log(this.current_graph.ambient);
+        //console.log(this.current_graph.ambient);
         this.axis = new CGFaxis(this, this.current_graph.referenceLength);
 
         this.gl.clearColor(this.current_graph.background.r, this.current_graph.background.g, this.current_graph.background.b, this.current_graph.background.a);
@@ -424,7 +437,7 @@ class XMLscene extends CGFscene {
         this.initViews();
         this.initLights();
         this.initMaterials();
-        this.initTextures();
+        this.initTextures(this.current_graph);
         this.initTransformations();
         this.initAnimations();
 
@@ -458,6 +471,9 @@ class XMLscene extends CGFscene {
         this.setGlobalAmbientLight(this.current_graph.ambient.r, this.current_graph.ambient.g, this.current_graph.ambient.b, this.current_graph.ambient.a);
 
         this.interface.updateLightsGroup(this.current_graph.lights);
+
+        console.log(scene_name);
+        console.log(this.textures);
 
     }
 
