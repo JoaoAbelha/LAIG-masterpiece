@@ -75,8 +75,8 @@ class MyInterface extends CGFinterface {
 
         this.model.scene = this.scene.graph.filename;
 
-        this.gui.add(this.model, 'scene_name', scene_name).onChange(
-            filename => this.scene.graph.parseXMLFile(filename)
+        this.gui.add(this.model, 'scene', scene_name).onChange(
+            filename => this.scene.graph.processXml(filename)
         ).name("Scene");
     }
 
