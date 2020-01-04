@@ -8,8 +8,8 @@ const STATE_ENUM = Object.freeze({
 
 const DIFFICULTY_TIME_ENUM = Object.freeze({
     slow: 60,
-    fast: 30,
-    bullet: 10,
+    medium: 30,
+    fast: 10,
 });
 
 class GameState {
@@ -18,7 +18,7 @@ class GameState {
 
         try {
             const res = await CommunicationHandler.initGame(player1_difficulty, player2_difficulty);
-            
+
             //Initial state cleanup
             this.state = STATE_ENUM.playing;
             this.curr_game_state = res;
@@ -29,13 +29,13 @@ class GameState {
 
             // Set the camera to playing mode
             CameraHandler.setPlayerCamera();
-            
+
             // Initializing board state pieces
             BoardState.initPieces();
 
             // Initialize score board (Score starts at 0)
             ScoreboardState.setScore(0);
-            
+
             ClickHandler.reset();
 
             // Starting the player turn - if the player is human starts the clock countdown
@@ -43,7 +43,7 @@ class GameState {
 
             // Starting the AI move chain (does nothing if the current player is a human so all is well)
             this.aiMovePiece();
-        } catch(err) {
+        } catch (err) {
             console.error("Unable to start game:", err);
         }
     }
@@ -79,10 +79,10 @@ class GameState {
             BoardState.performMove(...res.performed_move);
             // Updating the scoreboard
             ScoreboardState.setScore(this.calcScore());
-            
+
             // Testing if the game is over
             this.checkGameOver(res);
-        } catch(err) {
+        } catch (err) {
             // console.error("Move piece unsuccessful:", err);
             // Signaling that the move was invalid
             ClockState.setColor(CLOCK_COLOR.red);
@@ -111,10 +111,10 @@ class GameState {
             BoardState.performMove(...res.performed_move);
             // Updating the scoreboard
             ScoreboardState.setScore(this.calcScore());
-            
+
             // Testing if the game is over
             this.checkGameOver(res);
-        } catch(err) {
+        } catch (err) {
             console.error("Move piece unsuccessful:", err);
             // Signaling that the move was invalid
             ClockState.setColor(CLOCK_COLOR.red);
@@ -140,7 +140,7 @@ class GameState {
 
             // console.log("Ai performed move!", res.performed_move);
 
-            if(res.performed_move.length === 2) {
+            if (res.performed_move.length === 2) {
                 let origin = BoardState.getPieceToInsert(color);
                 res.performed_move.unshift(origin.column, origin.row);
             }
@@ -152,7 +152,7 @@ class GameState {
 
             // Testing if the game is over
             this.checkGameOver(res);
-        } catch(err) {
+        } catch (err) {
             // console.error("Ai move piece unsuccessful:", err);
             return;
         }
@@ -162,7 +162,9 @@ class GameState {
         // If the current player is human and we are in the playing state (not undoing or replaying), then start the clock and change the camera
         if (this.isCurrentPlayerHuman() && this.isPlaying()) {
             CameraHandler.swapPlayer(this.getCurrentPlayerColor());
-            ClockState.countdown(DIFFICULTY_TIME_ENUM[this.countdown_speed], () => {this.playerTimedOut()});
+            ClockState.countdown(DIFFICULTY_TIME_ENUM[this.countdown_speed], () => {
+                this.playerTimedOut()
+            });
         }
     }
 
@@ -205,7 +207,7 @@ class GameState {
         if (this.curr_game_state.nTurns === 1) {
             console.warn("No moves to undo yet!");
             return;
-        }        
+        }
 
         if (this.current_undo_index >= this.previous_states.length) {
             console.warn("No more moves to undo!");
@@ -228,7 +230,114 @@ class GameState {
     }
 
     static calcScore() {
-        return this.getNrGreen() - this.getNrYellow();
+        let score = 0;
+        let board = this.curr_game_state.board;
+        let currColor = this.getOtherPlayerColor();
+        let nextColor = this.getCurrentPlayerColor();
+        let length = board.length;
+
+        //Check ROWS
+        for (let row = 0; row < length; row++) {
+            for (let column = 0; column <= length - 4; column++) {
+                let currentInRow = 0, nextInRow = 0;
+                for (let offset = column; offset < column + 4; offset++) {
+                    if (board[row][offset] === currColor) {
+                        currentInRow++;
+                        nextInRow = 0
+                    } else if (board[row][offset] === nextColor) {
+                        nextInRow++;
+                        currentInRow = 0
+                    }
+                }
+                score += this.updateScore(currentInRow, nextInRow);
+                if (score <= -50 || score >= 50) return score;
+            }
+        }
+
+        //Check COLUMNS
+        for (let column = 0; column < length; column++) {
+            for (let row = 0; row <= length - 4; row++) {
+                let currentInRow = 0, nextInRow = 0;
+                for (let offset = row; offset < row + 4; offset++) {
+                    if (board[offset][column] === currColor) {
+                        currentInRow++;
+                        nextInRow = 0
+                    } else if (board[offset][column] === nextColor) {
+                        nextInRow++;
+                        currentInRow = 0
+                    }
+                }
+                score += this.updateScore(currentInRow, nextInRow);
+                if (score <= -50 || score >= 50) return score;
+            }
+        }
+
+        //Check DIAGONALS
+        for (let column = 0; column <= length - 4; column++) {
+            for (let row = 0; row <= length - 4; row++) {
+                let currentInRow = 0, nextInRow = 0;
+                for (let offset = row; offset < row + 4; offset++) {
+                    if (board[offset][(offset - row) + column] === currColor) {
+                        currentInRow++;
+                        nextInRow = 0
+                    } else if (board[offset][(offset - row) + column] === nextColor) {
+                        nextInRow++;
+                        currentInRow = 0
+                    }
+                }
+                score += this.updateScore(currentInRow, nextInRow);
+                if (score <= -50 || score >= 50) return score;
+            }
+        }
+        for (let column = length - 1; column >= length - 4; column--) {
+            for (let row = 0; row <= length - 4; row++) {
+                let currentInRow = 0, nextInRow = 0;
+                for (let offset = row; offset < row + 4; offset++) {
+                    if (board[offset][column - (offset - row)] === currColor) {
+                        currentInRow++;
+                        nextInRow = 0
+                    } else if (board[offset][column - (offset - row)] === nextColor) {
+                        nextInRow++;
+                        currentInRow = 0
+                    }
+                }
+                score += this.updateScore(currentInRow, nextInRow);
+                if (score <= -50 || score >= 50) return score;
+            }
+        }
+
+        return score;
+    }
+
+    static updateScore(currentInRow, nextInRow) {
+        let points = 0;
+        switch (currentInRow) {
+            case 4:
+				points += 50;
+				break;
+            case 3:
+                points += 5;
+                break;
+            case 2:
+                points += 1;
+                break;
+            default:
+                break
+        }
+        switch (nextInRow) {
+            case 4:
+				points -= 50;
+				break;
+            case 3:
+                points -= 5;
+                break;
+            case 2:
+                points -= 1;
+                break;
+            default:
+                break
+        }
+        return points;
     }
 
     static redoMove() {
@@ -253,7 +362,7 @@ class GameState {
 
         // Update the scoreboard
         ScoreboardState.setScore(this.calcScore());
- 
+
         // Do animation by passing information to board
         BoardState.performMove(...this.curr_game_state.performed_move);
     }

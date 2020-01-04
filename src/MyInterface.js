@@ -78,7 +78,6 @@ class MyInterface extends CGFinterface {
      */
     lightsCheckBoxes(lights) {
         this.group_light = this.gui.addFolder("Lights");
-        this.group_light.open();
         this.lights = [];
 
         for (var key in lights) {
@@ -150,5 +149,5 @@ class MyInterface extends CGFinterface {
         group.add(this.scene, "playAnimation").name("Play");
         group.add(this.scene, "pauseAnimation").name("Pause");
         group.add(this.scene, "restartAnimation").name("Restart");
-      }
+    }
 }

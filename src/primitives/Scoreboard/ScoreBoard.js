@@ -35,7 +35,7 @@ class ScoreBoard extends  CGFobject {
             this.scene.translate(0, this.height/2, this.breadth/2 + 0.001);
             this.scene.rotate(Math.PI/2, 1, 0, 0);
             this.scene.scale(this.display_width, 1, this.display_height);
-           // this.display_background_material.apply(); ---------------------------------
+            this.display_background_material.apply();
             this.display_part.display();
         this.scene.popMatrix();
 

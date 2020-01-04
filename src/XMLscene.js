@@ -131,9 +131,6 @@ class XMLscene extends CGFscene {
         //this.camera = this.views[this.selectedView];
        // this.interface.setActiveCamera(this.camera);
 
-        //add the views dropdown to the interface
-        this.interface.viewsDropDown(viewsId);
-
         if (!this.menuMode) {
             // Already playing (not in menu mode), change player camera to the defined default
             this.setCurrentCamera(this.current_graph.defaultViewId);  
@@ -149,6 +146,7 @@ class XMLscene extends CGFscene {
         CameraHandler.resetZoom();
         this.camera = this.game_camera;
         this.menuMode = false;
+        this.enableLights();
     }
 
     /**
@@ -189,10 +187,7 @@ class XMLscene extends CGFscene {
                     this.lights[i].setSpotDirection(target.x - pos.x, target.y - pos.y, target.z - pos.z);
                 }
 
-                if (light.enableLight)
-                    this.lights[i].enable();
-                else
-                    this.lights[i].disable();
+                this.lights[i].disable();
 
                 this.lights[i].update();
                 this.lightsId[key] = i;
@@ -200,10 +195,29 @@ class XMLscene extends CGFscene {
                 i++;
             }
         }
+    }
+
+    enableLights() {
+        let i = 0;
+
+        for(var key in this.current_graph.lights) {
+            if (this.current_graph.lights.hasOwnProperty(key)) {
+                var light = this.current_graph.lights[key];
+
+                if (light.enableLight)
+                    this.lights[i].enable();
+                else
+                    this.lights[i].disable();
+
+                this.lights[i].update();
+
+                i++;
+            }
+        }
 
         //add lights checkbox and show lights to interface
-        this.interface.lightsCheckBoxes(this.current_graph.lights);
         this.interface.lightsCheckbox();
+        this.interface.lightsCheckBoxes(this.current_graph.lights);
     }
 
     /**
@@ -362,8 +376,6 @@ class XMLscene extends CGFscene {
                 this.animations[key] = new KeyframeAnimation(keyframeTrack);
             }
         }
-
-        this.interface.addAnimations();
     }
 
     /**

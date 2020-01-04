@@ -12,7 +12,7 @@ class Menu extends CGFobject {
         this.num_button_actions = button_actions.length;
 
         if (this.num_button_actions <= 3) {
-            this.menu_height = 2;
+            this.menu_height = 2.35;
             this.buttons_padding = this.button_spacing/4;
         } else {
             this.menu_height = 2 + (this.num_button_actions - 3) * this.button_spacing;
@@ -31,7 +31,7 @@ class Menu extends CGFobject {
     };
 
     display() {
-        if (this.num_button_actions > 3) {
+        if (this.num_button_actions > 4) {
             this.scene.scale(0.8, 0.8, 0.8);
         }
         this.scene.pushMatrix();
@@ -62,10 +62,9 @@ class Menu extends CGFobject {
 
     initMaterials(backgroundTexturePath) {
         let background_texture = new CGFtexture(this.scene, backgroundTexturePath);
-        let menu_body_texture = new CGFtexture(this.scene, "menu/resources/menuback.png");
 
         this.menu_material = new CGFappearance(this.scene);
-        this.menu_material.setAmbient(0.15, 0.15, 0.15, 1);
+        this.menu_material.setAmbient(0.61, 0.61, 0.61, 1);
         this.menu_material.setDiffuse(0.4, 0.4, 0.4, 1);
         this.menu_material.setSpecular(0.3, 0.3, 0.3, 1);
         this.menu_material.setEmission(0, 0, 0, 1);
@@ -74,10 +73,9 @@ class Menu extends CGFobject {
 
         this.menu_body_material = new CGFappearance(this.scene);
         this.menu_body_material.setAmbient(0.15, 0.15, 0.15, 1);
-        this.menu_body_material.setDiffuse(0.5, 0.5, 0.5, 1);
-        this.menu_body_material.setSpecular(0.3, 0.3, 0.3, 1);
+        this.menu_body_material.setDiffuse(0.15, 0.15, 0.15, 1);
+        this.menu_body_material.setSpecular(0.2, 0.2, 0.2, 1);
         this.menu_body_material.setEmission(0, 0, 0, 1);
         this.menu_body_material.setShininess(25);
-        this.menu_body_material.setTexture(menu_body_texture);
     }
 };

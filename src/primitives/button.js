@@ -23,7 +23,7 @@ class Button extends CGFobject {
         let metal_texture = new CGFtexture(this.scene, "primitives/resources/metal.jpg");
 
         this.metal_material = new CGFappearance(this.scene);
-        this.metal_material.setAmbient(0.15, 0.15, 0.15, 1);
+        this.metal_material.setAmbient(0.5, 0.5, 0.5, 1);
         this.metal_material.setDiffuse(0.5, 0.5, 0.5, 1);
         this.metal_material.setSpecular(0.3, 0.3, 0.3, 1);
         this.metal_material.setEmission(0, 0, 0, 1);
