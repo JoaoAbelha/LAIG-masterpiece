@@ -1,0 +1,39 @@
+1. Server Setup
+Consultar o ficheiro server.pl, no diretório prolog, e, após consultar o ficheiro 
+server.pl correr o predicado server.
+
+2. Regras do jogo
+<insert imagem bonita>
+
+Straight4 é um jogo idealizado para dois jogadores.Esté um jogado num tabuleiro 4x4,
+contudo o posicionamento das peças é feito nos vértices das células, 25 posições disponíveis.
+Cada jogador tem 4 peças para jogar.
+
+
+Cada jogador move uma peça por turno. Os quatro primeiros turnos de cada jogador consistem em 
+posicionar as peças no jogo e a partir daí as peças movem-se entre vértices adjacentes ligados 
+por uma linha. O tabuleiro começa, portanto, vazio.
+
+2.1 Objetivo
+O objetivo do jogo é colocar as suas quatro peças em linha, evitando que o adversário faça
+o mesmo.
+
+2.2 Movimentação das peças
+As 4 primeiras jogadas consistem em colocar todas as peças, por turnos, numa posição vazia do tabuleiro.
+O tabuleiro contem apenas algumas células, cujo dois vértices estão ligados por uma digonal.
+O movimento vertical e horizontal é sempre possível desde que não haja uma peça nessa posição adjacente.
+No jogo não há qualquer tipo de capturas, acabando por ficar o tabuleiro sempre com as 8 peças em jogo, após terem
+sido colocadas e não podendo uma peça ocupar a posicão da outra sem esta sair de lá primeiro.
+
+
+3. Instruções
+Inicialmente, é mostrado ao usuário um menu, onde deve escolher várias opções que definem o jogo a ser realizado.
+Em primeiro lugar, é escolhido o tipo de jogador (humano, bot random, bot greedy e bot inteligente), tanto para o primeiro
+como para o segundo joagador. Em seguida, a velocidade de cada turno pode ser definida: lenta, média ou rápida, reiniciando-se
+o contador após cada jogada.
+Depois do menu, a cena onde está o jogo é mostrada. Acompanhado do tabuleiro está o  temporizador que define o tempo restante
+que o jogador tem para realizar uma jogada. Caso não a faça a tempo, o jogador perde. Ainda é apresentado um objeto onde mostra 
+o score que é calculado pelo numero de peças em linha que tem. Por último, ainda está disponível um objeto que contem várias opções,
+que podem ser selecionadas com um botão, nomeadamente para recomeçar jogo, voltar para o menum fazer replay, voltar um move atrás.
+Um move é realizado, clicando, na peça que se deseja mover e, em seguida, no vértice da célula para onde desejamos mover.
+Se for uma movimentação válida, a movimentação será realizada, mudando o turno.
