@@ -64,7 +64,7 @@ class Menu extends CGFobject {
         let background_texture = new CGFtexture(this.scene, backgroundTexturePath);
         this.background.setBackgroundTexture(background_texture);
 
-        //let menu_body_texture = new CGFtexture(this.scene, "menu/resources/wood.jpg");
+        let menu_body_texture = new CGFtexture(this.scene, "menu/resources/wood.jpg");
 
         this.menu_body_material = new CGFappearance(this.scene);
         this.menu_body_material.setAmbient(0.15, 0.15, 0.15, 1);
@@ -72,6 +72,6 @@ class Menu extends CGFobject {
         this.menu_body_material.setSpecular(0.8, 0.1, 0.3, 1);
         this.menu_body_material.setEmission(0, 0, 0, 1);
         this.menu_body_material.setShininess(25);
-        //this.menu_body_material.setTexture(menu_body_texture);
+        this.menu_body_material.setTexture(menu_body_texture);
     }
 };

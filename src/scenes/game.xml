@@ -18,51 +18,29 @@
     </globals>
 
     <lights>
-        <omni id="sceneTop1" enabled="1">
-            <location x="2" y="15" z="5" w="1" />
+        <omni id="sceneTop" enabled="1">
+            <location x="15" y="25" z="125" w="1" />
             <ambient r="0" g="0" b="0" a="1" />
             <diffuse r="1" g="1" b="1" a="1" />
             <specular r="1" g="1" b="1" a="1" />
             <attenuation constant="1" linear="0" quadratic="0" />
         </omni>
         <omni id="sceneTop2" enabled="1">
-            <location x="5" y="15" z="5" w="1" />
+            <location x="15" y="15" z="-15" w="1" />
             <ambient r="0" g="0" b="0" a="1" />
             <diffuse r="1" g="1" b="1" a="1" />
             <specular r="1" g="1" b="1" a="1" />
             <attenuation constant="1" linear="0" quadratic="0" />
         </omni>
         <omni id="sceneTop3" enabled="1">
-            <location x="8" y="15" z="5" w="1" />
+            <location x="18" y="25" z="5" w="1" />
             <ambient r="0" g="0" b="0" a="1" />
             <diffuse r="1" g="1" b="1" a="1" />
             <specular r="1" g="1" b="1" a="1" />
             <attenuation constant="0" linear="1" quadratic="0" />
         </omni>
-        <omni id="mysteryLight" enabled="0">
-            <location x="6.5" y="3.5" z="8" w="1" />
-            <ambient r="0.3" g="0.3" b="0" a="1" />
-            <diffuse r="1" g="1" b="0" a="1" />
-            <specular r="1" g="1" b="0" a="1" />
-            <attenuation constant="0" linear="0" quadratic="1" />
-        </omni>
-        <spot id="goalPoleLight" enabled="0" angle="1" exponent="1">
-            <location x="1.5" y="5" z="8" w="1" />
-            <target x="1.5" y="0" z="7" />
-            <ambient r="0" g="0.15" b="0" a="1" />
-            <diffuse r="0.1" g="0.6" b="0.1" a="1" />
-            <specular r="0.1" g="0.6" b="0.1" a="1" />
-            <attenuation constant="0" linear="1" quadratic="0" />
-        </spot>
-        <spot id="bulletLight" enabled="0" angle="1" exponent="1">
-            <location x="6" y="8" z="9.5" w="1" />
-            <target x="8.5" y="7" z="8" />
-            <ambient r="0" g="0" b="0" a="1" />
-            <diffuse r="0.2" g="0.2" b="0.2" a="1" />
-            <specular r="1" g="1" b="1" a="1" />
-            <attenuation constant="0" linear="1" quadratic="0" />
-        </spot>
-        <spot id="coinsLight" enabled="0" angle="10" exponent="4">
+    
+        <spot id="sceneRight" enabled="0" angle="10" exponent="4">
             <location x="8.5" y="3" z="8" w="1" />
             <target x="8.5" y="1.5" z="9" />
             <ambient r="0.1" g="0.1" b="0" a="1" />
