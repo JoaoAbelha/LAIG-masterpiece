@@ -21,8 +21,8 @@ class cubeMap extends  CGFobject  {
 			material.setSpecular(0.3, 0.3, 0.3, 1);
 			material.setEmission(0, 0, 0, 1);
 			material.setShininess(10);
-			material.setTexture(new CGFtexture(this.scene, "scenes/images/background1.jpg"));
-			//material.setTexture(new CGFtexture(this.scene, filePath + "/" +  i.toString() + ".jpg"));
+			//material.setTexture(new CGFtexture(this.scene, "scenes/images/background1.jpg"));
+			material.setTexture(new CGFtexture(this.scene, filePath + "/" +  i.toString() + ".jpg"));
 			this.materials.push(material);
 		}
 
@@ -34,45 +34,62 @@ class cubeMap extends  CGFobject  {
 			this.scene.translate(0.0, -this.size/2, 0.0);
 			this.scene.scale(this.size,1, this.size);
 			this.materials[0].apply();
-			
 			this.plane.display();
 		this.scene.popMatrix();
+
+
 		//2
-		this.scene.pushMatrix();
-			this.scene.translate(0.0, +this.size/2, 0.0);
-			this.scene.rotate(Math.PI, 1.0, 0.0, 0.0);
-			this.scene.scale(this.size,1, this.size);
-			this.plane.display();
-		this.scene.popMatrix();
-		//3
-		this.scene.pushMatrix();
-			this.scene.translate(0.0, 0.0, -this.size/2);
-			this.scene.rotate(Math.PI/2, 1.0, 0.0, 0.0);
-			this.scene.scale(this.size,1, this.size);
-			this.plane.display();
-		this.scene.popMatrix();
-		//4
-		this.scene.pushMatrix();
-			this.scene.rotate(Math.PI, 0.0, 1.0, 0.0);
-			this.scene.translate(0.0, 0.0, -this.size/2);
-			this.scene.rotate(Math.PI/2, 1.0, 0.0, 0.0);
-			this.scene.scale(this.size,1, this.size);
-			this.plane.display();
-		this.scene.popMatrix();
-		//5
 		this.scene.pushMatrix();
 			this.scene.rotate(Math.PI/2, 0.0, 1.0, 0.0);
 			this.scene.translate(0.0, 0.0, -this.size/2);
 			this.scene.rotate(Math.PI/2, 1.0, 0.0, 0.0);
 			this.scene.scale(this.size,1, this.size);
+			this.materials[1].apply();
+
 			this.plane.display();
 		this.scene.popMatrix();
+
+
+		//3
+		this.scene.pushMatrix();
+			this.scene.translate(0.0, 0.0, -this.size/2);
+			this.scene.rotate(Math.PI/2, 1.0, 0.0, 0.0);
+			this.scene.scale(this.size,1, this.size);
+			this.materials[2].apply();
+
+			this.plane.display();
+
+		this.scene.popMatrix();
+
+				//4
+			this.scene.pushMatrix();
+		this.scene.rotate(Math.PI, 0.0, 1.0, 0.0);
+		this.scene.translate(0.0, 0.0, -this.size/2);
+		this.scene.rotate(Math.PI/2, 1.0, 0.0, 0.0);
+		this.scene.scale(this.size,1, this.size);
+		this.materials[3].apply();
+		this.plane.display();
+			this.scene.popMatrix();
+
+
+				//5
+			this.scene.pushMatrix();
+		this.scene.translate(0.0, +this.size/2, 0.0);
+		this.scene.rotate(Math.PI, 1.0, 0.0, 0.0);
+		this.scene.scale(this.size,1, this.size);
+		this.materials[4].apply();
+		this.plane.display();
+			this.scene.popMatrix();
+
+		//5
+
 		//6
 		this.scene.pushMatrix();
 			this.scene.rotate(-Math.PI/2, 0.0, 1.0, 0.0);
 			this.scene.translate(0.0, 0.0, -this.size/2);
 			this.scene.rotate(Math.PI/2, 1.0, 0.0, 0.0);
 			this.scene.scale(this.size,1, this.size);
+			this.materials[5].apply();
 			this.plane.display();
 		this.scene.popMatrix();
 	}

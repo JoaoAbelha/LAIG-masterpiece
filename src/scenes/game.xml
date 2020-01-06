@@ -3,8 +3,8 @@
 
     <views default="player_camera" >
         <perspective id="player_camera" near="0.1" far="90" angle="60">
-            <from x="-10" y="10" z="2" />
-            <to x="2" y="0" z="2" />
+            <from x="10" y="10" z="10" />
+            <to x="0" y="0" z="0" />
         </perspective>
         <perspective id="spectator_camera" near="0.1" far="90" angle="60">
             <from x="4" y="10" z="0.4" />
@@ -73,14 +73,6 @@
     </lights>
 
     <textures>
-        <texture id="tijolo" file="scenes/images/tijolo.jpg" />
-        <texture id="surprise" file="scenes/images/surprise.jpg" />
-        <texture id="bellTop" file="scenes/images/top.jpg" />
-        <texture id="flag" file="scenes/images/flag.png" />
-        <texture id="background1" file="scenes/images/background1.jpg" />
-        <texture id="background2" file="scenes/images/background2.jpg" />
-        <texture id="mushroomBottom" file="scenes/images/mushroombottom.png" />
-        <texture id="kartflag" file="scenes/images/kartflag.png" />
         <texture id="board_texture" file="scenes/images/board.PNG"/>
         <texture id="skyHeightMap" file="scenes/images/sky/height.png"/>
         <texture id="skyColorMap" file="scenes/images/sky/colormap.png"/>
@@ -88,8 +80,11 @@
         <texture id="water" file="scenes/images/water/sea.jpg"/>
         <texture id="sand" file="scenes/images/islandTerrain/sand.jpg"/>
         <texture id="islandHeightMap" file="scenes/images/islandTerrain/islandHeightMap.jpg"/>
-        <texture id="green" file="scenes/images/green.png"/>
-        <texture id="yellow" file="scenes/images/yellow.png"/>
+        <texture id="wood" file="scenes/images/wood.jpg"/>
+        <texture id="straw" file="scenes/images/straw.jpg"/>
+        <texture id="stripe" file="scenes/images/stripes.png"/>
+        <texture id="palmTree" file="./scenes/images/palmTree.jpg"/>
+
     </textures>
 
     <materials>
@@ -102,7 +97,7 @@
         <material id="brown" shininess="10">
             <emission r="0" g="0" b="0" a="1" />
             <ambient r="0.44" g="0.26" b="0.04" a="1" />
-            <diffuse r="0.2" g="0.15" b="0.05" a="1" />
+            <diffuse r="0.4" g="0.4" b="0.4" a="1" />
             <specular r="0.1" g="0.05" b="0" a="1" />
         </material>
         <material id="white" shininess="10">
@@ -165,6 +160,7 @@
             <diffuse r="0.1" g="0.1" b="0.8" a="1" />
             <specular r="0.1" g="0.1" b="1" a="1" />
         </material>
+
     </materials>
 
     <transformations>
@@ -199,37 +195,63 @@
         <transformation id="bulletBillTransf">
             <translate x="9" y="7" z="9" />
         </transformation>
-        <transformation id="bellTreeTransf">
+        <transformation id="bellTransf">
             <translate x="8" y="0" z="3" />
         </transformation>
         <transformation id="goalPoleTransf">
             <translate x="1.5" y="0" z="7" />
         </transformation>
         <transformation id = "translationSky">
-            <translate x="0" y="14" z="0"/>
+            <translate x="0" y="49" z="0"/>
         </transformation>
         <transformation id = "translationSea">
             <translate x="0" y="-10" z="0"/>
         </transformation>
         <transformation id = "translationIsland">
-            <translate x="0" y="-8" z="0"/>
+            <translate x="0" y="2" z="0"/>
         </transformation>
 
     </transformations>
     
     <animations>
-        <animation id="flag_move">
-            <keyframe instant="24">
-                <translate x="0" y="0" z="0" />
-                <rotate angle_x="0" angle_y="0" angle_z="0" />
-                <scale x="1" y="1" z="1" />
+        <animation id="seaMarker">
+            <keyframe instant="5">
+            <translate x="0" y="0" z="0" />
+            <rotate angle_x="0" angle_y="20" angle_z="0" />
+            <scale x="1" y="1" z="1" />
             </keyframe>
-            <keyframe instant="30">
-                <translate x="0" y="3" z="0" />
-                <rotate angle_x="0" angle_y="0" angle_z="0" />
-                <scale x="1" y="1" z="1" />
+            <keyframe instant="15">
+            <translate x="0" y="0" z="0" />
+            <rotate angle_x="0" angle_y="-20" angle_z="0" />
+            <scale x="1" y="1" z="1" />
             </keyframe>
+            <keyframe instant="25">
+            <translate x="0" y="0" z="0" />
+            <rotate angle_x="0" angle_y="20" angle_z="0" />
+            <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="35">
+            <translate x="0" y="0" z="0" />
+            <rotate angle_x="0" angle_y="-20" angle_z="0" />
+            <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="45">
+            <translate x="0" y="0" z="0" />
+            <rotate angle_x="0" angle_y="20" angle_z="0" />
+            <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="60">
+            <translate x="0" y="0" z="0" />
+            <rotate angle_x="0" angle_y="-20" angle_z="0" />
+            <scale x="1" y="1" z="1" />
+            </keyframe>  
+            <keyframe instant="65">
+            <translate x="0" y="0" z="0" />
+            <rotate angle_x="0" angle_y="0" angle_z="0" />
+            <scale x="1" y="1" z="1" />
+            </keyframe>             
         </animation>
+
     </animations>
 
 
@@ -237,6 +259,7 @@
         <primitive id="wall">
             <rectangle x1="0" y1="0" x2="1" y2="1" />
         </primitive>
+
         <primitive id="board">
             <gameboard texture="board_texture"/>
         </primitive>
@@ -246,27 +269,97 @@
         <primitive id="score">
             <scoreboard />
         </primitive>
+
+        <primitive id="cubeMap">
+            <cubeMap folderPath = "scenes/images/island" size ="50" />
+        </primitive>
+        <primitive id="sky">
+            <sky size ="50" height = "skyHeightMap" colorMap = "skyColorMap" />
+        </primitive>
+        <primitive id="sea">
+            <water size ="50" height = "waterHeightMap" color = "water"/>
+        </primitive>
+        <primitive id="islandTerrain">
+            <sand size ="35" height = "islandHeightMap" color = "sand"/>
+        </primitive>
+        <primitive id="cubeFace">
+            <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+        </primitive>
+        <primitive id="parsolBody">
+            <cylinder base="0.15" top="0.15" height="10" slices="10" stacks="6" />
+        </primitive>
+        <primitive id="parsolTop">
+            <cylinder base="5" top="0" height="3.5" slices="20" stacks="6" />
+        </primitive>
+
+         <primitive id="floater">
+            <torus inner="1" outer="2" slices="20" loops="20" />
+        </primitive>
+
+        <primitive id="SeaMarkerTop">
+            <cylinder base="2" top="1" height="2" slices="8" stacks="2" />
+        </primitive>
+
+
+        <primitive id="demoRectangle">
+            <rectangle x1="-1" y1="-1" x2="1" y2="1" />
+        </primitive>
+
+        <primitive id="demoTriangle">
+            <triangle x1="-1" y1="0" z1="1"
+                     x2="1" y2="0" z2="1"
+                     x3="0" y3="2" z3="0"/>
+        </primitive>
+
+        <primitive id="demoCylinder">
+            <cylinder base="1" top="1" height="1" slices="8" stacks="8" />
+        </primitive>
+
+        <primitive id="demoSphere">
+            <sphere radius="1" slices="8" stacks="8" />
+        </primitive>
+
+        <primitive id="markerTorus">
+            <torus inner="1.1" outer="2" slices="12" loops="12" />
+        </primitive>
+
+        <primitive id="bellHeadTopPrim">
+            <sphere radius="0.75" slices="20" stacks="20" />
+        </primitive>
+        <primitive id="bellHeadMiddlePrim">
+            <cylinder base="1.5" top="1.5" height="2" slices="20" stacks="6" />
+        </primitive>
+        <primitive id="bellHeadBottomPrim">
+            <torus inner="0.3" outer="1.5" slices="20" loops="20" />
+        </primitive>
+        <primitive id="bellBodyPrim">
+            <cylinder base="0.35" top="0.35" height="3" slices="20" stacks="6" />
+        </primitive>
+
+        <primitive id="fishSphere">
+            <sphere radius="1" slices="20" stacks="20" />
+        </primitive>
+
+        <primitive id="fishTriangle1">
+            <triangle x1="0" y1="0" z1="-3" x2="0" y2="2" z2="0" x3="0" y3="0" z3="0"/>
+        </primitive>
+
+        <primitive id="fishTriangle2">
+            <triangle x1="0" y1="0.5" z1="0" x2="-0.5" y2="0" z2="0" x3="0.5" y3="0" z3="0"/>
+        </primitive>
+        <primitive id="fishTriangle3">
+            <triangle x1="0" y1="0.5" z1="0" x2="-0.5" y2="0" z2="0" x3="0.5" y3="0" z3="0"/>
+        </primitive>
+
+          <primitive id="palmTree">
+            <objfile file="scenes/models/beachChair.obj"/>
+        </primitive>
+
         <primitive id="gamecontrols">
             <gamecontrols />
         </primitive>
-        <primitive id="mushroom">
-            <mushroom />
-        </primitive>
-        <primitive id="coolpiece">
-            <coolpiece />
-        </primitive>
-        <primitive id="cubeMap">
-            <cubeMap folderPath = "scenes/images/island" size ="30" />
-        </primitive>
-        <primitive id="sky">
-            <sky size ="30" height = "skyHeightMap" colorMap = "skyColorMap" />
-        </primitive>
-        <primitive id="sea">
-            <water size ="30" height = "waterHeightMap" color = "water"/>
-        </primitive>
-        <primitive id="islandTerrain">
-            <sand size ="25" height = "islandHeightMap" color = "sand"/>
-        </primitive>
+
+
 
     </primitives>
 
@@ -278,125 +371,171 @@
             <materials>
                 <material id="matRegular" />
             </materials>
-            <texture id="none" />
+            <texture id="none"/>
             <children>
-                <componentref id="floor" />
+                <componentref id="scenary" />
+                <primitiveref id ="sea"/>
+                <componentref id="island" />
+                <componentref id="sky" />
+                <componentref id="table" />
+                <componentref id="parasol" />
+                <componentref id="floater" />
+                <componentref id="seaMarker" />
+                <componentref id ="cardume"/>
+                <componentref id="game"/>
+                <!--<componentref id = "palmTree"/> -->
+
             </children>
         </component>
-        <component id="floor">
+
+        <component id="palmTree">
             <transformation>
-                <translate x="0" y="0" z="0" />
-                <rotate axis="x" angle="-90" />
+            <translate x="-9" y="3" z="-1" />
+            <rotate axis="y" angle="-90" />
+            <scale x="0.005" y="0.005" z="0.005"/>
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="palmTree" length_s= "1" length_t = "1"/>
+            <children>
+                <primitiveref id = "palmTree"/>
+            </children>
+        </component>
+
+        <component id="cardume">
+            <transformation>
             </transformation>
             <materials>
                 <material id="brown" />
             </materials>
             <texture id="none"/>
             <children>
-                <componentref id="room"/>
-                <componentref id="game"/>
+                <componentref id = "fishref1"/>
+                <componentref id = "fishref2"/>
+                <componentref id = "fishref3"/>
+                <componentref id = "fishref4"/>
+                <componentref id = "fishref5"/>
             </children>
         </component>
-        <component id="room">
+
+        <component id="fishref1">
             <transformation>
+            <translate x = "-15" y = "5" z = "14"/>
+            </transformation>
+            <materials>
+                <material id="orange" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id = "fish"/>
+            </children>
+        </component>
+                <component id="fishref2">
+            <transformation>
+            <translate x = "17" y = "5" z = "-12.5"/>
+            </transformation>
+            <materials>
+                <material id="blue" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id = "fish"/>
+            </children>
+        </component>
+        <component id="fishref3">
+            <transformation>
+            <translate x = "-12" y = "5" z = "-18"/>
+            </transformation>
+            <materials>
+                <material id="yellow" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id = "fish"/>
+            </children>
+        </component>
+        <component id="fishref4">
+            <transformation>
+            <translate x = "-20" y = "5" z = "22"/>
+            </transformation>
+            <materials>
+                <material id="grey" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id = "fish"/>
+            </children>
+        </component>
+        <component id="fishref5">
+            <transformation>
+            <translate x = "12" y = "5" z = "12"/>
+            </transformation>
+            <materials>
+                <material id="brown" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id = "fish"/>
+            </children>
+        </component>
+
+        <component id="floater">
+            <transformation>
+                <translate x="9" y="1.8" z="9" />
+                <rotate axis="x" angle="-70" />
+            </transformation>
+            <materials>
+                <material id="brown" />
+            </materials>
+            <texture id="stripe" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id= "floater"/>
+            </children>
+        </component>
+
+          <component id="parasol">
+            <transformation>
+                <translate x="5" y="3" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id= "parsolBody"/>
+                <componentref id= "parasolTop"/>
+            </children>
+        </component>
+
+        <component id="parasolTop">
+            <transformation>
+                <translate x="0" y="0" z="8" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit" />
+            <texture id="straw" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id= "parsolTop"/>
+            </children>
+        </component>
+
+      
+        <component id="scenary">
+            <transformation>
+                <translate x="0" y="24" z="0" />
+            </transformation>
+            <materials>
+                <material id="brown" />
+            </materials>
+            <texture id="none"/>
             <children>
                 <primitiveref id="cubeMap"/>
-                <componentref id="sky"/>
-                <componentref id="sea"/>
-                <componentref id="island"/>
             </children>
         </component>
-        <component id="game">
-            <transformation>
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <componentref id="board" />
-                <componentref id="timer" />
-                <componentref id="scoreboard" />
-                <componentref id="gamecontrols" />
-            </children>
-        </component>
-        <component id="board">
-            <transformation>
-            </transformation>
-            <animations></animations>
-            <materials>
-                <material id="matRegular" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <primitiveref id="board" />
-            </children>
-        </component>
-        <component id="timer">
-            <transformation>
-            </transformation>
-            <animations></animations>
-            <materials>
-                <material id="matRegular" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <primitiveref id="timer" />
-            </children>
-        </component>
-        <component id="scoreboard">
-            <transformation>
-            </transformation>
-            <animations></animations>
-            <materials>
-                <material id="matRegular" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <primitiveref id="score" />
-            </children>
-        </component>
-        <component id="gamecontrols">
-            <transformation>
-            </transformation>
-            <animations></animations>
-            <materials>
-                <material id="matRegular" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <primitiveref id="gamecontrols" />
-            </children>
-        </component>
-        <component id="sky">
-            <transformation>
-            <transformationref id = "translationSky"/>
-            </transformation>
-            <materials>
-                <material id="matRegular" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <primitiveref id = "sky"/>
-            </children>
-        </component>
-        <component id="sea">
-            <transformation>
-            <transformationref id = "translationSea"/>
-            </transformation>
-            <materials>
-                <material id="matRegular" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <primitiveref id = "sea"/>
-            </children>
-        </component>
+
         <component id="island">
             <transformation>
             <transformationref id = "translationIsland"/>
@@ -409,24 +548,661 @@
                 <primitiveref id = "islandTerrain"/>
             </children>
         </component>
+
+        <component id="sky">
+            <transformation>
+            <transformationref id = "translationSky"/>
+            </transformation>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id = "sky"/>
+            </children>
+        </component>
+
+        <component id="game">
+            <transformation>
+                <translate x="2" y="5.8" z="-2" />
+                 <rotate axis="y" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="brown" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="board" />
+                <primitiveref id="score" />
+                <componentref id = "timer"/>
+                <primitiveref id="gamecontrols" />
+
+            </children>
+        </component>
+
+        <component id="sea">
+            <transformation>
+            <transformationref id = "translationSea"/>
+            </transformation>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id = "sea"/>
+            </children>
+        </component>
+        <component id="timer">
+            <transformation>
+            <transformationref id = "translationTimer"/>
+            </transformation>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id = "timer"/>
+            </children>
+        </component>
+          <component id="table">
+            <transformation>
+                <translate x="0" y="1.7" z="0" />
+            </transformation>
+            <materials>
+                <material id="brown" />
+            </materials>
+            <texture id="wood" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="table_top"/>
+                <componentref id="table_legCross1"/>
+                <componentref id="table_legCross2"/>
+              
+            </children>
+        </component>
+
+        <component id="table_top">
+            <transformation>
+                <translate x="0" y="4" z="0" />
+                <rotate axis="x" angle="-90" />
+                 <scale x="4" y="6.5" z="0.1" />
+            </transformation>
+            <materials>
+                <material id="brown" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+          <component id="table_legCross1">
+            <transformation>
+                <translate x="3.5" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="brown" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="table_leg1"/>
+                <componentref id="table_leg2"/>
+            </children>
+        </component>
+
+        <component id="table_legCross2">
+            <transformation>
+                <translate x="-0.5" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="brown" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="table_leg1"/>
+                <componentref id="table_leg2"/>
+            </children>
+        </component>
+
+
+        <component id="table_leg1">
+            <transformation>
+                <translate x="-1.5" y="3" z="0" />
+                 <rotate axis="x" angle="-60" />
+                 <scale x="0.3" y="4" z="0.3" />
+            </transformation>
+            <materials>
+                <material id="brown" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+
+        <component id="table_leg2">
+            <transformation>
+                <translate x="-1.5" y="3" z="0" />
+                 <rotate axis="x" angle="60" />
+                 <scale x="0.3" y="4" z="0.3" />
+            </transformation>
+            <materials>
+                <material id="brown" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+
+        <component id="cube">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="cubeTop" />
+                <componentref id="cubeBottom" />
+                <componentref id="cubeLeft" />
+                <componentref id="cubeRight" />
+                <componentref id="cubeFront" />
+                <componentref id="cubeBack" />
+            </children>
+        </component>
+     
+        <component id="cubeBack">
+            <transformation>
+                <translate x="0" y="0" z="-0.5" />
+                <rotate axis="y" angle="180" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="cubeFace" />
+            </children>
+        </component>
+
+        <component id="cubeFront">
+            <transformation>
+                <translate x="0" y="0" z="0.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="cubeFace" />
+            </children>
+        </component>
+
+        <component id="cubeRight">
+            <transformation>
+                <translate x="0.5" y="0" z="0" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="cubeFace" />
+            </children>
+        </component>
+        <component id="cubeLeft">
+            <transformation>
+                <translate x="-0.5" y="0" z="0" />
+                <rotate axis="y" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="cubeFace" />
+            </children>
+        </component>
+        <component id="cubeTop">
+            <transformation>
+                <translate x="0" y="0.5" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="cubeFace" />
+            </children>
+        </component>
+        <component id="cubeBottom">
+            <transformation>
+                <translate x="0" y="-0.5" z="0" />
+                <rotate axis="x" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="cubeFace" />
+            </children>
+        </component>
+
+        
+        <component id="seaMarker">
+            <transformation>
+                <translate x="20" y="1.7" z="20" />
+                <scale x="0.6" y="0.6" z="0.6" />
+            </transformation>
+              <animationref id="seaMarker" />
+
+            <materials>
+                <material id="orange" />
+            </materials>
+
+            <texture id="none"/>
+
+            <children>
+                <componentref id="Base" />
+                <componentref id="supporters" />
+                <componentref id="SeaMarkerTop" />
+            </children>
+        </component>
+
+        <component id="Base">
+            <transformation>
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="orange" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="markerTorus" />
+            </children>
+        </component>
+
+        <component id="basePilar">
+            <transformation>
+                <scale x="0.3" y="6" z="0.3" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="demoCylinder" />
+            </children>
+        </component>
+
+        <component id="support1">
+            <transformation>
+                <translate x="2" y="0" z="0" />
+            </transformation>
+
+            <materials>
+                <material id="inherit" />
+            </materials>
+
+            <texture id="inherit" />
+
+            <children>
+                <componentref id="basePilar" />
+            </children>
+        </component>
+
+        <component id="support2">
+            <transformation>
+                <translate x="-2" y="0" z="0" />
+            </transformation>
+
+            <materials>
+                <material id="inherit" />
+            </materials>
+
+            <texture id="inherit" />
+
+            <children>
+                <componentref id="basePilar" />
+            </children>
+        </component>
+
+        <component id="support3">
+            <transformation>
+                <translate x="0" y="0" z="2" />
+            </transformation>
+
+            <materials>
+                <material id="inherit" />
+            </materials>
+
+            <texture id="inherit" />
+
+            <children>
+                <componentref id="basePilar" />
+            </children>
+        </component>
+
+        <component id="support4">
+            <transformation>
+                <translate x="0" y="0" z="-2" />
+            </transformation>
+
+            <materials>
+                <material id="inherit" />
+            </materials>
+
+            <texture id="inherit" />
+
+            <children>
+                <componentref id="basePilar" />
+            </children>
+        </component>
+
+        <component id="supporters">
+            <transformation>
+            </transformation>
+
+            <materials>
+                <material id="grey" />
+            </materials>
+
+            <texture id="none"/>
+
+            <children>
+                <componentref id="support1" />
+                <componentref id="support3" />
+                <componentref id="support2" />
+                <componentref id="support4" />
+            </children>
+        </component>
+
+        <component id="SeaMarkerTop">
+            <transformation>
+            </transformation>
+
+            <materials>
+                <material id="orange" />
+            </materials>
+
+            <texture id="none"/>
+
+            <children>
+                <componentref id="SeaMarkerTop1"/>
+                <componentref id = "bell"/>
+            </children>
+        </component>
+
+
+
+        <component id="SeaMarkerTop1">
+            <transformation>
+                <translate x="0" y="6" z="0"/>
+                <rotate axis="x" angle="-90" />
+                <scale x="1.7" y="1.7" z ="1.7"/>
+
+            </transformation>
+
+            <materials>
+                <material id="orange" />
+            </materials>
+
+            <texture id="none"/>
+
+            <children>
+                <primitiveref id="SeaMarkerTop"/>
+            </children>
+        </component>
+
+
+         <component id="bell">
+            <transformation>
+                <translate x="0" y="4.2" z="0"/>
+                <scale x="0.5" y="0.6" z ="0.5"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="bellHead" />
+                <componentref id="bellBody" />
+            </children>
+        </component>
+           <component id="bellHead">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="yellow" />
+                <material id="green" />
+                <material id="gold" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="bellHeadBottom" />
+                <componentref id="bellHeadMiddle" />
+                <componentref id="bellHeadTop" />
+            </children>
+        </component>
+
+        <component id="bellBody">
+            <transformation>
+                <transformationref id="standupY" />
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="bellBodyPrim" />
+            </children>
+        </component>
+        <component id="bellHeadBottom">
+            <transformation>
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="bellHeadBottomPrim" />
+            </children>
+        </component>
+        <component id="bellHeadMiddle">
+            <transformation>
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="bellHeadMiddlePrim" />
+            </children>
+        </component>
+        <component id="bellHeadTop">
+            <transformation>
+                <translate x="0" y="2" z="0" />
+                <scale x="2" y="1" z="2" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="bellHeadTopPrim" />
+            </children>
+        </component>
+
+        <component id="fish">
+            <transformation>
+                <translate x="-2" y="-5" z="-0.3" />
+                <scale x= "2" y = "2" z = "2"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="fishBody" />
+                <componentref id="fishEye1" />
+                <componentref id="fishEye2" />
+                <componentref id="fishFin1"/>
+                <componentref id="fishFin2"/>
+                <componentref id="fishFin3"/>
+                <componentref id="fishFin4"/>
+
+                <componentref id="tail1" />
+            </children>
+        </component>
+
+        <component id="fishBody">
+            <transformation>
+                <scale x="0.6" y="0.3" z="0.4" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="fishSphere" />
+            </children>
+        </component>
+
+
+        <component id="fishEye1">
+            <transformation>
+                <translate x="-0.3" y="0" z="0.3" />
+                <scale x="0.1" y="0.1" z="0.1" />
+            </transformation>
+            <materials>
+                <material id="black" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="fishSphere" />
+            </children>
+        </component>
+
+        <component id="fishEye2">
+            <transformation>
+                <translate x="-0.3" y="0" z="-0.3" />
+                <scale x="0.1" y="0.1" z="0.1" />
+            </transformation>
+            <materials>
+                <material id="black" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="fishSphere" />
+            </children>
+        </component>
+
+
+        <component id="fishFin1">
+            <transformation>
+                <scale x="0.2" y="0.2" z="0.1" />
+                <rotate axis="y" angle="90" />
+                <translate x="0" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="fishTriangle1" />
+            </children>
+        </component>
+
+        <component id="fishFin2">
+            <transformation>
+             <scale x="0.25" y="0.25" z="0.2" />
+            <rotate axis="z" angle="110" />
+            <translate x="0" y="0" z="-0.3" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="fishTriangle1" />
+            </children>
+        </component>
+
+        <component id="fishFin3">
+            <transformation>
+                <scale x="0.4" y="0.4" z="0.2" />
+                <translate x="0" y="-0.6" z="0" />
+                <rotate axis="z" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="fishTriangle2" />
+            </children>
+        </component>
+
+ 
+        <component id="fishFin4">
+            <transformation>
+             <scale x="0.25" y="0.25" z="0.2" />
+            <rotate axis="z" angle="110" />
+            <rotate axis="y" angle="180" />
+            <translate x="0" y="0" z="-0.3" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="fishTriangle1" />
+            </children>
+        </component>
+
+
+                 <component id="tail1">
+            <transformation>
+                <rotate axis="z" angle="90" />
+                <translate x="0" y="-0.8" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="fishTriangle3" />
+            </children>
+        </component> 
+
     </components>
 
     <pieces>
         <piece_green>
             <transformation>
-                <scale x="1.5" y="1.5" z="1.5" />
-                <rotate axis="y" angle="90" />
+                <translate x="0" y="0" z="0" />
+                <rotate axis="x" angle="-90" />
             </transformation>
-            <material id="matRegular" />
-            <texture id="green" length_s="1" length_t="1" />
-            <primitive id="mushroom" />
+            <material id="grey" />
+            <texture id="none" />
+            <primitive id="wall" />
         </piece_green>
         <piece_yellow>
             <transformation>
+                <translate x="0" y="0" z="0" />
+                <rotate axis="x" angle="-90" />
             </transformation>
-            <material id="matRegular" />
-            <texture id="yellow" length_s="1" length_t="1" />
-            <primitive id="coolpiece" />
+            <material id="grey" />
+            <texture id="none" />
+            <primitive id="wall" />
         </piece_yellow>
     </pieces>
         
