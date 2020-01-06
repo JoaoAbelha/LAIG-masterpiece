@@ -3,18 +3,18 @@
 
     <views default="player_camera" >
         <perspective id="player_camera" near="0.1" far="90" angle="60">
-            <from x="10" y="10" z="10" />
-            <to x="0" y="0" z="0" />
+            <from x="0" y="8.7" z="4" />
+            <to x="0" y="5.7" z="0" />
         </perspective>
         <perspective id="spectator_camera" near="0.1" far="90" angle="60">
-            <from x="4" y="10" z="0.4" />
-            <to x="0" y="5.3" z="0" />
+            <from x="4" y="10" z="0" />
+            <to x="0" y="5.7" z="0" />
         </perspective>
     </views>
 
     <globals>
         <ambient r="0.6" g="0.6" b="0.6" a="1" />
-        <background r="0.8" g="0.1" b="1" a="1" />
+        <background r="0.365" g="0.365" b="0.365" a="1" />
     </globals>
 
     <lights>
@@ -347,7 +347,6 @@
     <components>
         <component id="rootComp">
             <transformation>
-            <transformationref id = "rotation"/>
             </transformation>
             <materials>
                 <material id="matRegular" />
@@ -477,7 +476,7 @@
 
           <component id="parasol">
             <transformation>
-                <translate x="5" y="3" z="0" />
+                <translate x="5" y="3" z="-3" />
                 <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
@@ -546,7 +545,7 @@
         <component id="game">
             <transformation>
                 <translate x="0" y="5.7" z="0"/>
-                <scale x="0.6" y="0.6" z="0.6" />
+                <scale x="0.55" y="0.55" z="0.55" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -575,7 +574,7 @@
         </component>
         <component id="timer">
             <transformation>
-                <translate x="3" y="0" z="-0.8" />
+                <translate x="3" y="0.3" z="-0.8" />
                 <rotate axis="y" angle="-90" />
             </transformation>
             <animations></animations>
@@ -589,7 +588,7 @@
         </component>
         <component id="scoreboard">
             <transformation>
-                <translate x="3" y="0" z="0.8" />
+                <translate x="3" y="0.3" z="0.8" />
                 <rotate axis="y" angle="-90" />
             </transformation>
             <animations></animations>
@@ -603,9 +602,9 @@
         </component>
         <component id="gamecontrols">
             <transformation>
-                <translate x="-3" y="1.4" z="0" />
+                <translate x="-3" y="1.7" z="0" />
                 <rotate axis="y" angle="90" />
-                <scale x="1.2" y="1.2" z="1.2" />
+                <scale x="1.5" y="1.5" z="1.2" />
             </transformation>
             <animations></animations>
             <materials>

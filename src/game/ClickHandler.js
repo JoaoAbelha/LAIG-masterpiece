@@ -21,7 +21,6 @@ class ClickHandler {
     }
 
     static verifyClick(clickId) {
-        console.log(clickId);
         if (clickId >= 0 && clickId < 25) {
             this.boardClickHandler(clickId);
         } else if (clickId > 25 && clickId < 100) {

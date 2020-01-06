@@ -3,18 +3,18 @@
 
     <views default="player_camera" >
         <perspective id="player_camera" near="0.1" far="90" angle="60">
-            <from x="10" y="10" z="10" />
-            <to x="0" y="0" z="0" />
+            <from x="4.2" y="2.5" z="4" />
+            <to x="2.75" y="1.5" z="4" />
         </perspective>
         <perspective id="spectator_camera" near="0.1" far="90" angle="60">
-            <from x="4" y="10" z="0.4" />
-            <to x="0" y="5.3" z="0" />
+            <from x="2.75" y="3" z="3" />
+            <to x="2.75" y="1.5" z="4" />
         </perspective>
     </views>
 
     <globals>
         <ambient r="0.6" g="0.6" b="0.6" a="1" />
-        <background r="0.14" g="0.6" b="1" a="1" />
+        <background r="0.365" g="0.365" b="0.365" a="1" />
     </globals>
 
     <lights>
@@ -82,6 +82,8 @@
         <texture id="mushroomBottom" file="scenes/images/mushroombottom.png" />
         <texture id="kartflag" file="scenes/images/kartflag.png" />
         <texture id="board_texture" file="scenes/images/board.PNG"/>
+        <texture id="green" file="scenes/images/green.png"/>
+        <texture id="yellow" file="scenes/images/yellow.png"/>
     </textures>
 
     <materials>
@@ -580,6 +582,9 @@
             <gamecontrols />
         </primitive>
 
+        <primitive id="mushroom">
+            <mushroom />
+        </primitive>
     </primitives>
 
     <components>
@@ -604,16 +609,16 @@
                 <componentref id="bellTree" />
                 <componentref id="goalPole" />
                 <componentref id="floor" />
-                <componentref id="game"/>
                 <componentref id="marioKartPlayer1" />
                 <componentref id="marioKartPlayer2" />
+                <componentref id="game"/>
             </children>
         </component>
 
           <component id="marioKartPlayer1">
             <transformation>
-        <translate x="2.5" y="0.3" z="4" />
-        <scale x = "0.8" y = "0.8" z = "0.8"/>
+                <translate x="2.5" y="0.3" z="4" />
+                <scale x = "0.8" y = "0.8" z = "0.8"/>
             </transformation>
             <materials>
                 <material id="matRegular" />
@@ -626,9 +631,9 @@
 
         <component id="marioKartPlayer2">
             <transformation>
-            <translate x="2.5" y="0.3" z="4" />
-            <scale x = "0.8" y = "0.8" z = "0.8"/>
-            <rotate axis="y" angle="180" />
+                <translate x="3" y="0.3" z="4" />
+                <scale x = "0.8" y = "0.8" z = "0.8"/>
+                <rotate axis="y" angle="180" />
             </transformation>
             <materials>
                 <material id="matRegular" />
@@ -641,33 +646,79 @@
 
         <component id="game">
             <transformation>
-                <translate x="2" y="1.5" z="3.5" />
-                 <scale x = "0.3" y = "0.3" z = "0.3"/>
+                <translate x="2.75" y="1.5" z="4" />
+                <scale x = "0.2" y = "0.2" z = "0.2"/>
+                <rotate axis="y" angle="90" />
             </transformation>
             <materials>
-                <material id="brown" />
+                <material id="inherit" />
             </materials>
-            <texture id="none"/>
+            <texture id="inherit" />
             <children>
-                <primitiveref id="board" />
-                <primitiveref id="score" />
-                <componentref id = "timer"/>
-                <primitiveref id="gamecontrols" />
+                <componentref id="board" />
+                <componentref id="timer" />
+                <componentref id="scoreboard" />
+                <componentref id="gamecontrols" />
             </children>
         </component>
-
-        <component id="timer">
+        <component id="board">
             <transformation>
-            <transformationref id = "translationTimer"/>
+                <translate x="-2" y="0" z="2" />
+                <rotate axis="y" angle="90" />
             </transformation>
+            <animations></animations>
             <materials>
                 <material id="matRegular" />
             </materials>
             <texture id="none" />
             <children>
-                <primitiveref id = "timer"/>
+                <primitiveref id="board" />
             </children>
         </component>
+        <component id="timer">
+            <transformation>
+                <translate x="3" y="0" z="-0.8" />
+                <rotate axis="y" angle="-90" />
+            </transformation>
+            <animations></animations>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="timer" />
+            </children>
+        </component>
+        <component id="scoreboard">
+            <transformation>
+                <translate x="3" y="0" z="0.8" />
+                <rotate axis="y" angle="-90" />
+            </transformation>
+            <animations></animations>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="score" />
+            </children>
+        </component>
+        <component id="gamecontrols">
+            <transformation>
+                <translate x="-3" y="1.7" z="0" />
+                <rotate axis="y" angle="90" />
+                <scale x="1.5" y="1.5" z="1.2" />
+            </transformation>
+            <animations></animations>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="gamecontrols" />
+            </children>
+        </component>
+
 
         <component id="floor">
             <transformation>
@@ -1907,17 +1958,21 @@
     <pieces>
         <piece_green>
             <transformation>
+                <scale x="1.5" y="1.5" z="1.5" />
+                <rotate axis="y" angle="90" />
             </transformation>
-            <material id="grey" />
-            <texture id="tijolo" length_s="1" length_t="1" />
-            <primitive id="wall" />
+            <material id="matRegular" />
+            <texture id="green" length_s="1" length_t="1" />
+            <primitive id="mushroom" />
         </piece_green>
         <piece_yellow>
             <transformation>
+                <scale x="1.5" y="1.5" z="1.5" />
+                <rotate axis="y" angle="-90" />
             </transformation>
-            <material id="grey" />
-            <texture id="tijolo" length_s="1" length_t="1" />
-            <primitive id="wall" />
+            <material id="matRegular" />
+            <texture id="yellow" length_s="1" length_t="1" />
+            <primitive id="mushroom" />
         </piece_yellow>
     </pieces>
 </lxs>

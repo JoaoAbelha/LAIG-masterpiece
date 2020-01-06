@@ -3,7 +3,7 @@
 
     <views default="player_camera" >
         <perspective id="player_camera" near="0.1" far="90" angle="60">
-            <from x="10" y="7.5" z="26" />
+            <from x="10" y="7" z="25" />
             <to x="10" y="5" z="20" />
         </perspective>
         <perspective id="spectator_camera" near="0.1" far="90" angle="60">
@@ -31,7 +31,7 @@
             <ambient r="0.1" g="0.1" b="0.1" a="1"/>
             <diffuse r="0.7" g="0.7" b="0.7" a="1"/>
             <specular r="0.7" g="0.7" b="0.7" a="1"/>
-            <attenuation constant="1" linear="0" quadratic="0" />
+            <attenuation constant="0" linear="1" quadratic="0" />
         </omni>
 
         <omni id="lightCorner2" enabled="1" >
@@ -47,7 +47,7 @@
             <ambient r="0.1" g="0.1" b="0.1" a="1"/>
             <diffuse r="0.7" g="0.7" b="0.7" a="1"/>
             <specular r="0.7" g="0.7" b="0.7" a="1"/>
-            <attenuation constant="1" linear="0" quadratic="0" />
+            <attenuation constant="0" linear="1" quadratic="0" />
         </omni>
 
         <omni id="lightCorner4" enabled="1" >
@@ -477,9 +477,9 @@
         </component>
         <component id="gamecontrols">
             <transformation>
-                <translate x="-3" y="1.4" z="0" />
+                <translate x="-3" y="1.7" z="0" />
                 <rotate axis="y" angle="90" />
-                <scale x="1.2" y="1.2" z="1.2" />
+                <scale x="1.2" y="1.5" z="1.5" />
             </transformation>
             <animations></animations>
             <materials>

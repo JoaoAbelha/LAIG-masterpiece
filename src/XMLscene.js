@@ -125,7 +125,6 @@ class XMLscene extends CGFscene {
         CameraHandler.resetZoom();
         this.camera = this.game_camera;
         this.menuMode = false;
-        this.enableLights();
     }
 
     /**
@@ -166,14 +165,10 @@ class XMLscene extends CGFscene {
                     this.lights[i].setSpotDirection(target.x - pos.x, target.y - pos.y, target.z - pos.z);
                 }
 
-                if (!this.menuMode) {
-                    if (light.enableLight)
-                        this.lights[i].enable();
-                    else
-                        this.lights[i].disable();
-                } else {
+                if (light.enableLight)
+                    this.lights[i].enable();
+                else
                     this.lights[i].disable();
-                }
 
                 this.lights[i].update();
                 this.lightsId[key] = i;
@@ -182,10 +177,8 @@ class XMLscene extends CGFscene {
             }
         }
 
-        if (!this.menuMode) {
-            this.interface.lightsCheckbox();
-            this.interface.lightsCheckBoxes(this.graph.lights);
-        }
+        this.interface.lightsCheckbox();
+        this.interface.lightsCheckBoxes(this.graph.lights);
     }
 
     enableLights() {
