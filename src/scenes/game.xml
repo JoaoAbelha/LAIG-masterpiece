@@ -244,6 +244,9 @@
         <primitive id="score">
             <scoreboard />
         </primitive>
+        <primitive id="gamecontrols">
+            <gamecontrols />
+        </primitive>
         <primitive id="cubeMap">
             <cubeMap folderPath = "scenes/images/island" size ="30" />
         </primitive>
@@ -282,13 +285,84 @@
             </materials>
             <texture id="none"/>
             <children>
-                <primitiveref id="board" />
-                <primitiveref id="score" />
-                <componentref id = "timer"/>
+                <componentref id="room"/>
+                <componentref id="game"/>
+            </children>
+        </component>
+        <component id="room">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
                 <primitiveref id="cubeMap"/>
                 <componentref id="sky"/>
                 <componentref id="sea"/>
                 <componentref id="island"/>
+            </children>
+        </component>
+        <component id="game">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="board" />
+                <componentref id="timer" />
+                <componentref id="scoreboard" />
+                <componentref id="gamecontrols" />
+            </children>
+        </component>
+        <component id="board">
+            <transformation>
+            </transformation>
+            <animations></animations>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="board" />
+            </children>
+        </component>
+        <component id="timer">
+            <transformation>
+            </transformation>
+            <animations></animations>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="timer" />
+            </children>
+        </component>
+        <component id="scoreboard">
+            <transformation>
+            </transformation>
+            <animations></animations>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="score" />
+            </children>
+        </component>
+        <component id="gamecontrols">
+            <transformation>
+            </transformation>
+            <animations></animations>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="gamecontrols" />
             </children>
         </component>
         <component id="sky">
@@ -327,39 +401,7 @@
                 <primitiveref id = "islandTerrain"/>
             </children>
         </component>
-        <component id="timer">
-            <transformation>
-            <transformationref id = "translationTimer"/>
-            </transformation>
-            <materials>
-                <material id="matRegular" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <primitiveref id = "timer"/>
-            </children>
-        </component>
     </components>
 
-    <pieces>
-        <piece_green>
-            <transformation>
-                <translate x="0" y="0" z="0" />
-                <rotate axis="x" angle="-90" />
-            </transformation>
-            <material id="grey" />
-            <texture id="tijolo" length_s="1" length_t="1" />
-            <primitive id="wall" />
-        </piece_green>
-        <piece_yellow>
-            <transformation>
-                <translate x="0" y="0" z="0" />
-                <rotate axis="x" angle="-90" />
-            </transformation>
-            <material id="grey" />
-            <texture id="tijolo" length_s="1" length_t="1" />
-            <primitive id="wall" />
-        </piece_yellow>
-    </pieces>
         
 </lxs>

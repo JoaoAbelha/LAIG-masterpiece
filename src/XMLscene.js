@@ -14,14 +14,6 @@ class XMLscene extends CGFscene {
         this.interface = myinterface;
         let d = new Date();
         this.time = d.getTime();
-
-        // to allow different scenes
-
-        this.graphs = {};
-        this.current_graph = null;
-
-        this.select_scene_graph = null;
-
     }
 
     /**
@@ -35,8 +27,8 @@ class XMLscene extends CGFscene {
 
         this.initCameras();
         this.initMenuCamera();
-
         this.enableTextures(true);
+        this.setPickEnabled(true);
 
         this.gl.clearDepth(100.0);
         this.gl.enable(this.gl.DEPTH_TEST);
@@ -44,11 +36,8 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
         this.gl.depthMask(true);
 
-        this.setPickEnabled(true);
-
         this.axis = new CGFaxis(this);
         this.showAxis = false;
-        this.textures = [];
 
         this.createDefaultMaterial();
         this.setUpdatePeriod(10);
@@ -58,8 +47,6 @@ class XMLscene extends CGFscene {
         CameraHandler.setScene(this);
         MenuHandler.init(this);
     }
-
- 
 
     /**
      * Initialize the scene camera.
@@ -100,9 +87,9 @@ class XMLscene extends CGFscene {
     initViews() {
         let viewsId = []; //array used for interface cameras dropdown
 
-        for (var key in this.current_graph.views) {
-            if (this.current_graph.views.hasOwnProperty(key)) {
-                var view = this.current_graph.views[key];
+        for (var key in this.graph.views) {
+            if (this.graph.views.hasOwnProperty(key)) {
+                var view = this.graph.views[key];
 
                 if (view.type === "ortho") {
                     let v = new CGFcameraOrtho(
@@ -127,19 +114,11 @@ class XMLscene extends CGFscene {
         }
 
         //change to the default view defined
-        this.selectedView = this.current_graph.defaultViewId;
-        //this.camera = this.views[this.selectedView];
-       // this.interface.setActiveCamera(this.camera);
+        this.selectedView = this.graph.defaultViewId;
+        const initial_camera = this.views[this.selectedView];
 
-        if (!this.menuMode) {
-            // Already playing (not in menu mode), change player camera to the defined default
-            this.setCurrentCamera(this.current_graph.defaultViewId);  
-        }
-        else {
-            this.interface.setActiveCamera(null);
-        }
-
-        this.game_camera = this.camera;
+        this.game_camera = initial_camera || this.views["default"];
+        this.interface.setActiveCamera(null);
     }
 
     initGame() {
@@ -157,12 +136,12 @@ class XMLscene extends CGFscene {
         let i = 0;
 
         // Reads the lights from the scene graph.
-        for (var key in this.current_graph.lights) {
+        for (var key in this.graph.lights) {
             if (i >= 8)
                 break; // Only eight lights allowed by WebGL.
 
-            if (this.current_graph.lights.hasOwnProperty(key)) {
-                var light = this.current_graph.lights[key];
+            if (this.graph.lights.hasOwnProperty(key)) {
+                var light = this.graph.lights[key];
 
                 let pos = light.location;
                 let ambient = light.ambient;
@@ -187,7 +166,14 @@ class XMLscene extends CGFscene {
                     this.lights[i].setSpotDirection(target.x - pos.x, target.y - pos.y, target.z - pos.z);
                 }
 
-                this.lights[i].disable();
+                if (!this.menuMode) {
+                    if (light.enableLight)
+                        this.lights[i].enable();
+                    else
+                        this.lights[i].disable();
+                } else {
+                    this.lights[i].disable();
+                }
 
                 this.lights[i].update();
                 this.lightsId[key] = i;
@@ -195,14 +181,19 @@ class XMLscene extends CGFscene {
                 i++;
             }
         }
+
+        if (!this.menuMode) {
+            this.interface.lightsCheckbox();
+            this.interface.lightsCheckBoxes(this.graph.lights);
+        }
     }
 
     enableLights() {
         let i = 0;
 
-        for(var key in this.current_graph.lights) {
-            if (this.current_graph.lights.hasOwnProperty(key)) {
-                var light = this.current_graph.lights[key];
+        for(var key in this.graph.lights) {
+            if (this.graph.lights.hasOwnProperty(key)) {
+                var light = this.graph.lights[key];
 
                 if (light.enableLight)
                     this.lights[i].enable();
@@ -216,8 +207,10 @@ class XMLscene extends CGFscene {
         }
 
         //add lights checkbox and show lights to interface
-        this.interface.lightsCheckbox();
-        this.interface.lightsCheckBoxes(this.current_graph.lights);
+        if(!this.interface.model.ligths) {
+            this.interface.lightsCheckbox();
+            this.interface.lightsCheckBoxes(this.graph.lights);
+        }
     }
 
     /**
@@ -250,9 +243,9 @@ class XMLscene extends CGFscene {
     initMaterials() {
         this.materials = [];
 
-        for (var key in this.current_graph.materials) {
-            if (this.current_graph.materials.hasOwnProperty(key)) {
-                var material = this.current_graph.materials[key];
+        for (var key in this.graph.materials) {
+            if (this.graph.materials.hasOwnProperty(key)) {
+                var material = this.graph.materials[key];
 
                 this.materials[key] = new CGFappearance(this);
 
@@ -274,10 +267,12 @@ class XMLscene extends CGFscene {
     /**
      * Initializes the scene textures with the values read from the XML file.
      */
-    initTextures(graph) {
-        for (var key in graph.textures) {
-            if (graph.textures.hasOwnProperty(key)) {
-                var texture = graph.textures[key];
+    initTextures() {
+        this.textures = [];
+
+        for (var key in this.graph.textures) {
+            if (this.graph.textures.hasOwnProperty(key)) {
+                var texture = this.graph.textures[key];
                 this.textures[key] = new CGFtexture(this, texture.path);
             }
         }
@@ -289,9 +284,9 @@ class XMLscene extends CGFscene {
     initTransformations() {
         this.transformations = [];
 
-        for (var key in this.current_graph.transformations) {
-            if (this.current_graph.transformations.hasOwnProperty(key)) {
-                var transformation = this.current_graph.transformations[key];
+        for (var key in this.graph.transformations) {
+            if (this.graph.transformations.hasOwnProperty(key)) {
+                var transformation = this.graph.transformations[key];
 
                 //calculate the trnasformation matrix
                 let matrix = mat4.create();
@@ -368,9 +363,9 @@ class XMLscene extends CGFscene {
         this.animations = [];
         let interpolant = new TransformationInterpolant();
 
-        for (var key in this.current_graph.animations) {
-            if (this.current_graph.animations.hasOwnProperty(key)) {
-                let animation = this.current_graph.animations[key];
+        for (var key in this.graph.animations) {
+            if (this.graph.animations.hasOwnProperty(key)) {
+                let animation = this.graph.animations[key];
                 let keyframes = animation.keyframes;
                 let keyframeTrack = new TransformationTrack(keyframes, interpolant);
                 this.animations[key] = new KeyframeAnimation(keyframeTrack);
@@ -391,65 +386,39 @@ class XMLscene extends CGFscene {
 
         if (this.sceneInited) {
             CameraHandler.update(delta_time);
-            ClockState.updateCountdown(delta_time);
+            TimerState.updateCountdown(delta_time);
             BoardState.updatePieceAnimations(delta_time);
             this.scoreBoard && this.scoreBoard.updateTextures();
             this.clock && this.clock.updateTextures();
         }
     }
 
-    setCurrentCamera(camera_id) {
-        const selected_camera = this.cameras.get(camera_id);
-
-        if(!selected_camera) {
-            console.warn(`Camera with id '${camera_id}' was not found, falling back to default camera`);
-        }
-
-        this.camera = selected_camera || this.default_camera;
-        // this.interface.setActiveCamera(this.camera);
-        this.interface.setActiveCamera(null);
-    }
-
     /** Handler called when the graph is finally loaded. 
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
-    onGraphLoaded(graph) {
+    onGraphLoaded() {
+        this.sceneInited = false;
 
+        //console.log(this.graph.ambient);
+        this.axis = new CGFaxis(this, this.graph.referenceLength);
+        this.gl.clearColor(this.graph.background.r, this.graph.background.g, this.graph.background.b, this.graph.background.a);
+        this.setGlobalAmbientLight(this.graph.ambient.r, this.graph.ambient.g, this.graph.ambient.b, this.graph.ambient.a);
 
-        if (this.current_graph != graph) {
-            graph.constructGraph();
-            graph.createCustomPieces();
-            this.initMaterials();
-            this.initTextures(graph);
-            this.initTransformations();
-            return;
-        }
-
-        // If another scene was loaded before, "pause" the scene rendering to ensure there are no unnecessary errors
-        //this.sceneInited = false;
-
-        //console.log(this.current_graph.ambient);
-        this.axis = new CGFaxis(this, this.current_graph.referenceLength);
-
-        this.gl.clearColor(this.current_graph.background.r, this.current_graph.background.g, this.current_graph.background.b, this.current_graph.background.a);
-
-        this.setGlobalAmbientLight(this.current_graph.ambient.r, this.current_graph.ambient.g, this.current_graph.ambient.b, this.current_graph.ambient.a);
+        //add axis checkbox to interface
+        this.interface.restartGUI();
+        this.interface.axisCheckBox();
+        this.interface.scenesDropDown();
 
         this.initViews();
         this.initLights();
         this.initMaterials();
-        this.initTextures(this.current_graph);
+        this.initTextures();
         this.initTransformations();
         this.initAnimations();
 
-        //add axis checkbox to interface
-        this.interface.axisCheckBox();
-
-        this.interface.addDifferentScenes(this.graphs);
-
         //construct the graph before start displaying
-        this.current_graph.constructGraph();
-        this.current_graph.createCustomPieces();
+        this.graph.constructGraph();
+        this.graph.createCustomPieces();
 
         if (!this.menuMode) {
             CameraHandler.swapToCurrentCamera();
@@ -457,19 +426,8 @@ class XMLscene extends CGFscene {
         }
 
         // Start or "resume" scene displaying
-
         this.sceneInited = true;
     }
-
-    onGraphChange(scene_name) {
-        this.current_graph = this.graphs[scene_name];
-        this.axis = new CGFaxis(this,this.current_graph.referenceLength);
-        this.gl.clearColor(this.current_graph.background.r, this.current_graph.background.g, this.current_graph.background.b, this.current_graph.background.a);
-        this.setGlobalAmbientLight(this.current_graph.ambient.r, this.current_graph.ambient.g, this.current_graph.ambient.b, this.current_graph.ambient.a);
-        this.interface.updateLightsGroup(this.current_graph.lights);
-    }
-
-    
 
     /**
      * Displays the scene.
@@ -506,7 +464,7 @@ class XMLscene extends CGFscene {
                 MenuHandler.displayCurrentMenu();
             } else {
                 //  console.log(this.camera);
-                this.current_graph.displayScene();  
+                this.graph.displayScene();  
             }   
         }
         this.popMatrix();

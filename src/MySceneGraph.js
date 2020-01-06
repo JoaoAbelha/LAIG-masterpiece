@@ -20,29 +20,27 @@ class MySceneGraph {
     /**
      * @constructor
      */
-    constructor(filename, scene) {
+    constructor(scene) {
         this.loadedOk = null;
-
-        // remove the extension
-        // a scene_id is reprensented by the name of the file
-        this.scene_id = filename.split('.')[0];
 
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
-        scene.graphs[this.scene_id] = this;
-
-        if (!scene.current_graph) { // if is not defined selects the scene
-            scene.select_scene_graph = this.scene_id;
-            scene.current_graph = this;
-        }
-
-
-        this.idRoot = null; // The id of the root element.
+        scene.graph = this;
 
         this.axisCoords = [];
         this.axisCoords['x'] = [1, 0, 0];
         this.axisCoords['y'] = [0, 1, 0];
         this.axisCoords['z'] = [0, 0, 1];
+    }
+
+    parseXML(filename) {
+        this.filename = filename;
+
+        this.idRoot = null; 
+        this.ambient = null;
+        this.background = null;
+        this.piece_green = null;
+        this.piece_yellow = null;
 
         // File reading 
         this.reader = new CGFXMLreader();
@@ -73,11 +71,9 @@ class MySceneGraph {
         }
 
         this.loadedOk = true;
-        //console.log(this.components);
-        //console.log(this.animations);
 
         // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
-        this.scene.onGraphLoaded(this);
+        this.scene.onGraphLoaded();
     }
 
     /**
@@ -1186,6 +1182,10 @@ class MySceneGraph {
             primitive = this.parseSand(node, messageError);
         else if (node.nodeName === "window") 
             primitive = this.parseWindow(node, messageError);
+        else if (node.nodeName === "coolpiece")
+            primitive = this.parseCoolPiece();
+        else if (node.nodeName === "mushroom") 
+            primitive = this.parseMushroom();
         else {
             this.onXMLMinorError(messageError + "unknown tag <" + node.nodeName + ">");
             return;
@@ -1197,6 +1197,17 @@ class MySceneGraph {
         this.primitives[primitive.primitiveID] = primitive;
     }
 
+    parseCoolPiece() {
+        return {
+            type:"coolpiece"
+        };
+    }
+
+    parseMushroom() {
+        return {
+            type:"mushroom"
+        };
+    }
 
     parseWindow(node, messageError) {
         let size = this.parseFloat(node, "size", messageError);
@@ -2196,7 +2207,7 @@ class MySceneGraph {
                         prim = new Board(this.scene, primitive.texture);
                         break;
                     case "timer":
-                        prim = new timer(this.scene);
+                        prim = new Timer(this.scene);
                         break;
                     case "scoreboard":
                         prim = new ScoreBoard(this.scene);
@@ -2209,7 +2220,7 @@ class MySceneGraph {
                                 () => (GameState.redoMove()),
                                 () => (GameState.continuePlaying()),
                                 () => (GameState.replayGame()),
-                                () => (MenuHandler.init(this.scene), ClockState.resetCountdown())
+                                () => (MenuHandler.init(this.scene), TimerState.resetCountdown())
                             ],
                             "menu/resources/gamecontrolsmenu.png"
                         );
@@ -2229,6 +2240,8 @@ class MySceneGraph {
                     case "window":
                         prim = new windowObject(this.scene, primitive.distortion, primitive.size, primitive.background);
                         break;
+                    case "coolpiece":
+                        prim = new CoolPiece(this.scene);
                     default:
                         break;
                 }
@@ -2392,8 +2405,9 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        this.transversePreorder(this.idRoot, this.scene.defaultMaterial, null, 1, 1);
-        //console.log(this.idRoot);
+        if(this.idRoot) {
+            this.transversePreorder(this.idRoot, this.scene.defaultMaterial, null, 1, 1);
+        }
     }
 
     /**

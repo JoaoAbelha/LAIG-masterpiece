@@ -94,7 +94,7 @@ class Board extends CGFobject {
     }
 
     createPiece() {
-        this.piece = new Mushroom(this.scene, this.piece_size);
+        this.piece = new CoolPiece(this.scene, this.piece_size);
     }
 
     initMaterials(board_tex) {
@@ -160,6 +160,7 @@ class Board extends CGFobject {
         for (const piece of current_pieces) {
             this.drawPiece(piece);
         }
+        this.scene.registerForPick(100, null);
     }
 
     drawPiece(piece) {

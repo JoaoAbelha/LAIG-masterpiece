@@ -1,16 +1,16 @@
-const CLOCK_STATE = Object.freeze({
+const TIMER_STATE = Object.freeze({
     "playing": 1,
     "disabled": 2,
     "finished": 3,
 });
 
-const CLOCK_COLOR = Object.freeze({
+const TIMER_COLOR = Object.freeze({
     "red": 1,
     "yellow": 2,
     "green": 3,
 });
 
-class ClockState {
+class TimerState {
     static getTime() {
         return this.time;
     }
@@ -21,7 +21,7 @@ class ClockState {
 
     static countdown(countdown_time_s, callback) {
         // If a countdown exists, we are playing
-        this.state = CLOCK_STATE.playing;
+        this.state = TIMER_STATE.playing;
 
         this.curr_countdown_time_ms = countdown_time_s * 1000;
         this.curr_countdown_callback = callback;
@@ -72,7 +72,7 @@ class ClockState {
         clearTimeout(this.timeout_id);
         
         this.timeout_id = setTimeout(() => {
-            this.color = CLOCK_COLOR.grey;
+            this.color = TIMER_COLOR.grey;
         }, 2000);
     }
 
@@ -81,7 +81,7 @@ class ClockState {
     }
 
     static disable() {
-        this.state = CLOCK_STATE.disabled;
+        this.state = TIMER_STATE.disabled;
         this.counting_down = false;
     }
 
@@ -90,10 +90,10 @@ class ClockState {
     }
     
     static gameFinished() {
-        this.state = CLOCK_STATE.finished;
+        this.state = TIMER_STATE.finished;
     }
 }
 
-ClockState.time = 0;
-ClockState.color = CLOCK_COLOR.grey;
-ClockState.state = CLOCK_STATE.playing;
+TimerState.time = 0;
+TimerState.color = TIMER_COLOR.grey;
+TimerState.state = TIMER_STATE.playing;

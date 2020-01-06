@@ -21,6 +21,7 @@ class ClickHandler {
     }
 
     static verifyClick(clickId) {
+        console.log(clickId);
         if (clickId >= 0 && clickId < 25) {
             this.boardClickHandler(clickId);
         } else if (clickId > 25 && clickId < 100) {
@@ -87,7 +88,7 @@ class ClickHandler {
 
         let index = this.baseButtonPickId + this.numRegisteredButtons;
         this.buttonActions[index] = action;
-
+        
         return index;
     }
 

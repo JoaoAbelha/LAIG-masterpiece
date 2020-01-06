@@ -248,7 +248,6 @@
         </component>
         <component id="floor">
             <transformation>
-                <translate x="0" y="0" z="0" />
                 <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
@@ -256,16 +255,61 @@
             </materials>
             <texture id="none" />
             <children>
-                <primitiveref id="board" />
-                <primitiveref id="score" />
-                <componentref id="gamecontrols" />
-                <componentref id="timer" />
+                <componentref id="game" />
             </children>
         </component>
-
+        <component id="game">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="board" />
+                <componentref id="timer" />
+                <componentref id="scoreboard" />
+                <componentref id="gamecontrols" />
+            </children>
+        </component>
+        <component id="board">
+            <transformation>
+            </transformation>
+            <animations></animations>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="board" />
+            </children>
+        </component>
+        <component id="timer">
+            <transformation>
+            </transformation>
+            <animations></animations>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="timer" />
+            </children>
+        </component>
+        <component id="scoreboard">
+            <transformation>
+            </transformation>
+            <animations></animations>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="score" />
+            </children>
+        </component>
         <component id="gamecontrols">
             <transformation>
-                <translate x="2" y="2" z="0" />
             </transformation>
             <animations></animations>
             <materials>
@@ -274,19 +318,6 @@
             <texture id="none" />
             <children>
                 <primitiveref id="gamecontrols" />
-            </children>
-        </component>
-
-        <component id="timer">
-            <transformation>
-                <transformationref id="translationTimer" />
-            </transformation>
-            <materials>
-                <material id="matRegular" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <primitiveref id="timer" />
             </children>
         </component>
     </components>

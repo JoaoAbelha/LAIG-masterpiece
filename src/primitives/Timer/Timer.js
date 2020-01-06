@@ -3,7 +3,7 @@
  * @constructor
  */
 
-class timer extends  CGFobject {
+class Timer extends  CGFobject {
 	constructor(scene) {
         super(scene);
 
@@ -133,10 +133,10 @@ class timer extends  CGFobject {
         let texture;
 
         switch (color) {
-            case CLOCK_COLOR.red:
+            case TIMER_COLOR.red:
                 texture = this.red_plastic_texture;
                 break;
-            case CLOCK_COLOR.grey:
+            case TIMER_COLOR.grey:
                 texture = this.grey_plastic_texture;
                 break;
             default:
@@ -163,17 +163,17 @@ class timer extends  CGFobject {
     }
 
     updateTextures() {
-        this.setColorTexture(ClockState.getColor());
+        this.setColorTexture(TimerState.getColor());
 
-        const curr_clock_state = ClockState.getState();
-        switch (curr_clock_state) {
-            case CLOCK_STATE.playing:
-                this.setTimeTexture(ClockState.getTime());
+        const curr_TIMER_STATE = TimerState.getState();
+        switch (curr_TIMER_STATE) {
+            case TIMER_STATE.playing:
+                this.setTimeTexture(TimerState.getTime());
                 break;
-            case CLOCK_STATE.disabled:
+            case TIMER_STATE.disabled:
                 this.setDisabledTextures();
                 break;
-            case CLOCK_STATE.finished:
+            case TIMER_STATE.finished:
                 this.setWinnerTexture();
                 break;
         }
@@ -197,7 +197,7 @@ class timer extends  CGFobject {
         this.display_part.display();
         this.scene.popMatrix();
 
-        if (ClockState.getState() !== CLOCK_STATE.finished) {
+        if (TimerState.getState() !== TIMER_STATE.finished) {
             // Clock display left digit
             this.scene.pushMatrix();
             this.scene.translate(-this.display_digit_width/2 - this.display_digit_spacing/2, this.height/2, this.breadth/2 + 0.002);

@@ -1,8 +1,8 @@
-class Mushroom extends CGFobject {
-    constructor(scene, top, bottom, radius_top) {
+class CoolPiece extends CGFobject {
+    constructor(scene) {
         super(scene);
         this.scene = scene;
-        this.piece = new MySphere(this.scene, top, 10, 10);
+        this.piece = new MySphere(this.scene, 0.4, 10, 10);
         this.base = new MyCylinder(scene,10,10, 0.5 ,1, 1);
 
         const degreeU = 2;

@@ -34,9 +34,9 @@ serialInclude([
     'animations/Interpolant.js',
     'animations/TransformationInterpolant.js',
     'MySecurityCamera.js',
-    'primitives/Mushroom.js',
-    'primitives/Clock/Clock.js',
-    'primitives/Clock/ClockState.js',
+    'primitives/CoolPiece.js',
+    'primitives/Timer/Timer.js',
+    'primitives/Timer/TimerState.js',
     'primitives/Cube.js',
     'primitives/Scoreboard/ScoreBoard.js',
     'primitives/Scoreboard/ScoreboardState.js',
@@ -68,28 +68,16 @@ main=function()
     app.setScene(myScene);
     app.setInterface(myInterface);
 
-   // myInterface.setActiveCamera(myScene.camera);
-
-   let scene_names = [
-    "island.xml"
-   ];
-
-
-   let scene_graphs = [];
-
-   for(let i = 0; i < scene_names.length; i++) {
-       console.log(scene_names[i]);
-       scene_graphs.push(new MySceneGraph(scene_names[i], myScene));
-   }
+   myInterface.setActiveCamera(myScene.camera);
 
 	// get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml 
 	// or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor) 
-	
-   // var filename=getUrlVars()['file'] || "game.xml";
+	var filename = getUrlVars()['file'] || "game.xml";
 
 	// create and load graph, and associate it to scene. 
 	// Check console for loading errors
-	//var myGraph = new MySceneGraph(filename, myScene);
+    var myGraph = new MySceneGraph(myScene);
+    myGraph.parseXML(filename);
 	
 	// start
     app.run();

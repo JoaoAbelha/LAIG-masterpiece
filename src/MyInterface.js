@@ -15,18 +15,16 @@ class MyInterface extends CGFinterface {
      */
     init(application) {
         super.init(application);
+        return true;
+    }
+
+    restartGUI() {
+        this.gui && this.gui.destroy();
         // init GUI. For more information on the methods, check:
         //  http://workshop.chromeexperiments.com/examples/gui
-
         this.gui = new dat.GUI();
-
-        this.model = {}
-        // add a group of controls (and open/expand by defult)
-
+        this.model = {};
         this.initKeys();
-
-        // this.gui.add(this.scene,'selectedView', this.scene.camerasId).name('Cameras').onChange(this.scene.updateCamera());
-        return true;
     }
 
     /**
@@ -46,6 +44,19 @@ class MyInterface extends CGFinterface {
     processKeyUp(event) {
 
     };
+
+    scenesDropDown() {
+        let sceneDropdownModel = [
+            "island.xml", 
+            "game.xml"
+        ];
+        
+        this.model.sceneIndex = this.scene.graph.filename;
+
+        this.gui.add(this.model, "sceneIndex", sceneDropdownModel)
+            .name("Current Scene")
+            .onChange(filename => this.scene.graph.parseXML(filename));
+    }
 
     /**
      * Adds a dropdown select for the views
