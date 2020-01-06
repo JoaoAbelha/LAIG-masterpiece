@@ -12,7 +12,7 @@ class MenuHandler {
                 () => (this.player2_difficulty = 3, this.clockSpeedMenu()),
                 () => (this.player2_difficulty = 4, this.clockSpeedMenu())
             ],
-            "menu/resources/player2typemenu.png"
+            "menu/resources/player2.png"
         );
 
         let player1_type_menu = new Menu (scene, 
@@ -22,7 +22,7 @@ class MenuHandler {
                 () => (this.player1_difficulty = 3, this.swapMenu(player2_type_menu)),
                 () => (this.player1_difficulty = 4, this.swapMenu(player2_type_menu))
             ],
-            "menu/resources/player1typemenu.png"
+            "menu/resources/player1.png"
         );
 
         this.menu = player1_type_menu;
@@ -42,7 +42,7 @@ class MenuHandler {
                 () => (this.clock_speed = "medium", this.initGame()),
                 () => (this.clock_speed = "fast", this.initGame()),
             ],
-            "menu/resources/clockspeedmenu.png"
+            "menu/resources/clockSpeed.png"
         );
 
         if (this.player1_difficulty === 1 || this.player2_difficulty === 1) {

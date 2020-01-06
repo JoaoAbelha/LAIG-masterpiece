@@ -33,7 +33,7 @@ serialInclude([
     'animations/TransformationTrack.js',
     'animations/Interpolant.js',
     'animations/TransformationInterpolant.js',
-    'MySecurityCamera.js',
+    'primitives/Screen.js',
     'primitives/CoolPiece.js',
     'primitives/Timer/Timer.js',
     'primitives/Timer/TimerState.js',

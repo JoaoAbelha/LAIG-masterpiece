@@ -12,6 +12,7 @@ void main() {
 
 	vTextureCoord = aTextureCoord; /*to pass the texture to frag*/
 
-	gl_Position =  vec4(aVertexPosition, 1.0);
+	gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+
 
 }

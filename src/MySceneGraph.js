@@ -2222,7 +2222,7 @@ class MySceneGraph {
                                 () => (GameState.replayGame()),
                                 () => (MenuHandler.init(this.scene), TimerState.resetCountdown())
                             ],
-                            "menu/resources/gamecontrolsmenu.png"
+                            "menu/resources/gameControls.png"
                         );
                         break;
                     case "cubeMap":

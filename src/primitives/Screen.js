@@ -1,5 +1,5 @@
 /**
- * MySecurityCamera
+ * Screen
  * @constructor
  * @param scene - Reference to MyScene object
  * @param x1 - vertex position in the screen in x
@@ -7,7 +7,7 @@
  * @param x2 - second vertex position in the screen in x
  * @param y2 - second vertex position in the screen in y
  */
-class MySecurityCamera extends CGFobject {
+class Screen extends CGFobject {
     constructor(scene,x1,x2,y1,y2) {
         super(scene);
         this.screen = new MyRectangle(scene, x1,x2, y1, y2);
@@ -30,8 +30,7 @@ class MySecurityCamera extends CGFobject {
     }
 
     setBackgroundTexture(text) {
-        this.texture = new CGFtexture(this.scene, text);
-
+        this.texture =  text;
 
     }
 
