@@ -364,7 +364,7 @@
             <materials>
                 <material id="brown" />
             </materials>
-            <texture id="carpetPattern1" length_s= "1" length_t= "1"/>
+            <texture id="carpetPattern1" length_s= "10" length_t= "10"/>
             <children>
                 <primitiveref id = "cubeMap"/>
             </children>

@@ -91,7 +91,7 @@ class CameraHandler {
         // Resetting camera zoom to prevent erroneous camera states
         this.resetZoom();
         this.scene.camera = this.scene.views[this.current_camera];
-        this.scene.interface.setActiveCamera(this.scene.camera);
+        this.scene.interface.setActiveCamera(null);
     }
 
     static setPlayerCamera() {
