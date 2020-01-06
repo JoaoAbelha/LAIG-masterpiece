@@ -2242,6 +2242,10 @@ class MySceneGraph {
                         break;
                     case "coolpiece":
                         prim = new CoolPiece(this.scene);
+                        break;
+                    case "mushroom":
+                        prim = new Mushroom(this.scene);
+                        break;
                     default:
                         break;
                 }

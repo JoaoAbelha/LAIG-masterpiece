@@ -35,6 +35,7 @@ serialInclude([
     'animations/TransformationInterpolant.js',
     'MySecurityCamera.js',
     'primitives/CoolPiece.js',
+    'primitives/Mushroom.js',
     'primitives/Timer/Timer.js',
     'primitives/Timer/TimerState.js',
     'primitives/Cube.js',
