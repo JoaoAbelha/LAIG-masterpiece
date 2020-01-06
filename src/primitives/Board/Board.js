@@ -131,9 +131,9 @@ class Board extends CGFobject {
         this.board_bottom_material.setTexture(this.board_bottom_texture);
 
         this.highlighted_material = new CGFappearance(this.scene);
-        this.highlighted_material.setAmbient(0.15, 0.05, 0, 1);
-        this.highlighted_material.setDiffuse(0.5, 0.3, 0, 1);
-        this.highlighted_material.setSpecular(0.3, 0.1, 0, 1);
+        this.highlighted_material.setAmbient(0.15, 0.15, 0, 1);
+        this.highlighted_material.setDiffuse(0.5, 0.5, 0, 1);
+        this.highlighted_material.setSpecular(0.3, 0.3, 0, 1);
         this.highlighted_material.setEmission(0, 0, 0, 1);
         this.highlighted_material.setShininess(25);
 
@@ -183,15 +183,15 @@ class Board extends CGFobject {
                     this.preparePiece(piece);
                     return this.piece;
                 }
-            case "yellow":
-                if (this.yellow_piece) {
-                    return this.yellow_piece;
-                } else {
-                    this.preparePiece(piece);
-                    return this.piece;
-                }
-            default:
-                break;
+                case "yellow":
+                    if (this.yellow_piece) {
+                        return this.yellow_piece;
+                    } else {
+                        this.preparePiece(piece);
+                        return this.piece;
+                    }
+                    default:
+                        break;
         }
     }
 
@@ -223,7 +223,7 @@ class Board extends CGFobject {
     }
 
     createHighlight() {
-        this.highlight = new MyCylinder(this.scene, 30, 30, 0, 1, 1);
+        this.highlight = new MyCylinder(this.scene, 10, 10, 0.1, 1, 1);
     }
 
     drawHighlightedSquare() {
@@ -238,7 +238,7 @@ class Board extends CGFobject {
             this.board_height + 0.001,
             this.piece_offset + this.square_size * current_highlighted_square.row
         );
-        this.scene.scale(0.25, 1, 0.25);
+        this.scene.scale(0.165, 1, 0.165);
         this.scene.rotate(-Math.PI / 2, 1, 0, 0);
         this.highlighted_material.apply();
         this.highlight.display();

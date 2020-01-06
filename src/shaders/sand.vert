@@ -35,9 +35,9 @@ void main() {
 
     vec4 color = texture2D(sand_map, aTextureCoord);
 
-    float height_gradient = gradient_radius(aTextureCoord,4.);
+    float height_gradient = gradient_radius(aTextureCoord,5.);
 
-	gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition.x, color.b * 2.  + height_gradient,   aVertexPosition.z, 1.0);
+	gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition.x, color.b * 3.  + height_gradient,   aVertexPosition.z, 1.0);
 
     vTextureCoord = aTextureCoord;
 

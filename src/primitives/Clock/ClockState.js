@@ -72,7 +72,7 @@ class ClockState {
         clearTimeout(this.timeout_id);
         
         this.timeout_id = setTimeout(() => {
-            this.color = CLOCK_COLOR.grey;
+            this.color = CLOCK_COLOR.yellow;
         }, 2000);
     }
 
@@ -95,5 +95,5 @@ class ClockState {
 }
 
 ClockState.time = 0;
-ClockState.color = CLOCK_COLOR.grey;
+ClockState.color = CLOCK_COLOR.yellow;
 ClockState.state = CLOCK_STATE.playing;

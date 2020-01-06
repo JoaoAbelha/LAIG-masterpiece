@@ -2,7 +2,7 @@ class Piece {
 	constructor(column, row, color) {
         this.column = column;
         this.row = row;
-        this.height = 0.001;
+        this.height = 0;
         this.color = color;
         this.target = null;
         this.target_mid_point = null;

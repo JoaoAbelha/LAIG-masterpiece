@@ -5,7 +5,7 @@
 class Cube extends  CGFobject  {
 	constructor(scene) {
 		super(scene);
-		this.plane = new MyPlane(this.scene, 20, 20);
+		this.plane = new MyPlane(this.scene,1 ,1);
 	};	
 
 	display() {

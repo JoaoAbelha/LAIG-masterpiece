@@ -18,6 +18,7 @@ class timer extends  CGFobject {
 
         this.createMaterials();
         this.createBody();
+        this.createButton();
         this.createTimeDisplay();
         this.setTimeTexture(0);
     };
@@ -52,15 +53,19 @@ class timer extends  CGFobject {
        
     }
 
-    createMaterials() {
-        this.grey_plastic_texture = new CGFtexture(this.scene, "primitives/resources/grey_plastic.jpg");
-        this.red_plastic_texture = new CGFtexture(this.scene, "primitives/resources/red_plastic.jpg");
+    createButton() {
+        this.button = new MyCylinder(this.scene, 30, 4, this.height/15, this.breadth*7/20, this.breadth*7/20);
+        this.button.pickingEnabled = true;
+    }
 
+    createMaterials() {
+        this.yellow_plastic_texture = new CGFtexture(this.scene, "primitives/resources/yellow_plastic.jpg");
+        this.red_plastic_texture = new CGFtexture(this.scene, "primitives/resources/red_plastic.jpg");
+        this.green_plastic_texture = new CGFtexture(this.scene, "primitives/resources/green_plastic.jpg");
         let empty_display_texture = new CGFtexture(this.scene, "primitives/resources/display.png");
         let player1wins_display_texture = new CGFtexture(this.scene, "primitives/resources/player1wins.png");
         let player2wins_display_texture = new CGFtexture(this.scene, "primitives/resources/player2wins.png");
         let metal_texture = new CGFtexture(this.scene, "primitives/resources/metal.jpg");
-
         this.minus_texture = new CGFtexture(this.scene, "primitives/resources/minus.png");
         this.number_texture = {}
         this.number_texture[0] = new CGFtexture(this.scene, "primitives/resources/0.png");
@@ -80,7 +85,7 @@ class timer extends  CGFobject {
         this.plastic_material.setSpecular(0.3, 0.3, 0.3, 1);
         this.plastic_material.setEmission(0, 0, 0, 1);
         this.plastic_material.setShininess(25);
-        this.plastic_material.setTexture(this.grey_plastic_texture);
+        this.plastic_material.setTexture(this.yellow_plastic_texture);
 
         this.empty_display_material = new CGFappearance(this.scene);
         this.empty_display_material.setAmbient(0.15, 0.15, 0.15, 1);
@@ -136,8 +141,11 @@ class timer extends  CGFobject {
             case CLOCK_COLOR.red:
                 texture = this.red_plastic_texture;
                 break;
-            case CLOCK_COLOR.grey:
-                texture = this.grey_plastic_texture;
+            case CLOCK_COLOR.green:
+                texture = this.green_plastic_texture;
+                break;
+            case CLOCK_COLOR.yellow:
+                texture = this.yellow_plastic_texture;
                 break;
             default:
                 return;
@@ -182,40 +190,49 @@ class timer extends  CGFobject {
     display() {
         // Clock body
         this.scene.pushMatrix();
-        this.scene.translate(0, this.height/2, 0);
-        this.scene.scale(this.width, this.height, this.breadth);
-        this.plastic_material.apply();
-        this.body.display();
+            this.scene.translate(0, this.height/2, 0);
+            this.scene.scale(this.width, this.height, this.breadth);
+            this.plastic_material.apply();
+            //console.log(this.body)
+            this.body.display();
         this.scene.popMatrix();
 
         // Clock display background
         this.scene.pushMatrix();
-        this.scene.translate(0, this.height/2, this.breadth/2 + 0.001);
-        this.scene.rotate(Math.PI/2, 1, 0, 0);
-        this.scene.scale(this.display_width, 1, this.display_height);
-        this.display_background_material.apply();
-        this.display_part.display();
+            this.scene.translate(0, this.height/2, this.breadth/2 + 0.001);
+            this.scene.rotate(Math.PI/2, 1, 0, 0);
+            this.scene.scale(this.display_width, 1, this.display_height);
+            this.display_background_material.apply();
+            this.display_part.display();
         this.scene.popMatrix();
 
         if (ClockState.getState() !== CLOCK_STATE.finished) {
             // Clock display left digit
             this.scene.pushMatrix();
-            this.scene.translate(-this.display_digit_width/2 - this.display_digit_spacing/2, this.height/2, this.breadth/2 + 0.002);
-            this.scene.rotate(Math.PI/2, 1, 0, 0);
-            this.scene.scale(this.display_digit_width, 1, this.display_digit_height);
-            this.number_left_material.apply();
-            this.display_part.display();
+                this.scene.translate(-this.display_digit_width/2 - this.display_digit_spacing/2, this.height/2, this.breadth/2 + 0.002);
+                this.scene.rotate(Math.PI/2, 1, 0, 0);
+                this.scene.scale(this.display_digit_width, 1, this.display_digit_height);
+                this.number_left_material.apply();
+                this.display_part.display();
             this.scene.popMatrix();
 
             // Clock display right digit
             this.scene.pushMatrix();
-            this.scene.translate(this.display_digit_width/2 + this.display_digit_spacing/2, this.height/2, this.breadth/2 + 0.002);
-            this.scene.rotate(Math.PI/2, 1, 0, 0);
-            this.scene.scale(this.display_digit_width, 1, this.display_digit_height);
-            this.number_right_material.apply();
-            this.display_part.display();
+                this.scene.translate(this.display_digit_width/2 + this.display_digit_spacing/2, this.height/2, this.breadth/2 + 0.002);
+                this.scene.rotate(Math.PI/2, 1, 0, 0);
+                this.scene.scale(this.display_digit_width, 1, this.display_digit_height);
+                this.number_right_material.apply();
+                this.display_part.display();
             this.scene.popMatrix();
         }
+        
+        // Button
+        this.scene.pushMatrix();
+            this.scene.translate(0, this.height, 0);
+            this.scene.rotate(-Math.PI/2, 1, 0, 0);
+            this.metal_material.apply();
+            this.button.display();
+        this.scene.popMatrix();
     }
 
 };

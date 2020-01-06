@@ -72,6 +72,9 @@ class GameState {
             // Resetting countdown to prevent player loss
             ClockState.resetCountdown();
 
+            // Signaling that the move was valid
+            ClockState.setColor(CLOCK_COLOR.green);
+
             console.log("Performed move!", res.performed_move);
             res.performed_move.unshift(x1, y1);
 
@@ -104,6 +107,9 @@ class GameState {
             this.previous_states.push(this.curr_game_state);
             // Resetting countdown to prevent player loss
             ClockState.resetCountdown();
+
+            // Signaling that the move was valid
+            ClockState.setColor(CLOCK_COLOR.green);
 
             console.log("Performed move!", res.performed_move);
 
@@ -202,7 +208,7 @@ class GameState {
             return;
         }
 
-        if (this.curr_game_state.nTurns === 1) {
+        if (this.curr_game_state.nTurns === 0) {
             console.warn("No moves to undo yet!");
             return;
         }        

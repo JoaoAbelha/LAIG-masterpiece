@@ -21,13 +21,13 @@ void main() {
 
     const float frequency = 0.5;
 
-    vec2 tex_coords_shift = vec2(sin(timefactor1 * frequency) + cos(timefactor1 * frequency));
+    vec2 tex_coords_shift = vec2(sin(timefactor1 * frequency)  + cos(timefactor1 * frequency) );
 
     vec2 calc_tex_coords = aTextureCoord + tex_coords_shift;
 
     vec4 color = texture2D(water_map, calc_tex_coords);
 
-    float calc_height = color.b * 3. ; 
+    float calc_height = color.b * 2. ; 
 
     if(calc_height > 2.5) {
         calc_height = 2.5;

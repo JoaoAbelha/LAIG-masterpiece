@@ -55,31 +55,46 @@ serialInclude([
     'primitives/water.js',
     'primitives/sand.js',
     'primitives/window.js',
+    'CGFOBJModel.js',
+    'CGFResourceReader.js',
 
 main=function()
 {
 	// Standard application, scene and interface setup
-    const app = new CGFapplication(document.body);
-    const myInterface = new MyInterface();
-    const myScene = new XMLscene(myInterface);
+    var app = new CGFapplication(document.body);
+    var myInterface = new MyInterface();
+    var myScene = new XMLscene(myInterface);
 
     app.init();
 
     app.setScene(myScene);
     app.setInterface(myInterface);
 
-   myInterface.setActiveCamera(myScene.camera);
+   // myInterface.setActiveCamera(myScene.camera);
 
+   let scene_names = [
+        "room.xml",
+        "game.xml",
+       "island.xml"
+
+   ];
+
+
+   let scene_graphs = [];
+
+   for(let i = 0; i < scene_names.length; i++) {
+       console.log(scene_names[i]);
+       scene_graphs.push(new MySceneGraph(scene_names[i], myScene));
+   }
 
 	// get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml 
 	// or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor) 
 	
-    const filename=getUrlVars()['file'] || "game.xml";
+   // var filename=getUrlVars()['file'] || "game.xml";
 
 	// create and load graph, and associate it to scene. 
 	// Check console for loading errors
-    const myGraph = new MySceneGraph(myScene);
-    myGraph.processXml(filename);
+	//var myGraph = new MySceneGraph(filename, myScene);
 	
 	// start
     app.run();

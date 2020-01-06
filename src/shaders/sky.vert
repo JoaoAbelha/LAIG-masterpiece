@@ -20,6 +20,7 @@ uniform float timefactor1;
 void main() {
     vec2 tex_coords_shift = vec2(timefactor1, timefactor1);
 
+    
     vec2 calc_tex_coords = aTextureCoord + tex_coords_shift;
 
     vec4 color = texture2D(sky_map, calc_tex_coords);

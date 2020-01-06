@@ -10,19 +10,16 @@ class CameraHandler {
             this.rotationAmount -= amount;
         }
 
-        if( this.menuRotationAmount > 0) {
-            let amount = Math.min(this.speed * this.speed_multiplier * delta_time, this.menuRotationAmount);
-            this.menuRotate(amount);
-            this.menuRotationAmount -= amount;
+        if( this.translationAmount > 0) {
+            let amount = Math.min(this.speed * this.speed_multiplier * delta_time, this.translationAmount);
+            this.translate(this.translationAmount);
+            this.translationAmount-=amount;
+
         }
     }
 
     static rotate(angle) {
-        this.scene.camera.orbit(CGFcameraAxisID.Y, angle);
-    }
-
-    static menuRotate(angle) {
-        this.scene.camera.orbit(CGFcameraAxisID.X, angle);
+        this.scene.camera.orbit(CGFcameraAxis.Y, angle);
     }
 
     static translate(amount) {
@@ -47,8 +44,12 @@ class CameraHandler {
 
     
     static menuRotation() {
+        console.log(this.scene.camera);
         this.speed_multiplier = 2.5;
-        this.menuRotationAmount = Math.PI * 2;
+        this.rotationAmount = Math.PI * 2;
+        this.translationAmount = 0.01;
+        
+
     }
 
     static isMoving() {
@@ -92,6 +93,7 @@ class CameraHandler {
         this.resetZoom();
         this.scene.camera = this.scene.views[this.current_camera];
         this.scene.interface.setActiveCamera(this.scene.camera);
+
     }
 
     static setPlayerCamera() {

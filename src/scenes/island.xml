@@ -73,14 +73,8 @@
     </lights>
 
     <textures>
-        <texture id="tijolo" file="scenes/images/tijolo.jpg" />
-        <texture id="surprise" file="scenes/images/surprise.jpg" />
-        <texture id="bellTop" file="scenes/images/top.jpg" />
-        <texture id="flag" file="scenes/images/flag.png" />
-        <texture id="background1" file="scenes/images/background1.jpg" />
-        <texture id="background2" file="scenes/images/background2.jpg" />
-        <texture id="mushroomBottom" file="scenes/images/mushroombottom.png" />
-        <texture id="kartflag" file="scenes/images/kartflag.png" />
+        <texture id="waterHeightMap" file="scenes/images/water/waterHeight.jpg"/>
+        <texture id="water" file="scenes/images/water/sea.jpg"/>
         <texture id="board_texture" file="scenes/images/board.PNG" />
     </textures>
 
@@ -231,6 +225,9 @@
         <primitive id="gamecontrols">
             <gamecontrols />
         </primitive>
+            <primitive id="sea">
+            <water size ="30" height = "waterHeightMap" color = "water"/>
+        </primitive>
     </primitives>
 
     <components>
@@ -243,13 +240,26 @@
             </materials>
             <texture id="none" />
             <children>
-                <componentref id="floor" />
+                <componentref id="game" />
+                <componentref id = "sea"/>
             </children>
         </component>
-        <component id="floor">
+
+        <component id="sea">
             <transformation>
-                <translate x="0" y="0" z="0" />
-                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="brown" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="sea" />
+            </children>
+        </component>
+
+
+        <component id="game">
+            <transformation>
             </transformation>
             <materials>
                 <material id="brown" />
@@ -258,24 +268,11 @@
             <children>
                 <primitiveref id="board" />
                 <primitiveref id="score" />
-                <componentref id="gamecontrols" />
                 <componentref id="timer" />
             </children>
         </component>
 
-        <component id="gamecontrols">
-            <transformation>
-                <translate x="2" y="2" z="0" />
-            </transformation>
-            <animations></animations>
-            <materials>
-                <material id="matRegular" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <primitiveref id="gamecontrols" />
-            </children>
-        </component>
+  
 
         <component id="timer">
             <transformation>
@@ -289,7 +286,8 @@
                 <primitiveref id="timer" />
             </children>
         </component>
-    </components>
+
+       </components>
 
     <pieces>
         <piece_green>
@@ -298,7 +296,7 @@
                 <rotate axis="x" angle="-90" />
             </transformation>
             <material id="grey" />
-            <texture id="tijolo" length_s="1" length_t="1" />
+            <texture id="none"/>
             <primitive id="wall" />
         </piece_green>
         <piece_yellow>
@@ -307,7 +305,7 @@
                 <rotate axis="x" angle="-90" />
             </transformation>
             <material id="grey" />
-            <texture id="tijolo" length_s="1" length_t="1" />
+            <texture id="none" />
             <primitive id="wall" />
         </piece_yellow>
     </pieces>

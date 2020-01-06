@@ -20,37 +20,41 @@ class MySceneGraph {
     /**
      * @constructor
      */
-    constructor(scene) {
+    constructor(filename, scene) {
         this.loadedOk = null;
 
+        // remove the extension
+        // a scene_id is reprensented by the name of the file
+        this.scene_id = filename.split('.')[0];
+
         // Establish bidirectional references between scene and graph.
+        console.log(scene);
+
         this.scene = scene;
-        scene.graph = this;
+        scene.graphs[this.scene_id] = this;
+
+        if(!scene.current_graph) { // if is not defined selects the scene
+            scene.select_scene_graph = this.scene_id;
+            scene.current_graph= this;
+        }
+
+
+        this.idRoot = null; // The id of the root element.
 
         this.axisCoords = [];
         this.axisCoords['x'] = [1, 0, 0];
         this.axisCoords['y'] = [0, 1, 0];
         this.axisCoords['z'] = [0, 0, 1];
 
-    
-    }
-
-
-    processXml(filename) {
-        this.filename = filename;
-        this.idRoot = null; // The id of the root element.
-
         // File reading 
         this.reader = new CGFXMLreader();
 
         /*
-            * Read the contents of the xml file, and refer to this class for loading and error handlers.
-            * After the file is read, the reader calls onXMLReady on this object.
-            * If any error occurs, the reader calls onXMLError on this object, with an error message
-            */
+         * Read the contents of the xml file, and refer to this class for loading and error handlers.
+         * After the file is read, the reader calls onXMLReady on this object.
+         * If any error occurs, the reader calls onXMLError on this object, with an error message
+         */
         this.reader.open('scenes/' + filename, this);
-
-
     }
 
     /*
@@ -72,10 +76,10 @@ class MySceneGraph {
 
         this.loadedOk = true;
         //console.log(this.components);
-        //console.log(this.animations);
+       //console.log(this.animations);
 
         // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
-        this.scene.onGraphLoaded();
+        this.scene.onGraphLoaded(this);
     }
 
     /**
@@ -191,7 +195,7 @@ class MySceneGraph {
         if (piecesNode) {
             this.parsePieces(piecesNode);
         }
-
+        
         this.log("All parsed");
     }
 
@@ -1003,7 +1007,7 @@ class MySceneGraph {
         this.log("Parsed Animations");
     }
 
-
+    
     /**
      * Parses one animation
      * @param {animation element} animationsNode
@@ -1037,14 +1041,12 @@ class MySceneGraph {
                 this.onXMLMinorError(messageError + "unknown tag <" + keyframesNodes[i].nodeName + ">");
                 continue;
             }
-
-            let instantsArr = animation.keyframes.map(function (item) {
-                return item.instant
-            });
+            
+            let instantsArr = animation.keyframes.map(function(item){ return item.instant });
             let isDuplicate = (instantsArr.indexOf(aux.instant) !== -1) ? true : false;
 
             /*checking duplicate */
-            if (!isDuplicate) {
+            if(!isDuplicate){
                 animation.keyframes.push(aux);
             } else this.onXMLMinorError(messageError + "keyframe instant repeated, ignoring keyframe")
         }
@@ -1056,7 +1058,7 @@ class MySceneGraph {
         this.animations[animation.animationID] = animation;
     }
 
-
+    
     /**
      * Parses one keyframe of an animation
      * @param {keyframe element} keyframeNode
@@ -1116,6 +1118,11 @@ class MySceneGraph {
             } else this.parsePrimitive(primitives[primitive_nr]);
         }
 
+        //there should be a board in the game
+        if (this.hasBoardPrimitive === false) {
+            throw "There should be a board primitive defined";
+        }
+
         //check if there is at least one primitive
         if (primitive_nr === 0) {
             throw "At least one primitive must be defined";
@@ -1166,24 +1173,34 @@ class MySceneGraph {
         else if (node.nodeName === "cylinder2") {
             primitive = this.parseCylinder(node, messageError);
             primitive.type = "cylinder2";
-        } else if (node.nodeName === "gameboard") 
+        } else if(node.nodeName === "gameboard") {
             primitive = this.parseBoard(node, messageError);
-        else if (node.nodeName === "timer") 
-            primitive = this.parseTimer();
-        else if (node.nodeName === "scoreboard") 
-            primitive = this.parseScoreBoard();
-        else if (node.nodeName === "gamecontrols") 
-            primitive = this.parseGameConstrols();
-        else if (node.nodeName === "cubeMap") 
+            this.hasBoardPrimitive = true;
+        }
+        else if (node.nodeName === "timer") {
+            primitive = this.parseTimer(node, messageError);
+        }
+        else if (node.nodeName === "scoreboard") {
+            primitive = this.parseScoreBoard(node, messageError);
+        }
+        else if(node.nodeName === "cubeMap") {
             primitive = this.parseCubeMap(node, messageError);
-        else if (node.nodeName === "sky") 
+        }
+        else if (node.nodeName === "sky") {
             primitive = this.parsesky(node, messageError);
-        else if (node.nodeName === "water") 
+        }
+        else if (node.nodeName === "water") {
             primitive = this.parseWater(node, messageError);
-        else if (node.nodeName === "sand") 
+        }
+        else if (node.nodeName === "sand") {
             primitive = this.parseSand(node, messageError);
-        else if (node.nodeName === "window") 
+        }
+        else if (node.nodeName === "window") {
             primitive = this.parseWindow(node, messageError);
+        }
+        else if (node.nodeName === "objfile") {
+            primitive = this.parseobjFile(node, messageError);
+        }
         else {
             this.onXMLMinorError(messageError + "unknown tag <" + node.nodeName + ">");
             return;
@@ -1191,34 +1208,44 @@ class MySceneGraph {
 
         //save the primitive id
         primitive.primitiveID = primitiveID;
-
+        
         this.primitives[primitive.primitiveID] = primitive;
+    }
+
+    parseobjFile(node, messageError) {
+
+        var file = this.parseString(node, 'file', messageError);
+
+        return {
+            type:"objfile",
+            file
+        }
     }
 
 
     parseWindow(node, messageError) {
         let size = this.parseFloat(node, "size", messageError);
-        let distortion = this.parseString(node, "distortion", messageError);
+        let distortion = this.parseString(node,"distortion", messageError);
         let background = this.parseString(node, "background", messageError);
 
         return {
-            type: "window",
+            type:"window",
             distortion,
             size,
             background
         }
-
+        
     }
 
     parseSand(node, messageError) {
         let size = this.parseFloat(node, "size", messageError);
-        let heightMap = this.parseString(node, "height", messageError);
+        let heightMap = this.parseString(node,"height", messageError);
         let color = this.parseString(node, "color", messageError);
 
         return {
-
-            type: "sand",
-            heightMap: heightMap,
+        
+            type:"sand",
+            heightMap:heightMap,
             size,
             color
         }
@@ -1228,13 +1255,13 @@ class MySceneGraph {
 
     parseWater(node, messageError) {
         let size = this.parseFloat(node, "size", messageError);
-        let heightMap = this.parseString(node, "height", messageError);
+        let heightMap = this.parseString(node,"height", messageError);
         let color = this.parseString(node, "color", messageError);
 
         return {
-
-            type: "water",
-            heightMap: heightMap,
+        
+            type:"water",
+            heightMap:heightMap,
             size,
             color
         }
@@ -1242,13 +1269,13 @@ class MySceneGraph {
 
 
     parsesky(node, messageError) {
-        let heightMap = this.parseString(node, "height", messageError);
+        let heightMap = this.parseString(node,"height", messageError);
         let colorMap = this.parseString(node, "colorMap", messageError);
         let size = this.parseFloat(node, "size", messageError);
 
         return {
-            type: "sky",
-            heightMap: heightMap,
+            type:"sky",
+            heightMap:heightMap,
             colorMap: colorMap,
             size
         };
@@ -1261,32 +1288,31 @@ class MySceneGraph {
         let size = this.parseFloat(node, "size", messageError);
 
         return {
-            type: "cubeMap",
-            folderPath: folderPath,
-            size: size
+            type:"cubeMap",
+            folderPath:folderPath,
+            size:size
         }
     }
+  
+    parseScoreBoard(node, messageError) {
 
-    parseScoreBoard() {
         return {
             type: "scoreboard"
+
         };
     }
 
-    parseGameConstrols() {
-        return {
-            type: "gamecontrols"
-        };
-    }
-
+    
     /**
      * Parses the timer
      * @param {gameboard element} boardNode
      * @param {message to send if there is an error} messageError
      */
-    parseTimer() {
+    parseTimer(timerNode, messageError) {
+
         return {
             type: "timer",
+
         };
     }
 
@@ -1563,16 +1589,6 @@ class MySceneGraph {
             }
         }
 
-        if (!this.gameboardPrimitivePresent) {
-            throw "primitive of type 'gameboard' must be present in the scene";
-        } else if (!this.timerPrimitivePresent) {
-            throw "primitive of type 'timer' must be present in the scene";
-        } else if (!this.scoreBoardPrimitivePresent) {
-            throw "primitive of type 'scoreboard' must be present in the scene";
-        } else if (!this.gameControlsPrimitivePresent) {
-            throw "primitive of type 'gamecontrols' must be present in the scene";
-        }
-
         this.log("Parsed Components");
     }
 
@@ -1665,17 +1681,6 @@ class MySceneGraph {
             }
         }
 
-        for (let primitiveId of primitiveIds) {
-            if (this.primitives[primitiveId].type === "gameboard") {
-                this.gameboardPrimitivePresent = true;
-            } else if (this.primitives[primitiveId].type === "timer") {
-                this.timerPrimitivePresent = true;
-            } else if (this.primitives[primitiveId].type === "scoreboard") {
-                this.scoreBoardPrimitivePresent = true;
-            } else if (this.primitives[primitiveId].type === "gamecontrols") {
-                this.gameControlsPrimitivePresent = true;
-            }
-        }
 
         const component = {
             componentID,
@@ -1957,7 +1962,7 @@ class MySceneGraph {
 
     parsePiecePrimitive(piecePrimitiveNode, messageError) {
         let primitiveID = this.parseString(piecePrimitiveNode, "id", messageError);
-
+        
         if ((this.primitives[primitiveID] === undefined)) {
             throw messageError + "primitive child with id " + primitiveID + " is not defined";
         }
@@ -2194,39 +2199,29 @@ class MySceneGraph {
                         prim = new Board(this.scene, primitive.texture);
                         break;
                     case "timer":
-                        prim = new timer(this.scene);
-                        break;
+                        prim = new timer(this.scene);   
+                    break;   
                     case "scoreboard":
                         prim = new ScoreBoard(this.scene);
-                        break;
-                    case "gamecontrols":
-                        prim = new Menu (
-                            this.scene, 
-                            [
-                                () => (GameState.undoMove()),
-                                () => (GameState.redoMove()),
-                                () => (GameState.continuePlaying()),
-                                () => (GameState.replayGame()),
-                                () => (MenuHandler.init(this.scene), ClockState.resetCountdown())
-                            ],
-                            "menu/resources/gamecontrolsmenu.png"
-                        );
-                        break;
+                    break;
                     case "cubeMap":
                         prim = new cubeMap(this.scene, primitive.size, primitive.folderPath);
-                        break;
+                    break;
                     case "sky":
                         prim = new sky(this.scene, primitive.heightMap, primitive.colorMap, primitive.size);
-                        break;
+                    break;
                     case "water":
                         prim = new water(this.scene, primitive.heightMap, primitive.size, primitive.color);
-                        break;
+                    break;
                     case "sand":
                         prim = new sand(this.scene, primitive.heightMap, primitive.size, primitive.color);
-                        break;
-                    case "window":
+                    break;
+                    case "window":   
                         prim = new windowObject(this.scene, primitive.distortion, primitive.size, primitive.background);
-                        break;
+                    break;
+                    case "objfile":   
+                    prim = new CGFOBJModel(this.scene, primitive.file);
+                    break;
                     default:
                         break;
                 }
@@ -2285,7 +2280,7 @@ class MySceneGraph {
                     }
                 }
 
-
+            
                 //push all materials defined for the component
                 let materials = [];
                 for (let materialId of component.materials) {
@@ -2304,7 +2299,7 @@ class MySceneGraph {
                 }
 
                 //create the MyGraphNode object
-                this.sceneComponents[key] = new MyGraphNode(matrix, this.scene.animations[component.animation], materials, texture, component.texture.length_s, component.texture.length_t);
+                this.sceneComponents[key] = new MyGraphNode(matrix,this.scene.animations[component.animation], materials, texture, component.texture.length_s, component.texture.length_t);
             }
         }
 
@@ -2320,7 +2315,7 @@ class MySceneGraph {
             let matrix = this.calculateMatrix(green_piece_model.transformation);
             let material = this.scene.materials[green_piece_model.material];
             let primitive = this.scenePrimitives[green_piece_model.primitive];
-
+            
             let texture;
             if (green_piece_model.texture.textureId === "none") {
                 texture = green_piece_model.texture.textureId;
@@ -2347,7 +2342,7 @@ class MySceneGraph {
         }
 
         // Passing the created pieces to the board
-        this.scene.board.setCustomPieces(green_piece, yellow_piece);
+        //this.board.setCustomPieces(green_piece, yellow_piece);
     }
 
     calculateMatrix(transformation) {
