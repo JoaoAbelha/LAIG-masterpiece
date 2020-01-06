@@ -88,6 +88,8 @@
         <texture id="water" file="scenes/images/water/sea.jpg"/>
         <texture id="sand" file="scenes/images/islandTerrain/sand.jpg"/>
         <texture id="islandHeightMap" file="scenes/images/islandTerrain/islandHeightMap.jpg"/>
+        <texture id="green" file="scenes/images/green.png"/>
+        <texture id="yellow" file="scenes/images/yellow.png"/>
     </textures>
 
     <materials>
@@ -247,6 +249,12 @@
         <primitive id="gamecontrols">
             <gamecontrols />
         </primitive>
+        <primitive id="mushroom">
+            <mushroom />
+        </primitive>
+        <primitive id="coolpiece">
+            <coolpiece />
+        </primitive>
         <primitive id="cubeMap">
             <cubeMap folderPath = "scenes/images/island" size ="30" />
         </primitive>
@@ -403,5 +411,23 @@
         </component>
     </components>
 
+    <pieces>
+        <piece_green>
+            <transformation>
+                <scale x="1.5" y="1.5" z="1.5" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <material id="matRegular" />
+            <texture id="green" length_s="1" length_t="1" />
+            <primitive id="mushroom" />
+        </piece_green>
+        <piece_yellow>
+            <transformation>
+            </transformation>
+            <material id="matRegular" />
+            <texture id="yellow" length_s="1" length_t="1" />
+            <primitive id="coolpiece" />
+        </piece_yellow>
+    </pieces>
         
 </lxs>
