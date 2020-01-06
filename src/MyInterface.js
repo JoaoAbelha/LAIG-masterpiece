@@ -48,7 +48,8 @@ class MyInterface extends CGFinterface {
     scenesDropDown() {
         let sceneDropdownModel = [
             "room.xml", 
-            "game.xml"
+            "game.xml",
+            "mario.xml",
         ];
         
         this.model.sceneIndex = this.scene.graph.filename;
