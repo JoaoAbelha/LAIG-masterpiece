@@ -303,6 +303,9 @@
         <primitive id="gamecontrols">
             <gamecontrols />
         </primitive>
+        <primitive id="cubeMap">
+            <cubeMap folderPath = "scenes/images/room" size ="30" />
+        </primitive>
 
     </primitives>
 
@@ -332,6 +335,7 @@
                 <componentref id="carpet2"/>
                 <componentref id="paint"/> 
                 <componentref id="window"/> 
+                <componentref id = "room"/>
                 <componentref id="game"/>
              </children>
         </component>
@@ -342,8 +346,6 @@
                 <translate x="10" y="8" z="30" />
                 <rotate axis="x" angle="90" />
                 <rotate axis="z" angle="180" />
-
-
             </transformation>
             <materials>
                 <material id="brown" />
@@ -351,6 +353,20 @@
             <texture id="carpetPattern1" length_s= "1" length_t= "1"/>
             <children>
                 <primitiveref id = "window"/>
+            </children>
+        </component>
+
+        <component id="room">
+            <transformation>
+                <translate x="20" y="14.9" z="15.1" />
+                <scale x = "1.4" y = "1" z = "1"/>
+            </transformation>
+            <materials>
+                <material id="brown" />
+            </materials>
+            <texture id="carpetPattern1" length_s= "1" length_t= "1"/>
+            <children>
+                <primitiveref id = "cubeMap"/>
             </children>
         </component>
 
@@ -371,7 +387,7 @@
         </component>
         <component id="paint">
             <transformation>
-                <translate x="0" y="8" z="18" />
+                <translate x="0" y="12" z="18" />
                  <rotate axis="y" angle="90" />
                 <scale x="8" y="8" z="1"/>
 
