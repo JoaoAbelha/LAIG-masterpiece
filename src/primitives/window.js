@@ -13,9 +13,12 @@ class windowObject extends CGFobject {
 
         this.shader.setUniformsValues({
             distortion: 0,
-            background: 1,
-            timefactor1: 0
-        });
+            background :1 ,
+            timefactor1: 0,
+            resolutionWidth:  this.scene.gl.canvas.width,
+            resolutionHeight: this.scene.gl.canvas.height
+         });
+
 
 
         this.plane = new MyPlane(scene, size * 2, size * 2);
@@ -24,8 +27,9 @@ class windowObject extends CGFobject {
 
     display() {
         this.scene.setActiveShader(this.shader);
+
         this.scene.activeShader.setUniformsValues({
-            timefactor1: (this.scene.time / 30000 % 100)
+            timefactor1: (this.scene.time / 30000 % 1000)
         });
         this.background.bind(1);
 

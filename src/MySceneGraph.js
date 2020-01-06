@@ -1186,6 +1186,9 @@ class MySceneGraph {
             primitive = this.parseCoolPiece();
         else if (node.nodeName === "mushroom") 
             primitive = this.parseMushroom();
+        else if (node.nodeName === "objfile") 
+            primitive = this.parseobjFile(node, messageError);
+            
         else {
             this.onXMLMinorError(messageError + "unknown tag <" + node.nodeName + ">");
             return;
@@ -1195,6 +1198,17 @@ class MySceneGraph {
         primitive.primitiveID = primitiveID;
 
         this.primitives[primitive.primitiveID] = primitive;
+    }
+
+
+    parseobjFile(node, messageError) {
+
+        var file = this.parseString(node, 'file', messageError);
+
+        return {
+            type:"objfile",
+            file
+        }
     }
 
     parseCoolPiece() {
@@ -2245,6 +2259,9 @@ class MySceneGraph {
                         break;
                     case "mushroom":
                         prim = new Mushroom(this.scene);
+                        break;
+                    case "objfile":   
+                        prim = new CGFOBJModel(this.scene, primitive.file);
                         break;
                     default:
                         break;

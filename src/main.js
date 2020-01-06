@@ -56,6 +56,8 @@ serialInclude([
     'primitives/water.js',
     'primitives/sand.js',
     'primitives/window.js',
+    'CGFOBJModel.js',
+    'CGFResourceReader.js',
 
 main=function()
 {

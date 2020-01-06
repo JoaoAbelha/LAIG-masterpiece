@@ -14,6 +14,7 @@ class Screen extends CGFobject {
         /*create the shader */
         this.shader = new CGFshader(this.scene.gl, "shaders/security.vert", "shaders/security.frag");
 
+
         //this.time;
     }
 
@@ -31,6 +32,7 @@ class Screen extends CGFobject {
 
     setBackgroundTexture(text) {
         this.texture =  text;
+
 
     }
 

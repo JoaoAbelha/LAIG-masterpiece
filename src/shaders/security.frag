@@ -39,8 +39,6 @@ float gradient_radius(vec2 uv, float size)
 }
 
 
-
-
 void main() {
 
 	/*get the texture*/

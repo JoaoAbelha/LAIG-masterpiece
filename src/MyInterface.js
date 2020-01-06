@@ -47,7 +47,7 @@ class MyInterface extends CGFinterface {
 
     scenesDropDown() {
         let sceneDropdownModel = [
-            "island.xml", 
+            "room.xml", 
             "game.xml"
         ];
         
