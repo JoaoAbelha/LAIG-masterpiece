@@ -84,6 +84,8 @@
         <texture id="straw" file="scenes/images/straw.jpg"/>
         <texture id="stripe" file="scenes/images/stripes.png"/>
         <texture id="palmTree" file="./scenes/images/palmTree.jpg"/>
+        <texture id="green" file="scenes/images/green.png"/>
+        <texture id="yellow" file="scenes/images/yellow.png"/>
 
     </textures>
 
@@ -256,10 +258,6 @@
 
 
     <primitives>
-        <primitive id="wall">
-            <rectangle x1="0" y1="0" x2="1" y2="1" />
-        </primitive>
-
         <primitive id="board">
             <gameboard texture="board_texture"/>
         </primitive>
@@ -359,7 +357,12 @@
             <gamecontrols />
         </primitive>
 
-
+        <primitive id="mushroom">
+            <mushroom />
+        </primitive>
+        <primitive id="coolpiece">
+            <coolpiece />
+        </primitive>
 
     </primitives>
 
@@ -564,19 +567,75 @@
 
         <component id="game">
             <transformation>
-                <translate x="2" y="5.8" z="-2" />
-                 <rotate axis="y" angle="-90" />
+                <translate x="0" y="5.7" z="0"/>
+                <scale x="0.6" y="0.6" z="0.6" />
             </transformation>
             <materials>
-                <material id="brown" />
+                <material id="inherit" />
             </materials>
-            <texture id="none"/>
+            <texture id="inherit" />
+            <children>
+                <componentref id="board" />
+                <componentref id="timer" />
+                <componentref id="scoreboard" />
+                <componentref id="gamecontrols" />
+            </children>
+        </component>
+        <component id="board">
+            <transformation>
+                <translate x="-2" y="0" z="2" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <animations></animations>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
             <children>
                 <primitiveref id="board" />
+            </children>
+        </component>
+        <component id="timer">
+            <transformation>
+                <translate x="3" y="0" z="-0.8" />
+                <rotate axis="y" angle="-90" />
+            </transformation>
+            <animations></animations>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="timer" />
+            </children>
+        </component>
+        <component id="scoreboard">
+            <transformation>
+                <translate x="3" y="0" z="0.8" />
+                <rotate axis="y" angle="-90" />
+            </transformation>
+            <animations></animations>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
                 <primitiveref id="score" />
-                <componentref id = "timer"/>
+            </children>
+        </component>
+        <component id="gamecontrols">
+            <transformation>
+                <translate x="-3" y="1.4" z="0" />
+                <rotate axis="y" angle="90" />
+                <scale x="1.2" y="1.2" z="1.2" />
+            </transformation>
+            <animations></animations>
+            <materials>
+                <material id="matRegular" />
+            </materials>
+            <texture id="none" />
+            <children>
                 <primitiveref id="gamecontrols" />
-
             </children>
         </component>
 
@@ -590,18 +649,6 @@
             <texture id="none" />
             <children>
                 <primitiveref id = "sea"/>
-            </children>
-        </component>
-        <component id="timer">
-            <transformation>
-            <transformationref id = "translationTimer"/>
-            </transformation>
-            <materials>
-                <material id="matRegular" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <primitiveref id = "timer"/>
             </children>
         </component>
           <component id="table">
@@ -1188,21 +1235,19 @@
     <pieces>
         <piece_green>
             <transformation>
-                <translate x="0" y="0" z="0" />
-                <rotate axis="x" angle="-90" />
+                <scale x="1.5" y="1.5" z="1.5" />
+                <rotate axis="y" angle="90" />
             </transformation>
-            <material id="grey" />
-            <texture id="none" />
-            <primitive id="wall" />
+            <material id="matRegular" />
+            <texture id="green" length_s="1" length_t="1" />
+            <primitive id="mushroom" />
         </piece_green>
         <piece_yellow>
             <transformation>
-                <translate x="0" y="0" z="0" />
-                <rotate axis="x" angle="-90" />
             </transformation>
-            <material id="grey" />
-            <texture id="none" />
-            <primitive id="wall" />
+            <material id="matRegular" />
+            <texture id="yellow" length_s="1" length_t="1" />
+            <primitive id="coolpiece" />
         </piece_yellow>
     </pieces>
         
